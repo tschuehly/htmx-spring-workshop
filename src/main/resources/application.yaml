@@ -7,3 +7,4 @@ org:
   eclipse:
     store:
       root: de.tschuehly.easy.spring.auth.store.Root
+      storage-directory: ./storage

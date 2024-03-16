@@ -23,6 +23,7 @@ repositories {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-oauth2-authorization-server")
+
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("de.tschuehly:spring-view-component-jte:0.7.2")
     annotationProcessor("de.tschuehly:spring-view-component-core:0.7.2")

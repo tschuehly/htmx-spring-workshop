@@ -1,6 +1,8 @@
 package de.tschuehly.easy.spring.auth.store;
 
 import de.tschuehly.easy.spring.auth.user.EasyUser;
+import de.tschuehly.easy.spring.auth.user.Group;
+import de.tschuehly.easy.spring.auth.user.Role;
 import de.tschuehly.easy.spring.auth.user.UserRepository;
 import java.util.List;
 import org.springframework.security.core.GrantedAuthority;
@@ -35,13 +37,13 @@ public class EasyUserDetailsManager implements UserDetailsManager, GroupManager 
     if (authorities.stream().anyMatch(it -> !it.getAuthority().startsWith("ROLE_"))) {
       throw new RuntimeException("Authority must start with ROLE_");
     }
-    userRepository.createGroup(groupName, authorities);
+    List<Role> roleList = authorities.stream().map(auth -> new Role(auth.getAuthority())).toList();
+    userRepository.createGroup(groupName, roleList);
   }
 
   @Override
   public void deleteGroup(String groupName) {
-    return userRepository.deleteGroup(groupName);
-
+    userRepository.deleteGroup(groupName);
   }
 
   @Override
@@ -61,7 +63,10 @@ public class EasyUserDetailsManager implements UserDetailsManager, GroupManager 
 
   @Override
   public List<GrantedAuthority> findGroupAuthorities(String groupName) {
-    return userRepository.findGroup(groupName);
+    Group group = userRepository.findGroup(groupName).orElseThrow(
+        () -> new RuntimeException("No Group found with grouName" + groupName)
+    );
+    return group.grantedAuthorityList();
   }
 
   @Override
@@ -76,22 +81,29 @@ public class EasyUserDetailsManager implements UserDetailsManager, GroupManager 
 
   @Override
   public void createUser(UserDetails user) {
-    userRepository.createUser(user);
+    userRepository.createUser(user.getUsername(),user.getPassword());
   }
 
   @Override
   public void updateUser(UserDetails user) {
+    List<Role> roles = userRepository.findRoles(
+        user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList());
+    userRepository.updateUser(
+        user.getUsername(),
+        user.getPassword(),
+        roles
+    );
 
   }
 
   @Override
   public void deleteUser(String username) {
+    userRepository.deleteUser(username);
 
   }
 
   @Override
   public void changePassword(String oldPassword, String newPassword) {
-
   }
 
   @Override

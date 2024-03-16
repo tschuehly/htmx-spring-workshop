@@ -18,6 +18,7 @@ public class EasyUser implements UserDetails {
     this.groupList = groupList;
   }
 
+
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return groupList.stream().flatMap(it -> it.roleList.stream().map(role -> role.authority))
