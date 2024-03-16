@@ -1,10 +1,10 @@
 @import de.tschuehly.easy.spring.auth.user.EasyUser
 @import static de.tschuehly.easy.spring.auth.user.UserController.EDIT_USER_MODAL
 @import static de.tschuehly.easy.spring.auth.user.UserController.EDIT_USER_PARAMETER
-@import static de.tschuehly.easy.spring.auth.web.WebController.MODAL_CONTAINER
+@import static de.tschuehly.easy.spring.auth.web.WebController.MODAL_CONTAINER_ID
 @param EasyUser easyUser
 !{var uuid = easyUser.uuid.toString();}
-<tr id="${uuid}">
+<tr id="user-${uuid}">
     <td>
         ${uuid}
     </td>
@@ -15,7 +15,7 @@
         ${easyUser.password}
     </td>
     <td>
-        <button hx-get="${EDIT_USER_MODAL}?${EDIT_USER_PARAMETER}=${uuid}" hx-target="#${MODAL_CONTAINER}">
+        <button hx-get="${EDIT_USER_MODAL}?${EDIT_USER_PARAMETER}=${uuid}" hx-target="#${MODAL_CONTAINER_ID}">
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                  class="icon icon-tabler icons-tabler-outline icon-tabler-edit">

@@ -16,6 +16,7 @@ public class UserController {
   public static final String SAVE_USER = "/user";
   public static final String EDIT_USER_MODAL = "/user/edit";
   public static final String EDIT_USER_PARAMETER = "uuid";
+  public static final String USER_TABLE_BODY_ID = "userTableBody";
 
   private final UserService userService;
 
@@ -51,13 +52,15 @@ public class UserController {
           username,
           password
       );
+      response.addHeader("HX-Retarget", "#" + USER_TABLE_BODY_ID);
+      response.addHeader("HX-Reswap", "afterbegin");
     } else {
       user = userService.saveUser(
           uuid.get(),
           username,
           password
       );
-      response.addHeader("HX-Retarget", "#" + user.uuid);
+      response.addHeader("HX-Retarget", "#user-" + user.uuid);
       response.addHeader("HX-Reswap", "outerHTML");
     }
     response.addHeader("HX-Trigger", WebController.CLOSE_MODAL_EVENT);

@@ -1,4 +1,4 @@
-@import static de.tschuehly.easy.spring.auth.web.WebController.MODAL_CONTAINER
+@import static de.tschuehly.easy.spring.auth.web.WebController.MODAL_CONTAINER_ID
 @import de.tschuehly.easy.spring.auth.web.WebController
 @param de.tschuehly.easy.spring.auth.web.WebController.UserManagementModel userManagementModel
 
@@ -23,7 +23,7 @@
     @template.UserTable(easyUserList = userManagementModel.easyUserList())
 </main>
 </body>
-<div id="${MODAL_CONTAINER}" hx-on:$unsafe{WebController.CLOSE_MODAL_EVENT}="this.innerHTML = null">
+<div id="${MODAL_CONTAINER_ID}" hx-on:$unsafe{WebController.CLOSE_MODAL_EVENT}="this.innerHTML = null">
 
 </div>
 

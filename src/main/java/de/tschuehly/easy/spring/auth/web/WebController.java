@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class WebController {
 
-  public static final String MODAL_CONTAINER = "modalContainer";
+  public static final String MODAL_CONTAINER_ID = "modalContainer";
   public static final String CLOSE_MODAL_EVENT = "close-modal";
   public WebController(UserService userService) {
     this.userService = userService;
