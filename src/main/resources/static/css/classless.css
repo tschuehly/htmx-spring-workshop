@@ -1,0 +1,8 @@
+aside{
+  position: fixed;
+  display: block;
+  height: 100dvh;
+  width: 20rem;
+  top: 0;
+  left: 0;
+}

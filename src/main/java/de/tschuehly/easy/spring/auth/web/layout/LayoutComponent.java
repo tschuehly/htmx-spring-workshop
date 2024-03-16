@@ -5,8 +5,10 @@ import de.tschuehly.spring.viewcomponent.jte.ViewContext;
 
 @ViewComponent
 public class LayoutComponent {
-  record LayoutContext() implements ViewContext{}
-  public ViewContext render(){
-    return new LayoutContext();
+  public record LayoutContext(
+      ViewContext content
+  ) implements ViewContext{}
+  public ViewContext render(ViewContext content){
+    return new LayoutContext(content);
   }
 }
