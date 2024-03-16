@@ -1,5 +1,6 @@
 package de.tschuehly.easy.spring.auth.user;
 
+import de.tschuehly.easy.spring.auth.web.WebController;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.Optional;
 import java.util.UUID;
@@ -59,7 +60,7 @@ public class UserController {
       response.addHeader("HX-Retarget", "#" + user.uuid);
       response.addHeader("HX-Reswap", "outerHTML");
     }
-    response.addHeader("HX-Trigger","closeModal");
+    response.addHeader("HX-Trigger", WebController.CLOSE_MODAL_EVENT);
     model.addAttribute("easyUser", user);
     return "userRow";
   }
