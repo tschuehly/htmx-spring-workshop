@@ -1,4 +1,4 @@
-package de.tschuehly.easy.spring.auth.user;
+package de.tschuehly.easy.spring.auth.domain;
 
 import java.util.ArrayList;
 import java.util.List;

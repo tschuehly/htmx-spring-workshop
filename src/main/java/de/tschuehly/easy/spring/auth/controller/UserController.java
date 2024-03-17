@@ -1,7 +1,9 @@
-package de.tschuehly.easy.spring.auth.user;
+package de.tschuehly.easy.spring.auth.controller;
 
-import de.tschuehly.easy.spring.auth.web.WebController;
+import de.tschuehly.easy.spring.auth.domain.EasyUser;
+import de.tschuehly.easy.spring.auth.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.stereotype.Controller;
@@ -18,16 +20,32 @@ public class UserController {
   public static final String EDIT_USER_PARAMETER = "uuid";
   public static final String USER_TABLE_BODY_ID = "userTableBody";
 
+  public static final String MODAL_CONTAINER_ID = "modalContainer";
+  public static final String CLOSE_MODAL_EVENT = "close-modal";
   private final UserService userService;
 
   public UserController(UserService userService) {
     this.userService = userService;
   }
 
-  public record UserForm(String uuid, String username, String password) {
+
+  public record UserManagementModel(
+      List<EasyUser> easyUserList
+  ) {
 
   }
 
+  @GetMapping("/")
+  public String userManagement(Model model) {
+    List<EasyUser> easyUserList = userService.findAll();
+    model.addAttribute("userManagementModel", new UserManagementModel(easyUserList));
+    return "UserManagement";
+  }
+
+
+  public record UserForm(String uuid, String username, String password) {
+
+  }
 
   @GetMapping(EDIT_USER_MODAL)
   public String editUserModal(@RequestParam(EDIT_USER_PARAMETER) Optional<UUID> userUuid, Model model) {
@@ -39,14 +57,13 @@ public class UserController {
     } else {
       model.addAttribute("userForm", new UserForm(null, null, null));
     }
-
     return "EditUserForm";
   }
 
   @PostMapping(SAVE_USER)
   public String saveUser(Optional<UUID> uuid, String username, String password, Model model,
       HttpServletResponse response) {
-    EasyUser user = null;
+    EasyUser user;
     if (uuid.isEmpty()) {
       user = userService.createUser(
           username,
@@ -63,7 +80,7 @@ public class UserController {
       response.addHeader("HX-Retarget", "#user-" + user.uuid);
       response.addHeader("HX-Reswap", "outerHTML");
     }
-    response.addHeader("HX-Trigger", WebController.CLOSE_MODAL_EVENT);
+    response.addHeader("HX-Trigger", CLOSE_MODAL_EVENT);
     model.addAttribute("easyUser", user);
     return "userRow";
   }
