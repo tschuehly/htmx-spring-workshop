@@ -22,6 +22,7 @@ public class UserController {
 
   public static final String MODAL_CONTAINER_ID = "modalContainer";
   public static final String CLOSE_MODAL_EVENT = "close-modal";
+  public static final String HTMX = "hx-get=/helloWorld hx-swap=outerHTML";
   private final UserService userService;
 
   public UserController(UserService userService) {
