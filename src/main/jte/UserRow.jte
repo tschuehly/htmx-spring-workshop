@@ -1,7 +1,7 @@
-@import de.tschuehly.easy.spring.auth.domain.EasyUser
-@import static de.tschuehly.easy.spring.auth.controller.UserController.EDIT_USER_MODAL
-@import static de.tschuehly.easy.spring.auth.controller.UserController.EDIT_USER_PARAMETER
-@import static de.tschuehly.easy.spring.auth.controller.UserController.MODAL_CONTAINER_ID
+@import de.tschuehly.easy.spring.auth.user.EasyUser
+@import static de.tschuehly.easy.spring.auth.user.UserController.EDIT_USER_MODAL
+@import static de.tschuehly.easy.spring.auth.user.UserController.EDIT_USER_PARAMETER
+@import static de.tschuehly.easy.spring.auth.web.WebController.MODAL_CONTAINER_ID
 @param EasyUser easyUser
 !{var uuid = easyUser.uuid.toString();}
 <tr id="user-${uuid}">
