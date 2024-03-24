@@ -1,4 +1,4 @@
-package de.tschuehly.easy.spring.auth.user;
+package de.tschuehly.easy.spring.auth.role;
 
 public class Role {
 

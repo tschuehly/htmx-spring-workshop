@@ -1,8 +1,8 @@
 package de.tschuehly.easy.spring.auth.store;
 
 
-import de.tschuehly.easy.spring.auth.user.Group;
-import de.tschuehly.easy.spring.auth.user.Role;
+import de.tschuehly.easy.spring.auth.group.Group;
+import de.tschuehly.easy.spring.auth.role.Role;
 import de.tschuehly.easy.spring.auth.user.EasyUser;
 import java.util.ArrayList;
 import java.util.HashSet;

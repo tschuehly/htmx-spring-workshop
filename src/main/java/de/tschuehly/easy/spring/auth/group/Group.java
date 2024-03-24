@@ -1,5 +1,6 @@
-package de.tschuehly.easy.spring.auth.user;
+package de.tschuehly.easy.spring.auth.group;
 
+import de.tschuehly.easy.spring.auth.role.Role;
 import java.util.List;
 
 public class Group {
