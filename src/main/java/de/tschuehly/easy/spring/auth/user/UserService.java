@@ -34,8 +34,7 @@ public class UserService {
     EasyUser newUser = new EasyUser(
         userToUpdate.uuid,
         username,
-        password,
-        userToUpdate.groupList
+        password
     );
     authRoot.easyUserList.set(
         authRoot.easyUserList.indexOf(userToUpdate),
