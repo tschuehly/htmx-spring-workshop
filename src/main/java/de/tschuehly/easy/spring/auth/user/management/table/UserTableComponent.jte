@@ -1,0 +1,33 @@
+@import de.tschuehly.easy.spring.auth.user.management.table.UserTableComponent.UserTableContext
+@import static de.tschuehly.easy.spring.auth.user.UserController.CREATE_USER_MODAL
+@import static de.tschuehly.easy.spring.auth.user.management.UserManagement.MODAL_CONTAINER_ID
+@param UserTableContext userTableContext
+<table>
+    <thead>
+    <tr>
+        <th>
+            uuid
+        </th>
+        <th>
+            username
+        </th>
+        <th>
+            password
+        </th>
+    </tr>
+    </thead>
+    <tbody id="${UserTableContext.USER_TABLE_BODY_ID}">
+    @for(var row: userTableContext.userTableRowList())
+        ${row}
+    @endfor
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="4">
+            <button hx-get="${CREATE_USER_MODAL}" hx-target="#${MODAL_CONTAINER_ID}">
+                Create new User
+            </button>
+        </td>
+    </tr>
+    </tfoot>
+</table>
