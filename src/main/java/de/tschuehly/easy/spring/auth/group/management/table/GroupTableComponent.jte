@@ -6,10 +6,13 @@
     <thead>
     <tr>
         <th>
-            username
+            Group Name
         </th>
         <th>
-            password
+            Group Members
+        </th>
+        <th>
+
         </th>
     </tr>
     </thead>
@@ -22,10 +25,12 @@
             <td>
                 @for(var member: group.memberList)
                     <span>${member.username}</span>
+                @else
+                    <span>no member</span>
                 @endfor
             </td>
             <td>
-                <button hx-get="${HtmxUtil.URI(GroupController.GET_SELECT_USER,group.groupName)}">
+                <button hx-get="${HtmxUtil.URI(GroupController.GET_SELECT_USER,group.groupName)}" hx-swap="outerHTML">
                     <img src="/plus.svg">
                 </button>
             </td>

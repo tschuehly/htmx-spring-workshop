@@ -29,4 +29,10 @@ public class GroupService {
     easyGroup.memberList.add(user);
     return easyGroup.memberList;
   }
+
+  public void createGroup(String groupName) {
+    easyGroupList.add(
+        new EasyGroup(groupName)
+    );
+  }
 }

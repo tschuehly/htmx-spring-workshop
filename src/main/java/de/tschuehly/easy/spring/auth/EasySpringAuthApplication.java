@@ -15,9 +15,17 @@ public class EasySpringAuthApplication {
   }
   @Bean
   public ApplicationRunner initializeUsers(UserService userService, GroupService groupService) {
-    return (args) -> userService.createUser(
-        "Thomas",
-        "This is a password"
-    );
+    return (args) -> {
+      userService.createUser(
+          "Thomas",
+          "This is a password"
+      );
+      userService.createUser(
+          "Cassandra",
+          "Test1234"
+      );
+      groupService.createGroup("USER_GROUP");
+      groupService.createGroup("ADMIN_GROUP");
+    };
   }
 }
