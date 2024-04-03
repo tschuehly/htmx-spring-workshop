@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.util.UriTemplate;
 
 @Controller
 public class UserController {
@@ -33,7 +32,7 @@ public class UserController {
   }
 
   @GetMapping("/")
-  public ViewContext index() {
+  public ViewContext userManagement() {
     return userManagement.render();
   }
 

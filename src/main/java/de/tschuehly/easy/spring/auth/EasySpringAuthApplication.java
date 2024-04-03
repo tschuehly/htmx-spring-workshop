@@ -1,5 +1,6 @@
 package de.tschuehly.easy.spring.auth;
 
+import de.tschuehly.easy.spring.auth.group.GroupService;
 import de.tschuehly.easy.spring.auth.user.UserService;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
@@ -13,7 +14,7 @@ public class EasySpringAuthApplication {
     SpringApplication.run(EasySpringAuthApplication.class, args);
   }
   @Bean
-  public ApplicationRunner initializeUsers(UserService userService) {
+  public ApplicationRunner initializeUsers(UserService userService, GroupService groupService) {
     return (args) -> userService.createUser(
         "Thomas",
         "This is a password"

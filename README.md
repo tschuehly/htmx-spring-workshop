@@ -16,7 +16,7 @@ The goal of this lab is to build a simple UserManagement Application with stock 
 
 # Lab 2: Introducing Spring ViewComponent
 
-The goal of this lab is to refactor the application to use Spring ViewComponent and htmx-spring-boot to delegate rendering responsibility to the ViewComponents and make the Controller thinner
+The goal of this lab is to refactor the application to use Spring ViewComponent and htmx-spring-boot to delegate rendering responsibility to the ViewComponents and remove it from the Controller
 
 # Lab 3: Using Spring Beans to compose the UI
 
