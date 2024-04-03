@@ -37,40 +37,37 @@ public class UserController {
     return userManagement.render();
   }
 
-  public static final String EDIT_USER_MODAL = "/save-user/modal/{uuid}";
+  public static final String GET_EDIT_USER_MODAL = "/save-user/modal/{uuid}";
 
-  @GetMapping(EDIT_USER_MODAL)
+  @GetMapping(GET_EDIT_USER_MODAL)
   public ViewContext editUserModal(@PathVariable UUID uuid) {
     return editUserComponent.render(uuid);
   }
 
-  public static final String SAVE_USER = "/save-user";
+  public static final String POST_SAVE_USER = "/save-user";
 
-  @PostMapping(SAVE_USER)
+  @PostMapping(POST_SAVE_USER)
   public ViewContext saveUser(UUID uuid, String username, String password) {
     EasyUser user = userService.saveUser(uuid, username, password);
     return userRowComponent.rerender(user);
   }
 
+  public static final String GET_CREATE_USER_MODAL = "/create-user/modal";
 
-  public static final String CREATE_USER_MODAL = "/create-user/modal";
-
-  @GetMapping(CREATE_USER_MODAL)
+  @GetMapping(GET_CREATE_USER_MODAL)
   public ViewContext createUserModal() {
     return createUserComponent.render();
   }
 
-  public static final String CREATE_USER = "/create-user";
 
-  @PostMapping(CREATE_USER)
+  public static final String POST_CREATE_USER = "/create-user";
+  @PostMapping(POST_CREATE_USER)
   public ViewContext createUser(String username, String password, Model model, HttpServletResponse response) {
     EasyUser user = userService.createUser(username, password);
     return userRowComponent.renderNewRow(user);
   }
 
 
-  public static String URI(String uriTemplate, Object... variables) {
-    return new UriTemplate(uriTemplate).expand(variables).toString();
-  }
+
 
 }

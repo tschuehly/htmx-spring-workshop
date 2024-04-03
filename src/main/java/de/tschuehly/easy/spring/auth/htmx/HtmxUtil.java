@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.util.UriTemplate;
 
 public class HtmxUtil {
   public static String target(String id){
@@ -25,6 +26,10 @@ public class HtmxUtil {
 
   public static void trigger(String event) {
     setHeader(HtmxResponseHeader.HX_TRIGGER.getValue(), event);
+  }
+
+  public static String URI(String uriTemplate, Object... variables) {
+    return new UriTemplate(uriTemplate).expand(variables).toString();
   }
 
   public static void setHeader(String headerName, String headerValue) {

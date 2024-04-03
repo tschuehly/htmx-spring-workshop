@@ -9,7 +9,7 @@
             Password
             <input type="text" name="password">
         </label>
-        <button type="submit" hx-post="${CREATE_USER}">
+        <button type="submit" hx-post="${CREATE_USER_ENDPOINT}">
             Save User
         </button>
     </form>

@@ -15,10 +15,12 @@ public class EditUserComponent {
     this.userService = userService;
   }
 
-  public record EditUserContext(UUID uuid, String username, String password) implements ViewContext{}
+  public record EditUserContext(UUID uuid, String username, String password) implements ViewContext {
 
-  public ViewContext render(UUID uuid){
+  }
+
+  public ViewContext render(UUID uuid) {
     EasyUser user = userService.findById(uuid);
-    return new EditUserContext(user.uuid,user.username,user.password);
+    return new EditUserContext(user.uuid, user.username, user.password);
   }
 }

@@ -1,4 +1,4 @@
-@import static de.tschuehly.easy.spring.auth.user.UserController.SAVE_USER
+@import static de.tschuehly.easy.spring.auth.user.management.edit.EditUserComponent.*
 @import de.tschuehly.easy.spring.auth.user.management.edit.EditUserComponent
 @param EditUserComponent.EditUserContext editUserContext
 

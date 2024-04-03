@@ -18,9 +18,8 @@ public class UserTableComponent {
 
   public record UserTableContext(List<ViewContext> userTableRowList) implements ViewContext{
 
-    public static final String USER_TABLE_BODY_ID = "userTableBody";
-
   }
+  public static final String USER_TABLE_BODY_ID = "userTableBody";
 
   public ViewContext render(){
     List<ViewContext> rowList = userService.findAll().stream().map(userRowComponent::render).toList();
