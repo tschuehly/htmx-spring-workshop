@@ -1,9 +1,10 @@
 package de.tschuehly.easy.spring.auth.user;
 
-import de.tschuehly.easy.spring.auth.user.management.UserManagement;
 import de.tschuehly.easy.spring.auth.user.management.create.CreateUserComponent;
 import de.tschuehly.easy.spring.auth.user.management.edit.EditUserComponent;
+import de.tschuehly.easy.spring.auth.user.management.table.UserTableComponent;
 import de.tschuehly.easy.spring.auth.user.management.table.row.UserRowComponent;
+import de.tschuehly.easy.spring.auth.web.layout.LayoutComponent;
 import de.tschuehly.spring.viewcomponent.jte.ViewContext;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.UUID;
@@ -16,24 +17,28 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class UserController {
 
-  private final UserManagement userManagement;
   private final UserService userService;
   private final EditUserComponent editUserComponent;
   private final UserRowComponent userRowComponent;
   private final CreateUserComponent createUserComponent;
+  private final LayoutComponent layoutComponent;
+  private final UserTableComponent userTableComponent;
 
-  public UserController(UserManagement userManagement, UserService userService, EditUserComponent editUserComponent,
-      UserRowComponent userRowComponent, CreateUserComponent createUserComponent) {
-    this.userManagement = userManagement;
+  public UserController(UserService userService, EditUserComponent editUserComponent,
+      UserRowComponent userRowComponent, CreateUserComponent createUserComponent, LayoutComponent layoutComponent,
+      UserTableComponent userTableComponent) {
     this.userService = userService;
     this.editUserComponent = editUserComponent;
     this.userRowComponent = userRowComponent;
     this.createUserComponent = createUserComponent;
+    this.layoutComponent = layoutComponent;
+    this.userTableComponent = userTableComponent;
   }
+  public static final String USER_MANAGEMENT_PATH = "/";
 
-  @GetMapping("/")
+  @GetMapping(USER_MANAGEMENT_PATH)
   public ViewContext userManagement() {
-    return userManagement.render();
+    return layoutComponent.render(userTableComponent.render());
   }
 
   public static final String GET_EDIT_USER_MODAL = "/save-user/modal/{uuid}";

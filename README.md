@@ -23,7 +23,7 @@ In this Lab we will create a group Management Page where we can add a user to a 
 
 # Lab 4: Using Spring Beans to compose the UI
 
-In this short lab we will use the dependency injection capabilities to show a navigation bar where we can add new items by just creating new ViewComponents
+In this short lab we will use the dependency injection capabilities to show a navigation bar where we can add new items by just creating new Components
 
 # Lab 5: HandlerAdapters to handle Task Forms
 

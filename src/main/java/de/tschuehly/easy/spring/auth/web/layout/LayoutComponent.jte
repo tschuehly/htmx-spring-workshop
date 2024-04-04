@@ -1,7 +1,7 @@
-@import static de.tschuehly.easy.spring.auth.group.management.GroupManagement.CLOSE_MODAL_EVENT
-@import static de.tschuehly.easy.spring.auth.group.management.GroupManagement.MODAL_CONTAINER_ID
-@import de.tschuehly.easy.spring.auth.group.management.GroupManagement.GroupManagementContext
-@param GroupManagementContext groupManagementContext
+@import static de.tschuehly.easy.spring.auth.web.layout.LayoutComponent.CLOSE_MODAL_EVENT
+@import static de.tschuehly.easy.spring.auth.web.layout.LayoutComponent.MODAL_CONTAINER_ID
+@import de.tschuehly.easy.spring.auth.web.layout.LayoutComponent.LayoutContext
+@param LayoutContext layoutContext
 <html lang="en">
 
 <head>
@@ -16,12 +16,13 @@
     <h2>
         Easy Spring Auth
     </h2>
-    <a href="/">UserManagement</a>
-    <a href="/groupManagement">GroupManagement</a>
+    @for(var nav: layoutContext.navigationItemList())
+        <a href="${nav.URI()}">${nav.displayName()}</a>
+    @endfor
     <hr>
 </nav>
 <main>
-    ${groupManagementContext.viewContext()}
+    ${layoutContext.content()}
 </main>
 </body>
 <div id="${MODAL_CONTAINER_ID}" hx-on:$unsafe{CLOSE_MODAL_EVENT}="this.innerHTML = null">

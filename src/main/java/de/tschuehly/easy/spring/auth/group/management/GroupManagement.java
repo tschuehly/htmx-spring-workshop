@@ -1,24 +1,17 @@
 package de.tschuehly.easy.spring.auth.group.management;
 
+import de.tschuehly.easy.spring.auth.group.GroupController;
 import de.tschuehly.easy.spring.auth.group.management.table.GroupTableComponent;
+import de.tschuehly.easy.spring.auth.web.Page;
 import de.tschuehly.spring.viewcomponent.core.component.ViewComponent;
 import de.tschuehly.spring.viewcomponent.jte.ViewContext;
+import org.springframework.stereotype.Component;
 
-@ViewComponent
-public class GroupManagement {
-  private final GroupTableComponent groupTableComponent;
+@Component
+public class GroupManagement implements Page {
 
-  public static final String MODAL_CONTAINER_ID = "modalContainer";
-  public static final String CLOSE_MODAL_EVENT = "close-modal";
-
-  public GroupManagement(GroupTableComponent groupTableComponent) {
-    this.groupTableComponent = groupTableComponent;
+  @Override
+  public NavigationItem navigationItem() {
+    return new NavigationItem("Group Management", GroupController.GROUP_MANAGEMENT);
   }
-
-  public record GroupManagementContext(ViewContext viewContext) implements ViewContext{}
-
-  public ViewContext render(){
-    return new GroupManagementContext(groupTableComponent.render());
-  }
-
 }
