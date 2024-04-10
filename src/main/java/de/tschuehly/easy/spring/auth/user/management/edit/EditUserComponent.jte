@@ -1,4 +1,8 @@
 @import static de.tschuehly.easy.spring.auth.user.management.edit.EditUserComponent.*
+@import de.tschuehly.easy.spring.auth.htmx.CreateUserEndpoint
+@import de.tschuehly.easy.spring.auth.htmx.HtmxAction
+@import de.tschuehly.easy.spring.auth.htmx.HtmxController
+@import de.tschuehly.easy.spring.auth.htmx.HtmxController.UserForm
 @import de.tschuehly.easy.spring.auth.user.UserController
 @import de.tschuehly.easy.spring.auth.user.management.edit.EditUserComponent
 @param EditUserComponent.EditUserContext editUserContext
@@ -11,13 +15,13 @@
         </label>
         <label>
             Username
-            <input type="text" name="username" value="${editUserContext.username()}">
+            <input type="text" name="userName" value="${editUserContext.username()}">
         </label>
         <label>
             Password
             <input type="text" name="password" value="${editUserContext.password()}">
         </label>
-        <button type="submit" hx-post="${UserController.POST_SAVE_USER}">
+        <button type="submit" ${HtmxController.createUserEndpoint}>
             Save User
         </button>
     </form>

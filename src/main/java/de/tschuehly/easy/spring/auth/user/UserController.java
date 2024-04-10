@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class UserController {
@@ -56,7 +57,7 @@ public class UserController {
 
   public static final String GET_CREATE_USER_MODAL = "/create-user/modal";
 
-  @GetMapping(GET_CREATE_USER_MODAL)
+  @GetMapping(value = GET_CREATE_USER_MODAL)
   public ViewContext createUserModal() {
     return createUserComponent.render();
   }
@@ -68,8 +69,5 @@ public class UserController {
     EasyUser user = userService.createUser(username, password);
     return userRowComponent.renderNewRow(user);
   }
-
-
-
 
 }
