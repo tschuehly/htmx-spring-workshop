@@ -16,7 +16,7 @@ public class HtmxComponent {
       "/test", HttpMethod.GET, this::test);
 
   private ViewContext test() {
-    return new HtmxContext("world", createUserEndpoint);
+    return new HtmxContext("world", this);
   }
 
   public HtmxEndpoint<UserForm> createUserEndpoint = new HtmxEndpoint<>(
@@ -26,10 +26,10 @@ public class HtmxComponent {
   );
 
   private ViewContext createUser(UserForm userForm) {
-    return new HtmxContext("hello", createUserEndpoint);
+    return new HtmxContext("hello", this);
   }
 
-  public record HtmxContext(String test, HtmxEndpoint<?> htmxEndpoint) implements ViewContext {
+  public record HtmxContext(String test, HtmxComponent server) implements ViewContext {
 
   }
 }
