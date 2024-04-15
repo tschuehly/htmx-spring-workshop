@@ -1,3 +1,5 @@
+@import de.tschuehly.easy.spring.auth.htmx.HtmxUtil
+@import de.tschuehly.easy.spring.auth.user.UserController
 @import de.tschuehly.easy.spring.auth.user.management.table.UserTableComponent.UserTableContext
 @import static de.tschuehly.easy.spring.auth.user.UserController.GET_CREATE_USER_MODAL
 @import static de.tschuehly.easy.spring.auth.user.management.table.UserTableComponent.USER_TABLE_BODY_ID
@@ -5,6 +7,18 @@
 @param UserTableContext userTableContext
 <table>
     <thead>
+    <tr>
+       <th colspan="4">
+           <label>
+               Search Users
+               <input type="text"
+                      name="${UserController.SEARCH_PARAM}"
+                      hx-get="${UserController.GET_SEARCH_USER}"
+                      hx-trigger="input changed delay:500ms, search"
+                      hx-target="${HtmxUtil.idSelector(USER_TABLE_BODY_ID)}">
+           </label>
+       </th>
+    </tr>
     <tr>
         <th>
             uuid

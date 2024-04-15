@@ -30,6 +30,15 @@ public class UserService {
     return newUser;
   }
 
+  public List<EasyUser> searchUser(String searchString) {
+    return easyUserList.stream().filter(
+        it -> it.uuid.toString().contains(searchString)
+              || it.username.contains(searchString)
+              || it.password.contains(
+            searchString)
+    ).toList();
+  }
+
 
   public EasyUser findById(UUID uuid) {
     return easyUserList.stream().filter(it -> Objects.equals(uuid, it.uuid)).findFirst()
