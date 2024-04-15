@@ -13,11 +13,6 @@ public class UserService {
   public final static List<EasyUser> easyUserList = new ArrayList<>();
 
   public List<EasyUser> findAll() {
-    try {
-      TimeUnit.SECONDS.sleep(3);
-    } catch (InterruptedException e) {
-      throw new RuntimeException(e);
-    }
     return easyUserList;
   }
 

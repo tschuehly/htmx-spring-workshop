@@ -26,7 +26,7 @@ public class EasySpringAuthApplication {
           "Test1234"
       );
       Faker faker = new Faker();
-      for (int i = 0; i < 10000; i++) {
+      for (int i = 0; i < 1000; i++) {
         userService.createUser(
             faker.internet().username(),
             faker.internet().password()
