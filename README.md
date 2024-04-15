@@ -28,5 +28,18 @@ In this short lab,
 we will use the dependency injection capabilities of spring
 to show a navigation bar where we can add new items by just creating new Components
 
-# Lab 5: HandlerAdapters to handle Task Forms
+# Lab 5: Lazy Loading
 
+In this lab we will lazy load the user table as it now contains a lot of users
+
+# Lab 6: Full Text Search
+
+
+# Lab : Infinite Scrolling using Pageable
+
+# Lab : Exception Messages with I18n
+
+
+
+
+# Lab : Server Sent Events
