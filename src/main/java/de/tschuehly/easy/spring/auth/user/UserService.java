@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,6 +13,12 @@ public class UserService {
 
   public List<EasyUser> findAll() {
     return easyUserList;
+  }
+
+  public List<EasyUser> getPage(int pageNumber, int pageSize) {
+    var startIndex = pageNumber * pageSize;
+    var endIndex = startIndex + pageSize;
+    return easyUserList.subList(startIndex, endIndex);
   }
 
   public EasyUser createUser(String username, String password) {
@@ -53,4 +58,5 @@ public class UserService {
     );
     return newUser;
   }
+
 }

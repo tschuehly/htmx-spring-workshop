@@ -34,8 +34,11 @@ In this lab we will lazy load the user table as it now contains a lot of users
 
 # Lab 6: Full Text Search
 
+In this lab we will enable our users to search the user table.
 
-# Lab : Infinite Scrolling using Pageable
+# Lab 7: Infinite Scrolling using Pageable
+
+In this lab we will only load new users when we are scrolling down, improving our initial page speed
 
 # Lab : Exception Messages with I18n
 
