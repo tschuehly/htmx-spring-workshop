@@ -1,12 +1,15 @@
 package de.tschuehly.easy.spring.auth.user;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 import java.util.UUID;
 import java.util.random.RandomGenerator;
+import net.datafaker.Faker;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 
 @Service
 public class UserService {
@@ -46,6 +49,7 @@ public class UserService {
   }
 
 
+
   public EasyUser findById(UUID uuid) {
     return easyUserList.stream().filter(it -> Objects.equals(uuid, it.uuid)).findFirst()
         .orElseThrow(() -> new RuntimeException("User Not Found"));
@@ -65,4 +69,10 @@ public class UserService {
     return newUser;
   }
 
+  public Flux<EasyUser> subscribeToNewUserCreation() {
+    Faker faker = new Faker();
+    return Flux.interval(Duration.ofSeconds(5)).map(
+        val -> createUser(faker.internet().username(),faker.internet().password())
+    );
+  }
 }

@@ -2,10 +2,21 @@
 @import de.tschuehly.easy.spring.auth.user.UserController
 @import de.tschuehly.easy.spring.auth.user.management.table.UserTableComponent.UserTableContext
 @import static de.tschuehly.easy.spring.auth.user.UserController.GET_CREATE_USER_MODAL
+@import static de.tschuehly.easy.spring.auth.user.UserController.GET_SUBSCRIBE_USER
 @import static de.tschuehly.easy.spring.auth.user.management.table.UserTableComponent.USER_TABLE_BODY_ID
 @import static de.tschuehly.easy.spring.auth.web.layout.LayoutComponent.MODAL_CONTAINER_ID
 @param UserTableContext userTableContext
+<style>
+  tr.htmx-added {
+    opacity: 0;
+  }
+  tr{
+    opacity: 1;
+    transition: opacity 1s ease-out;
+  }
+</style>
 <table>
+
     <thead>
     <tr>
        <th colspan="4">
@@ -32,6 +43,7 @@
     </tr>
     </thead>
     <tbody id="${USER_TABLE_BODY_ID}">
+    <tr hx-ext="sse" sse-connect="${GET_SUBSCRIBE_USER}" sse-swap="message" hx-swap="afterend"></tr>
     ${userTableContext.userTableBody()}
     </tbody>
     <tfoot>

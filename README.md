@@ -44,6 +44,6 @@ In this lab, we will only load new users when we are scrolling down, improving o
 
 In this lab, we will catch Exception using a Spring Controller Advice and show them to the user in a nice form 
 
+# Lab 9: Server Sent Events
 
-
-# Lab : Server Sent Events
+We will leverage the SSE capabilities of htmx to update our table live with the newest Users that are created.
