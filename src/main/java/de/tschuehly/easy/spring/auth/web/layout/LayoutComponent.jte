@@ -1,5 +1,6 @@
 @import static de.tschuehly.easy.spring.auth.web.layout.LayoutComponent.CLOSE_MODAL_EVENT
 @import static de.tschuehly.easy.spring.auth.web.layout.LayoutComponent.MODAL_CONTAINER_ID
+@import static de.tschuehly.easy.spring.auth.web.layout.LayoutComponent.TOAST_CONTAINER_ID
 @import de.tschuehly.easy.spring.auth.web.layout.LayoutComponent.LayoutContext
 @param LayoutContext layoutContext
 <html lang="en">
@@ -26,6 +27,10 @@
 </main>
 </body>
 <div id="${MODAL_CONTAINER_ID}" hx-on:$unsafe{CLOSE_MODAL_EVENT}="this.innerHTML = null">
+
+</div>
+
+<div id="${TOAST_CONTAINER_ID}">
 
 </div>
 

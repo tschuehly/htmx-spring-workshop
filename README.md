@@ -30,18 +30,19 @@ to show a navigation bar where we can add new items by just creating new Compone
 
 # Lab 5: Lazy Loading
 
-In this lab we will lazy load the user table as it now contains a lot of users
+In this lab we will lazily load the user table as it now contains a lot of users
 
 # Lab 6: Full Text Search
 
-In this lab we will enable our users to search the user table.
+In this lab, we will enable our users to search the user table.
 
 # Lab 7: Infinite Scrolling using Pageable
 
-In this lab we will only load new users when we are scrolling down, improving our initial page speed
+In this lab, we will only load new users when we are scrolling down, improving our initial page speed
 
-# Lab : Exception Messages with I18n
+# Lab 8: Exception Messages
 
+In this lab, we will catch Exception using a Spring Controller Advice and show them to the user in a nice form 
 
 
 

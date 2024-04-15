@@ -3,7 +3,9 @@ package de.tschuehly.easy.spring.auth.user;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
 import java.util.UUID;
+import java.util.random.RandomGenerator;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,12 +33,16 @@ public class UserService {
   }
 
   public List<EasyUser> searchUser(String searchString) {
-    return easyUserList.stream().filter(
+    List<EasyUser> easyUsers = easyUserList.stream().filter(
         it -> it.uuid.toString().contains(searchString)
               || it.username.contains(searchString)
               || it.password.contains(
             searchString)
     ).toList();
+    if (easyUsers.isEmpty()) {
+      throw new UserNotFoundException("No user found with the searchString: \"" + searchString + "\"");
+    }
+    return easyUsers;
   }
 
 
