@@ -1,3 +1,4 @@
 # Table of contents
 
-* [Page](README.md)
+* [Building server-side web applications with htmx](README.md)
+* [Lab1](lab1.md)
