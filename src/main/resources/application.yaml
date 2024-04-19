@@ -11,3 +11,8 @@ spring:
 gg:
   jte:
     developmentMode: true
+htmx:
+  endpoint:
+    annotationClassesToScan:
+      - org.springframework.stereotype.Controller
+      - de.tschuehly.spring.viewcomponent.core.component.ViewComponent

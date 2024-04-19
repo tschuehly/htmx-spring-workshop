@@ -2,34 +2,36 @@ package de.tschuehly.easy.spring.auth.htmx;
 
 import de.tschuehly.spring.viewcomponent.core.component.ViewComponent;
 import de.tschuehly.spring.viewcomponent.jte.ViewContext;
+import jakarta.annotation.Nullable;
 import org.springframework.http.HttpMethod;
 
 @ViewComponent
 public class HtmxComponent {
 
-  public record UserForm(
-      String userName, String password) {
-
-  }
 
   public HtmxEndpoint<?> htmxTestEndpoint = new HtmxEndpoint<>(
       "/test", HttpMethod.GET, this::test);
 
   private ViewContext test() {
-    return new HtmxContext("world", this);
+    return new HtmxContext(null, this);
   }
 
+
+  public record UserForm(
+      String userName, String password) {
+  }
   public HtmxEndpoint<UserForm> createUserEndpoint = new HtmxEndpoint<>(
       "/createUser",
       HttpMethod.POST,
-      this::createUser
+      this::createUser,
+      UserForm.class
   );
 
   private ViewContext createUser(UserForm userForm) {
-    return new HtmxContext("hello", this);
+    return new HtmxContext(userForm, this);
   }
 
-  public record HtmxContext(String test, HtmxComponent server) implements ViewContext {
+  public record HtmxContext(@Nullable UserForm userForm, HtmxComponent server) implements ViewContext {
 
   }
 }

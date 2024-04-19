@@ -19,6 +19,7 @@ configurations {
 
 repositories {
     mavenCentral()
+    mavenLocal()
     maven {
         url = uri("https://jitpack.io")
     }
@@ -29,11 +30,11 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("gg.jte:jte-spring-boot-starter-3:3.1.9")
-    implementation("gg.jte:jte:3.1.9")
+    implementation("com.github.casid.jte:jte:e8fca09303")
 //
 
-    implementation("de.tschuehly:spring-view-component-jte:0.7.4")
-    annotationProcessor("de.tschuehly:spring-view-component-core:0.7.4")
+    implementation("de.tschuehly:spring-view-component-jte:0.7.5-SNAPSHOT")
+    annotationProcessor("de.tschuehly:spring-view-component-core:0.7.5-SNAPSHOT")
 //    implementation("org.eclipse.store:integrations-spring-boot3:1.2.0")
 
     implementation("io.github.wimdeblauwe:htmx-spring-boot:3.2.0")
