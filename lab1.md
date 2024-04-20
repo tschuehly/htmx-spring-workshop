@@ -1,8 +1,16 @@
 # Lab1
 
+The goal of this lab is to build a simple UserManagement Application with Spring Boot, JTE and htmx. 
+
+Before you start you should install the htmx and JTE IntelliJ plugins:
+
+* https://plugins.jetbrains.com/plugin/20588-htmx-support
+* https://plugins.jetbrains.com/plugin/14521-jte
+
 ## Spring UserManagement Application
 
-We have a table of users and we want to be able to edit users only with the power of HATEOAS and htmx.
+We want to display a table of users
+We have a table of users, and we want to be able to edit users only with the power of HATEOAS and htmx.
 
 We are using [JTE](https://jte.gg) as the server-side template language. CSS is omitted for the sake of readability.
 
