@@ -33,8 +33,6 @@ dependencies {
 //    implementation("org.eclipse.store:integrations-spring-boot3:1.2.0")
 
     implementation("net.datafaker:datafaker:2.1.0")
-    implementation("io.projectreactor:reactor-core:3.6.5")
-
     implementation("io.github.wimdeblauwe:htmx-spring-boot:3.2.0")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")

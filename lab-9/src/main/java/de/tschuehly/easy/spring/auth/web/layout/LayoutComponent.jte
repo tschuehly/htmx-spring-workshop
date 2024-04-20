@@ -11,7 +11,6 @@
     <script src="/htmx_1.9.11.js"></script>
     <script src="/htmx_debug.js"></script>
     <script src="http://localhost:35729/livereload.js"></script>
-    <script src="https://unpkg.com/htmx.org@1.9.11/dist/ext/sse.js"></script>
 </head>
 <body hx-ext="debug">
 <nav>
