@@ -13,11 +13,11 @@ Before you start you should install the htmx and JTE IntelliJ plugins:
 
 We want to display a table of users like this:
 
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
 First, we will create a `UserController.java` in `de.tschuehly.easy.spring.auth.user` and annotate it with `@Controller`.
 
-<figure><img src=".gitbook/assets/image (4).png" alt="" width="295"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image%20(4).png" alt="" width="295"><figcaption></figcaption></figure>
 
 In the index method, we call the `userService.findAll()` method and add it to the MVC model.
 
@@ -45,7 +45,7 @@ public class UserController {
 
 We return the string `UserManagement` . This is the reference to the View we want to render:
 
-<figure><img src=".gitbook/assets/image (3).png" alt="" width="295"><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image%20(3).png" alt="" width="295"><figcaption></figcaption></figure>
 
 The JTE Spring Boot Starter looks for templates  in `src/main/jte`.&#x20;
 
