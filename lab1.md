@@ -1,44 +1,62 @@
 # Lab1
 
-The goal of this lab is to build a simple UserManagement Application with Spring Boot, JTE and htmx. 
+This lab aims to build a simple user management application with Spring Boot and htmx.
+
+We are using [JTE](https://jte.gg) as the server-side template language.
 
 Before you start you should install the htmx and JTE IntelliJ plugins:
 
 * https://plugins.jetbrains.com/plugin/20588-htmx-support
 * https://plugins.jetbrains.com/plugin/14521-jte
 
-## Spring UserManagement Application
-
-We want to display a table of users
-We have a table of users, and we want to be able to edit users only with the power of HATEOAS and htmx.
-
-We are using [JTE](https://jte.gg) as the server-side template language. CSS is omitted for the sake of readability.
-
 #### Display a List of Users
 
-We add an easyUserList attribute to our MVC model.\
-(I explain the MVC pattern here [Spring MVC explained: Spring I/O 2023](https://youtu.be/DPAtQU-erM4?si=iiuB70a2KbJvp5VI\&t=628).)\
+We want to display a table of users like this:
+
+<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
+First, we will create a `UserController.java` in `de.tschuehly.easy.spring.auth.user` and annotate it with `@Controller`.
+
+<figure><img src=".gitbook/assets/image (4).png" alt="" width="295"><figcaption></figcaption></figure>
+
+In the index method, we call the `userService.findAll()` method and add it to the MVC model.
+
 We also define a constant for the UserTable ID and an ID for a modal container.
 
 ```java
-// UserController.java
 @Controller
 public class UserController {
   public static final String MODAL_CONTAINER_ID = "modalContainer";
   public static final String USER_TABLE_BODY_ID = "userTableBody";
-  @Autowired
+  
   private final UserService userService;
 
+  public UserController(UserService userService) {
+    this.userService = userService;
+  }
+
   @GetMapping("/")
-  public String userManagement(Model model) {
+  public String index(Model model) {
     model.addAttribute("easyUserList", userService.findAll());
     return "UserManagement";
   }
 }
 ```
 
-We add this easyUserList as a parameter to the template.\
-In the table body, we loop over the easyUserList and call the userRow JTE template.
+We return the string `UserManagement` . This is the reference to the View we want to render:
+
+<figure><img src=".gitbook/assets/image (3).png" alt="" width="295"><figcaption></figcaption></figure>
+
+The JTE Spring Boot Starter looks for templates  in `src/main/jte`.&#x20;
+
+That's why we create a UserManagement.jte file in there.
+
+
+
+We import all static variables defined in UserController with `@import`&#x20;
+
+We add this easyUserList as a parameter to the template with `@param`.\
+In the table body, we loop over the easyUserList with `@for` and call the userRow JTE template with the @template and pass the user loop variable into the template.
 
 ```xml
 <!-- UserManagement.jte -->
@@ -62,7 +80,6 @@ The UserRow template defines an EasyUser parameter and a local variable with the
 ```xml
 <!-- UserRow.jte -->
 @import de.tschuehly.easy.spring.auth.domain.EasyUser
-@import static de.tschuehly.easy.spring.auth.controller.UserController.*
 @param EasyUser easyUser
 !{var uuid = easyUser.uuid.toString();}
 <tr id="user-${uuid}">
@@ -74,15 +91,17 @@ The UserRow template defines an EasyUser parameter and a local variable with the
     </td>
     <td>
         ${easyUser.password}
-    </td>
-    <td>
-        <button hx-get="${URI(EDIT_USER_MODAL,uuid)}"
-                hx-target="#${MODAL_CONTAINER_ID}">
-            <img src="/edit.svg">
-        </button>
-    </td>
+    </td
 </tr>
 ```
+
+If we now start the application and navigate to [http://localhost:8080](http://localhost:8080) we can see all Users that are currently defined.
+
+### Edit users
+
+
+
+
 
 As you can see we are using static constants heavily, to make it easy to understand what controller mappings htmx sends requests to.
 
