@@ -19,6 +19,12 @@ configurations {
 
 repositories {
     mavenCentral()
+    maven {
+        url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+        mavenContent {
+            snapshotsOnly()
+        }
+    }
     mavenLocal()
     maven {
         url = uri("https://jitpack.io")
