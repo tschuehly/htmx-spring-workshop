@@ -1,6 +1,5 @@
 package de.tschuehly.easy.spring.auth.user;
 
-import de.tschuehly.easy.spring.auth.store.AuthRoot;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -11,22 +10,23 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
   public final static List<EasyUser> easyUserList = new ArrayList<>();
-  public List<EasyUser> findAll(){
-      return easyUserList;
-    }
 
-    public EasyUser createUser(String username, String password){
-      EasyUser newUser = new EasyUser(
-          username,
-          password
-      );
-      easyUserList.add(newUser);
-      return newUser;
-    }
+  public List<EasyUser> findAll() {
+    return easyUserList;
+  }
+
+  public EasyUser createUser(String username, String password) {
+    EasyUser newUser = new EasyUser(
+        username,
+        password
+    );
+    easyUserList.add(newUser);
+    return newUser;
+  }
 
 
   public EasyUser findById(UUID uuid) {
-    return easyUserList.stream().filter(it -> Objects.equals(uuid,it.uuid)).findFirst()
+    return easyUserList.stream().filter(it -> Objects.equals(uuid, it.uuid)).findFirst()
         .orElseThrow(() -> new RuntimeException("User Not Found"));
   }
 

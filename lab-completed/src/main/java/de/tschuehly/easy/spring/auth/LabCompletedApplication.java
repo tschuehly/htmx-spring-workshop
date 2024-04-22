@@ -9,10 +9,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class EasySpringAuthApplication {
+public class LabCompletedApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(EasySpringAuthApplication.class, args);
+    SpringApplication.run(LabCompletedApplication.class, args);
   }
   @Bean
   public ApplicationRunner initializeUsers(UserService userService, GroupService groupService) {

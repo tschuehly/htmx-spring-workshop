@@ -1,6 +1,6 @@
 package de.tschuehly.easy.spring.auth.user;
 
-import de.tschuehly.easy.spring.auth.store.AuthRoot;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
@@ -8,24 +8,24 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
-    private final AuthRoot authRoot = new AuthRoot();
+  public final List<EasyUser> easyUserList = new ArrayList<>();
 
-    public List<EasyUser> findAll(){
-      return authRoot.easyUserList;
-    }
+  public List<EasyUser> findAll(){
+    return easyUserList;
+  }
 
-    public EasyUser createUser(String username, String password){
-      EasyUser newUser = new EasyUser(
-          username,
-          password
-      );
-      authRoot.easyUserList.add(newUser);
-      return newUser;
-    }
+  public EasyUser createUser(String username, String password){
+    EasyUser newUser = new EasyUser(
+        username,
+        password
+    );
+    easyUserList.add(newUser);
+    return newUser;
+  }
 
 
   public EasyUser findById(UUID uuid) {
-    return authRoot.easyUserList.stream().filter(it -> Objects.equals(uuid,it.uuid)).findFirst()
+    return easyUserList.stream().filter(it -> Objects.equals(uuid,it.uuid)).findFirst()
         .orElseThrow(() -> new RuntimeException("User Not Found"));
   }
 
@@ -36,8 +36,8 @@ public class UserService {
         username,
         password
     );
-    authRoot.easyUserList.set(
-        authRoot.easyUserList.indexOf(userToUpdate),
+    easyUserList.set(
+        easyUserList.indexOf(userToUpdate),
         newUser
     );
     return newUser;
