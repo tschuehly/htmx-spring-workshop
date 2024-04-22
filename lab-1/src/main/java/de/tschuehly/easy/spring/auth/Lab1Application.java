@@ -7,10 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class EasySpringAuthApplication {
+public class Lab1Application {
 
   public static void main(String[] args) {
-    SpringApplication.run(EasySpringAuthApplication.class, args);
+    SpringApplication.run(Lab1Application.class, args);
   }
   @Bean
   public ApplicationRunner initializeUsers(UserService userService) {
