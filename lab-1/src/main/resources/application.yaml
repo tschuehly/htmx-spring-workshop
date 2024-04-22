@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: easy-spring-auth
+#  view-component:
+#    local-development: true
+#org:
+#  eclipse:
+#    store:
+#      root: de.tschuehly.easy.spring.auth.store.Root
+#      storage-directory: ./storage
+gg:
+  jte:
+    developmentMode: true
