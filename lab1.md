@@ -9,7 +9,7 @@ Before you start you should install the htmx and JTE IntelliJ plugins:
 * https://plugins.jetbrains.com/plugin/20588-htmx-support
 * https://plugins.jetbrains.com/plugin/14521-jte
 
-#### Display a List of Users
+### Display a List of Users
 
 We want to display a table of users like this:
 
@@ -122,21 +122,46 @@ We then add the uuid of the user as id to the `<tr>` element and add a `<td>`ele
 
 
 
-If we now start the application and navigate to [http://localhost:8080](http://localhost:8080), we can see all currently defined users.
+We can see all currently defined users if we start the application and navigate to [localhost:8080](https://localhost:8080).
 
 ### Edit users
 
-As you can see we are using static constants heavily, to make it easy to understand what controller mappings htmx sends requests to.
+Next, we want to edit a user that has already been created and change his username.
 
-`hx-get="${URI(EDIT_USER_MODAL,uuid)}` creates an HTTP get request to /user/edit/{uuid} when the button element is clicked. The uuid variable is interpolated with a static URI method we will define next.
+We create a new GetMapping endpoint in the `UserController`
 
-`hx-target="#${MODAL_CONTAINER_ID}"` tells HTMX to swap the response body with the element that has the id value "modalContainer".
+```java
+// UserController.java
+public static final String EDIT_USER_MODAL = "/save-user/modal/{uuid}";
+@GetMapping(EDIT_USER_MODAL)
+public String editUserModal(Model model, @PathVariable UUID uuid) {
+  return "EditUserForm";
+}
+```
+
+As you can see we are using a static constant for the HTTP Endpoint. This makes it easy to understand what controller mappings htmx sends requests to.
+
+In the `UserRow.jte` we add a new `<td>` element and create a button element.
+
+```
+@import static de.tschuehly.easy.spring.auth.user.UserController.*
+<td>
+    <button hx-get="${URI(EDIT_USER_MODAL,uuid)}"
+            hx-target="#${MODAL_CONTAINER_ID}">
+        <img src="/edit.svg">
+    </button>
+</td>
+```
+
+`hx-get="${URI(EDIT_USER_MODAL,uuid)}` creates an HTTP get request to `/user/edit/{uuid}` when the button element is clicked. The uuid variable is interpolated with a static URI method we will define next.
+
+`hx-target="#${MODAL_CONTAINER_ID}"` tells HTMX to swap the response body with the `div`element we created earlier in the `UserManagement.jte` template
 
 If we now go to the localhost:8080 we can see the table rendered:
 
 !\[]\(https://cdn.hashnode.com/res/hashnode/image/upload/v1711129546288/b7a72623-d81b-41cb-b4b1-d858bedc6b9d.png align="center")
 
-#### Edit User attributes
+### Edit User attributes
 
 ```java
 // UserController.java
