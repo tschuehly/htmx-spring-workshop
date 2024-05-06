@@ -13,7 +13,7 @@ Before you start you should install the htmx and JTE IntelliJ plugins:
 
 We want to display a table of users like this:
 
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
 
 First, navigate to `UserController.java`  here we will create the endpoint to the UserManagement page and add the data necessary for view rendering:
 
@@ -294,5 +294,85 @@ If we now listen to this event in the `MODAL_CONTAINER_ID`  element using `hx-on
 
 
 
-If we click the `Save User` button and go to Chrome DevTools we can see HATEOAS in action.\
-The new application state after saving the user is transferred via HTML to the browser.
+If we click the `Save User` button and go to Chrome DevTools we can see Hypermedia as the Engine of Application State (HATEOAS) in action.\
+The new application state after saving the user is transferred via HTML to the browser, and the new row also includes the link to get the modal that it was just called from.
+
+<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
+### Create User
+
+As next step we want to create a new User.&#x20;
+
+To start we create a new endpoint `CREATE_USER_MODAL` where we return the CreateUserForm template.
+
+```java
+// UserController.java
+public static final String CREATE_USER_MODAL = "/create-user/modal";
+
+@GetMapping(CREATE_USER_MODAL)
+public String getCreateUserModal() {
+  return "CreateUserForm";
+}
+```
+
+We add this as table footer of the UserManagement table, in a button element and target the `MODAL_CONTAINER_ID`
+
+```html
+// UserManagement.jte
+@import static de.tschuehly.easy.spring.auth.user.UserController.*
+<tfoot>
+  <tr>
+    <td colspan="4">
+        <button hx-get="${CREATE_USER_MODAL}" hx-target="#${MODAL_CONTAINER_ID}">
+            Create new User
+        </button>
+    </td>
+  </tr>
+</tfoot>
+```
+
+The `CreateUserForm.jte` looks like this, as you can see here, this time we have the hx-post attribute on the `<form>` element and trigger the HTTP request with the `<button type="submit">`
+
+```
+<form hx-post="${CREATE_USER}">
+    <label>
+        Username
+        <input type="text" name="username">
+    </label>
+    <label>
+        Password
+        <input type="text" name="password">
+    </label>
+    <button type="submit">
+        Save User
+    </button>
+</form>
+```
+
+We now need to create the `CREATE_USER` endpoint.
+
+It follows the same pattern as the `SAVE_USER` endpoint, but this time we target the `<body>` element using `HX-Retarget: #USER_TABLE_BODY_ID` and the use `HX-Reswap: afterbegin`&#x20;
+
+`afterbegin` inserts the content of the response as the first child of the target element.
+
+We also trigger the `CLOSE_MODAL_EVENT` and return the `UserRow.jte` template.
+
+```java
+public static final String CREATE_USER = "/create-user";
+@PostMapping(CREATE_USER)
+public String createUser(String username, String password, Model model, HttpServletResponse response) {
+  EasyUser user = userService.createUser(username, password);
+  model.addAttribute("easyUser", user);
+
+  response.addHeader("HX-Retarget", "#" + USER_TABLE_BODY_ID);
+  response.addHeader("HX-Reswap", "afterbegin");
+  response.addHeader("HX-Trigger", CLOSE_MODAL_EVENT);
+  return "UserRow";
+}
+```
+
+After restarting the application you now should be able to create a new user and when saving the new user they should be displayed as the first item of the table:
+
+<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+
+This was Lab 1, you should now feel confident to use server-side rendering with Spring Boot and JTE and be able to create an interactive application using htmx.&#x20;
