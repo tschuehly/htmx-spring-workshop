@@ -153,101 +153,128 @@ In the `UserRow.jte` we add a new `<td>` element and create a button element.
 </td>
 ```
 
-`hx-get="${URI(EDIT_USER_MODAL,uuid)}` creates an HTTP get request to `/user/edit/{uuid}` when the button element is clicked. The uuid variable is interpolated with a static URI method we will define next.
+`hx-get="${URI(EDIT_USER_MODAL,uuid)}` creates an HTTP get request to `/user/edit/{uuid}` when the button element is clicked. The uuid variable is interpolated with a static URI method we will define next.&#x20;
 
-`hx-target="#${MODAL_CONTAINER_ID}"` tells HTMX to swap the response body with the `div`element we created earlier in the `UserManagement.jte` template
+We leverage the `URI()` utility function already present in the controller. This method creates a `UriTemplate` and fills it with the variables we pass as vararg.
 
-If we now go to the localhost:8080 we can see the table rendered:
+`hx-target="#${MODAL_CONTAINER_ID}"` tells HTMX to swap the response body with the `div` element we created earlier in the `UserManagement.jte` template
 
-!\[]\(https://cdn.hashnode.com/res/hashnode/image/upload/v1711129546288/b7a72623-d81b-41cb-b4b1-d858bedc6b9d.png align="center")
+We now have to fill in the corresponding `EditUserForm.jte` template, to display the data that the user currently has.&#x20;
 
-### Edit User attributes
+To make this very simple we create a UserForm record:
 
-```java
+```
 // UserController.java
-@Controller
-public class UserController {
-  @Autowired
-  private final UserService userService;
-
-  public static final String MODAL_CONTAINER_ID = "modalContainer";
-  public static final String EDIT_USER_MODAL = "/user/edit/{uuid}";
-
-  public record UserForm(String uuid, String username, String password) {}
-
-  @GetMapping(EDIT_USER_MODAL)
-  public String editUserModal(Model model, @PathVariable UUID uuid) {
-    var user = userService.findById(uuid);
-    model.addAttribute("userForm", new UserForm(
-        user.uuid.toString(), user.username, user.password
-    ));
-    return "EditUserForm";
-  }
-
-  public static String URI(String uriTemplate, Object... variables) {
-    return new UriTemplate(uriTemplate)
-        .expand(variables).toString();
-  }
+public record UserForm(String uuid, String username, String password) {
 
 }
 ```
 
-The EDIT\_USER\_MODAL endpoint adds a UserForm record to the model with the values retrieved from the UserService.
-
-The `EditUserForm.jte` template displays a form with an hx-post attribute to "/create-user" that we reference by the static constant "CREATE\_USER".
-
-```xml
-<!-- EditUserForm.jte -->
-@import static de.tschuehly.easy.spring.auth.controller.UserController.SAVE_USER
-@param de.tschuehly.easy.spring.auth.controller.UserController.UserForm userForm
-<form>
-    <label>
-        UUID
-        <input type="text" readonly name="uuid" value="${userForm.uuid()}">
-    </label>
-    <label>
-        Username
-        <input type="text" name="username" value="${userForm.username()}">
-    </label>
-    <label>
-        Password
-        <input type="text" name="password" value="${userForm.password()}">
-    </label>
-    <button type="submit" hx-post="${SAVE_USER}">
-        Save User
-    </button>
-</form>
-```
-
-When clicking on the edit button the EditUserForm is rendered in the modalContainer.
-
-#### Save changed User attributes
-
-In the controller method, we save the user and add the saved user to the model.
-
-We add `HX-Retarget = #user-${user.uuid}`to target the table row \<tr> element that contains the user we just edited.\
-With `HX-Reswap = outerHTML` we tell htmx to swap the whole table row.
+We retrieve the data from the datastore and add it to the model, using the record we just defined.
 
 ```java
-@Controller
-public class UserController {
-  public static final String SAVE_USER = "/save-user";
-  public static final String CLOSE_MODAL_EVENT = "close-modal";
+// UserController.java
+@GetMapping(EDIT_USER_MODAL)
+public String editUserModal(Model model, @PathVariable UUID uuid) {
+  var user = userService.findById(uuid);
+  model.addAttribute("userForm", new UserForm(user.uuid.toString(), user.username, user.password));
+  return "EditUserForm";
+}
+```
 
-  @PostMapping(SAVE_USER)
-  public String saveUser(UUID uuid, String username, String password, Model model,
-      HttpServletResponse response) {
-    EasyUser user = userService.saveUser(
-        uuid,
-        username,
-        password
-    );
-    model.addAttribute("easyUser", user);
-    response.addHeader("HX-Retarget", "#user-" + user.uuid);
-    response.addHeader("HX-Reswap", "outerHTML");
-    response.addHeader("HX-Trigger", CLOSE_MODAL_EVENT);
-    return "UserRow";
-  }
+In the corresponding `EditUserForm.jte` template we display the values in a `<form>` element:
+
+<pre class="language-html"><code class="lang-html">&#x3C;!-- EditUserForm.jte -->
+@param de.tschuehly.easy.spring.auth.user.UserController.UserForm userForm
+<strong>&#x3C;form>
+</strong>    &#x3C;label>
+        UUID
+        &#x3C;input type="text" readonly name="uuid" value="${userForm.uuid()}">
+    &#x3C;/label>
+    &#x3C;label>
+        Username
+        &#x3C;input type="text" name="username" value="${userForm.username()}">
+    &#x3C;/label>
+    &#x3C;label>
+        Password
+        &#x3C;input type="text" name="password" value="${userForm.password()}">
+    &#x3C;/label>
+&#x3C;/form>
+</code></pre>
+
+Now let's restart the application, navigate to localhost:8080, and click the edit button. You should now see the modal popup and the values of the user displayed.
+
+### Save edited User
+
+We now want to change a value, save it to the datastore and display the updated value in the table.&#x20;
+
+Let's create a new endpoint and call the `userService.saveUser()`  endpoint&#x20;
+
+```java
+// UserController.java
+public static final String SAVE_USER = "/save-user";
+
+@PostMapping(SAVE_USER)
+public void saveUser(UUID uuid, String username, String password) {
+  EasyUser user = userService.saveUser(uuid, username, password);
+}
+```
+
+We can then call this endpoint by adding a button with an `hx-post` attribute that uses the `SAVE_USER` constant.
+
+{% hint style="info" %}
+We can also place the hx- attribute on the form, as the button would trigger a form submit, that htmx catches.
+{% endhint %}
+
+<pre><code>&#x3C;!-- EditUserForm.jte -->
+<strong>@import static de.tschuehly.easy.spring.auth.user.UserController.SAVE_USER
+</strong><strong>&#x3C;form>
+</strong><strong>  &#x3C;button type="submit" hx-post="${SAVE_USER}">
+</strong>    Save User
+  &#x3C;/button>
+&#x3C;/form>
+</code></pre>
+
+If you restart the app now you will see that the table value is not updated, but instead the label of the button disappears.\
+
+
+<figure><img src=".gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+
+
+
+To fix this we need to return the table row of the updated user with the new values inserted, we add the new user value to the model and return the UserRow template.&#x20;
+
+But this would render the returned HTML inside the button, because htmx by default swaps the innerHTML of the element that created the request.
+
+```
+// UserController.java
+@PostMapping(SAVE_USER)
+public String saveUser(UUID uuid, String username, String password) {
+  EasyUser user = userService.saveUser(uuid, username, password);
+  model.addAttribute("easyUser", user);
+  return "UserRow";
+}
+```
+
+To fix this, we can return htmx attributes as HTTP Response headers.&#x20;
+
+We add `HX-Retarget = #user-${user.uuid}`to target the table row \<tr> element that contains the user we just edited.
+
+\
+With `HX-Reswap = outerHTML` we tell htmx to swap the whole table row.
+
+We tell htmx to trigger the JavaScript event `CLOSE_MODAL_EVENT` using `HX-Trigger`
+
+```java
+// UserController.java
+@PostMapping(SAVE_USER)
+public String saveUser(UUID uuid, String username, String password) {
+  EasyUser user = userService.saveUser(uuid, username, password);
+  model.addAttribute("easyUser", user);  
+  response.addHeader("HX-Retarget", "#user-" + user.uuid);
+  response.addHeader("HX-Reswap", "outerHTML");
+  response.addHeader("HX-Trigger", CLOSE_MODAL_EVENT);
+  return "UserRow";  
 }
 ```
 
@@ -255,11 +282,17 @@ With `HX-Trigger = close-modal` we tell htmx to trigger a JavaScript event `clos
 
 We add an `hx-on:` attribute to clear the innerHTML of the modalContainer to remove the HTML from the DOM when the event is triggered.
 
-```xml
+If we now listen to this event in the `MODAL_CONTAINER_ID`  element using `hx-on` and use the JTE `$unsafe` syntax, we can set the innerHTML to null and remove the modal.
+
+```
+// UserManagement.jte
 <div id="${MODAL_CONTAINER_ID}" 
      hx-on:$unsafe{CLOSE_MODAL_EVENT}="this.innerHTML = null">
+
 </div>
 ```
+
+
 
 If we click the `Save User` button and go to Chrome DevTools we can see HATEOAS in action.\
 The new application state after saving the user is transferred via HTML to the browser.
