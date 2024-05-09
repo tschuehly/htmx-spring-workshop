@@ -1,4 +1,4 @@
-@import static de.tschuehly.easy.spring.auth.htmx.HtmxUtil.*
+@import static de.tschuehly.easy.spring.auth.htmx.HtmxUtil.URI
 @import static de.tschuehly.easy.spring.auth.user.UserController.*
 @import static de.tschuehly.easy.spring.auth.user.management.UserManagement.MODAL_CONTAINER_ID
 @import de.tschuehly.easy.spring.auth.user.management.table.row.UserRowComponent.UserRowContext
@@ -16,7 +16,7 @@
         ${userRowContext.easyUser().password}
     </td>
     <td>
-        <button hx-get="${URI(GET_EDIT_USER_MODAL,uuid)}"
+        <button hx-get="${URI(EDIT_USER_MODAL,uuid)}"
                 hx-target="#${MODAL_CONTAINER_ID}">
             <img src="/edit.svg">
         </button>

@@ -1,5 +1,10 @@
 package de.tschuehly.easy.spring.auth.user;
 
+import static de.tschuehly.easy.spring.auth.user.management.UserManagement.CLOSE_MODAL_EVENT;
+import static de.tschuehly.easy.spring.auth.user.management.table.UserTableComponent.USER_TABLE_BODY_ID;
+
+import de.tschuehly.easy.spring.auth.user.management.UserManagement;
+import de.tschuehly.spring.viewcomponent.jte.ViewContext;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.UUID;
 import org.springframework.stereotype.Controller;
@@ -14,15 +19,16 @@ public class UserController {
   public static final String USER_TABLE_BODY_ID = "userTableBody";
 
   private final UserService userService;
+  private final UserManagement userManagement;
 
-  public UserController(UserService userService) {
+  public UserController(UserService userService, UserManagement userManagement) {
     this.userService = userService;
+    this.userManagement = userManagement;
   }
 
   @GetMapping("/")
-  public String index(Model model) {
-    model.addAttribute("easyUserList", userService.findAll());
-    return "UserManagement";
+  public ViewContext index() {
+    return userManagement.render();
   }
 
   public static final String GET_EDIT_USER_MODAL = "/save-user/modal/{uuid}";
