@@ -5,6 +5,7 @@ import static de.tschuehly.easy.spring.auth.user.management.table.UserTableCompo
 
 import de.tschuehly.easy.spring.auth.user.management.UserManagement;
 import de.tschuehly.easy.spring.auth.user.management.edit.EditUserComponent;
+import de.tschuehly.easy.spring.auth.user.management.table.row.UserRowComponent;
 import de.tschuehly.spring.viewcomponent.jte.ViewContext;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.UUID;
@@ -16,17 +17,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class UserController {
-  public static final String MODAL_CONTAINER_ID = "modalContainer";
-  public static final String USER_TABLE_BODY_ID = "userTableBody";
 
   private final UserService userService;
   private final UserManagement userManagement;
   private final EditUserComponent editUserComponent;
+  private final UserRowComponent userRowComponent;
 
-  public UserController(UserService userService, UserManagement userManagement, EditUserComponent editUserComponent) {
+  public UserController(UserService userService, UserManagement userManagement, EditUserComponent editUserComponent,
+      UserRowComponent userRowComponent) {
     this.userService = userService;
     this.userManagement = userManagement;
     this.editUserComponent = editUserComponent;
+    this.userRowComponent = userRowComponent;
   }
 
   @GetMapping("/")
@@ -44,15 +46,11 @@ public class UserController {
   public static final String POST_SAVE_USER = "/save-user";
   public static final String CLOSE_MODAL_EVENT = "close-modal";
 
-  @PostMapping(POST_SAVE_USER)
-  public String saveUser(UUID uuid, String username, String password, Model model, HttpServletResponse response) {
-    EasyUser user = userService.saveUser(uuid, username, password);
-    model.addAttribute("easyUser", user);
-    response.addHeader("HX-Retarget", "#user-" + user.uuid);
-    response.addHeader("HX-Reswap", "outerHTML");
-    response.addHeader("HX-Trigger", CLOSE_MODAL_EVENT);
-    return "UserRow";
-  }
+@PostMapping(POST_SAVE_USER)
+public ViewContext saveUser(UUID uuid, String username, String password) {
+  EasyUser user = userService.saveUser(uuid, username, password);
+  return userRowComponent.rerender(user);
+}
 
 
   public static final String GET_CREATE_USER_MODAL = "/create-user/modal";

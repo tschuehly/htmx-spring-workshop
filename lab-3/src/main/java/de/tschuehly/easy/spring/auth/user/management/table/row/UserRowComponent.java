@@ -1,7 +1,6 @@
 package de.tschuehly.easy.spring.auth.user.management.table.row;
 
 import static de.tschuehly.easy.spring.auth.user.management.UserManagement.CLOSE_MODAL_EVENT;
-import static de.tschuehly.easy.spring.auth.user.management.table.UserTableComponent.USER_TABLE_BODY_ID;
 
 import de.tschuehly.easy.spring.auth.htmx.HtmxUtil;
 import de.tschuehly.easy.spring.auth.user.EasyUser;

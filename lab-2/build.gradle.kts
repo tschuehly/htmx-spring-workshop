@@ -30,6 +30,7 @@ dependencies {
     // LAB 2:
     implementation("de.tschuehly:spring-view-component-jte:0.7.4")
     annotationProcessor("de.tschuehly:spring-view-component-core:0.7.4")
+    implementation("io.github.wimdeblauwe:htmx-spring-boot:3.2.0")
 
     // LAB 9:
     implementation("io.projectreactor:reactor-core:3.6.5")
