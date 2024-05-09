@@ -12,9 +12,4 @@ public class UserController {
     this.userService = userService;
   }
 
-
-  public static String URI(String uriTemplate, Object... variables) {
-    return new UriTemplate(uriTemplate).expand(variables).toString();
-  }
-
 }

@@ -1,4 +1,5 @@
 @import de.tschuehly.easy.spring.auth.user.EasyUser
+@import static de.tschuehly.easy.spring.auth.htmx.HtmxUtil.*
 @import static de.tschuehly.easy.spring.auth.user.UserController.*
 
 @param EasyUser easyUser
