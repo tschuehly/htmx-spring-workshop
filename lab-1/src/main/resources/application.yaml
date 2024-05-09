@@ -11,3 +11,4 @@ spring:
 gg:
   jte:
     developmentMode: true
+    templateLocation: lab-1/src/main/jte
