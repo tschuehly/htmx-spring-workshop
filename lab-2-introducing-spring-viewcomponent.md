@@ -417,9 +417,108 @@ public ViewContext saveUser(UUID uuid, String username, String password) {
 &#x20;We can restart the application and navigate to [localhost:8080](https://localhost:8080) and the save user function works again.&#x20;
 
 {% hint style="info" %}
-Lab 2 checkpoint 3
+Lab 2 Checkpoint 3
 {% endhint %}
 
 The advantage we now have is that the Controller doesn't need to know how the UserRowComponent template looks and what needs to be swapped. The UserRowComponent just offers an API to rerender a row.
 
-&#x20;
+### &#x20;Create User
+
+FInally we need to migrate the CreateUser functionality to Spring ViewComponent. \
+We start by creating a `CreateUserComponent` in `auth.user.management.create`&#x20;
+
+<pre><code><strong>// CreateUserComponent.java
+</strong><strong>@ViewComponent
+</strong>public class CreateUserComponent {
+
+  public record CreateUserContext() implements ViewContext{}
+
+  public ViewContext render(){
+    return new CreateUserContext();
+  }
+}
+</code></pre>
+
+As template we can just use the `CreateUserForm.jte` and copy past the content into `CreateUserComponent.jte`
+
+<pre class="language-html"><code class="lang-html">// CreateUserComponent.jte
+@import static de.tschuehly.easy.spring.auth.user.UserController.GET_CREATE_USER
+<strong>&#x3C;div>
+</strong>    &#x3C;form hx-post="${POST_CREATE_USER}">
+        &#x3C;label>
+            Username
+            &#x3C;input type="text" name="username">
+        &#x3C;/label>
+        &#x3C;label>
+            Password
+            &#x3C;input type="text" name="password">
+        &#x3C;/label>
+        &#x3C;button type="submit">
+            Save User
+        &#x3C;/button>
+    &#x3C;/form>
+&#x3C;/div>
+</code></pre>
+
+We can now call the `CreateUserComponent.java` in the `UserController.java`
+
+```java
+// UserController.java
+public static final String CREATE_USER_MODAL = "/create-user/modal";
+
+@GetMapping(CREATE_USER_MODAL)
+public ViewContext getCreateUserModal() {
+  return createUserComponent.render();
+}
+```
+
+&#x20;We can restart the application and navigate to [localhost:8080](https://localhost:8080) and the create user modal is shown when we click on `Create User`
+
+<figure><img src=".gitbook/assets/image (10).png" alt=""><figcaption></figcaption></figure>
+
+Finally we need to migrate the `createUser()` function in the `UserController.java`
+
+Currently it looks like this:
+
+```java
+@PostMapping(POST_CREATE_USER)
+public String createUser(String username, String password, Model model, HttpServletResponse response) {
+  EasyUser user = userService.createUser(username, password);
+  model.addAttribute("easyUser", user);
+
+  response.addHeader("HX-Retarget", "#" + USER_TABLE_BODY_ID);
+  response.addHeader("HX-Reswap", "afterbegin");
+  response.addHeader("HX-Trigger", CLOSE_MODAL_EVENT);
+  return "UserRow";
+}
+```
+
+As before we want to move this code into the UserRow component, by creating a new `renderNewRow` function:
+
+```java
+public ViewContext renderNewRow(EasyUser user) {
+  String target = HtmxUtil.target(UserTableComponent.USER_TABLE_BODY_ID);
+  HtmxUtil.retarget(target);
+  HtmxUtil.reswap(HxSwapType.AFTER_BEGIN);
+  HtmxUtil.trigger(UserManagement.CLOSE_MODAL_EVENT);
+  return new UserRowContext(user);
+}
+```
+
+This simplifies the Controller createUser function:
+
+```java
+@PostMapping(POST_CREATE_USER)
+public ViewContext createUser(String username, String password) {
+  EasyUser user = userService.createUser(username, password);
+  return userRowComponent.renderNewRow(user);
+}
+```
+
+Now if we restart the application we can save a new user and they are inserted at the start of the table.
+
+<figure><img src=".gitbook/assets/image (11).png" alt=""><figcaption></figcaption></figure>
+
+{% hint style="info" %}
+Lab 2 Checkpoint 4
+{% endhint %}
