@@ -4,6 +4,8 @@ import static de.tschuehly.easy.spring.auth.user.management.UserManagement.CLOSE
 
 import de.tschuehly.easy.spring.auth.htmx.HtmxUtil;
 import de.tschuehly.easy.spring.auth.user.EasyUser;
+import de.tschuehly.easy.spring.auth.user.management.UserManagement;
+import de.tschuehly.easy.spring.auth.user.management.table.UserTableComponent;
 import de.tschuehly.spring.viewcomponent.core.component.ViewComponent;
 import de.tschuehly.spring.viewcomponent.jte.ViewContext;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxSwapType;
@@ -28,5 +30,13 @@ public class UserRowComponent {
     HtmxUtil.reswap(HxSwapType.OUTER_HTML);
     HtmxUtil.trigger(CLOSE_MODAL_EVENT);
     return new UserRowContext(easyUser);
+  }
+  
+  public ViewContext renderNewRow(EasyUser user) {
+    String target = HtmxUtil.target(UserTableComponent.USER_TABLE_BODY_ID);
+    HtmxUtil.retarget(target);
+    HtmxUtil.reswap(HxSwapType.AFTER_BEGIN);
+    HtmxUtil.trigger(UserManagement.CLOSE_MODAL_EVENT);
+    return new UserRowContext(user);
   }
 }

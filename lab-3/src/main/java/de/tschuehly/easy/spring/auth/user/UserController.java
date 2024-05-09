@@ -5,14 +5,11 @@ import de.tschuehly.easy.spring.auth.user.management.create.CreateUserComponent;
 import de.tschuehly.easy.spring.auth.user.management.edit.EditUserComponent;
 import de.tschuehly.easy.spring.auth.user.management.table.row.UserRowComponent;
 import de.tschuehly.spring.viewcomponent.jte.ViewContext;
-import jakarta.servlet.http.HttpServletResponse;
 import java.util.UUID;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.util.UriTemplate;
 
 @Controller
 public class UserController {
@@ -61,13 +58,12 @@ public class UserController {
 
 
   public static final String POST_CREATE_USER = "/create-user";
+
   @PostMapping(POST_CREATE_USER)
-  public ViewContext createUser(String username, String password, Model model, HttpServletResponse response) {
+  public ViewContext createUser(String username, String password) {
     EasyUser user = userService.createUser(username, password);
     return userRowComponent.renderNewRow(user);
   }
-
-
 
 
 }
