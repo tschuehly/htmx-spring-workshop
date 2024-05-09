@@ -24,6 +24,7 @@ Create a new `@GetMapping`  and inside the method we call the `userService.findA
 We also define a constant for the UserTable ID and an ID for a modal container.
 
 ```java
+// UserController.java
 @Controller
 public class UserController {
   public static final String MODAL_CONTAINER_ID = "modalContainer";
@@ -44,26 +45,26 @@ We return the string `UserManagement` . This is the reference to the View we wan
 
 The JTE Spring Boot Starter looks for templates  in `src/main/jte`.&#x20;
 
-You can find all the templates we need are already there. We just need to fill them with life.
+There you can find all the templates we need. We just need to fill them with life.
 
 We start with `UserManagement.jte` , as you can see there is already a barebones html structure in place with css and htmx linked.
 
 We can import all static variables defined in UserController with `@import`&#x20;
 
-```crystal
+```html
 <!-- UserManagement.jte -->
-@import static de.tschuehly.easy.spring.auth.controller.UserController.*
+@import static de.tschuehly.easy.spring.auth.user.UserController.*
 ```
 
 We add the easyUserList we defined earlier in the model as a parameter to the template with `@param`.
 
-```crystal
+```html
 <!-- UserManagement.jte -->
 @import de.tschuehly.easy.spring.auth.user.EasyUser
 @param List<EasyUser> easyUserList
 ```
 
-There is already a basic HTML Table in place we need to fill with our data.&#x20;
+There is already a basic HTML Table we need to fill with our data.&#x20;
 
 In the table body, we loop over the easyUserList with the `@for` JTE syntax and call the userRow.jte template with the `@template` syntax and pass the user loop variable into the template.
 
@@ -96,9 +97,9 @@ We also add an empty div with the id set to `MODAL_CONTAINER_ID` to show a modal
 
 The UserRow.jte template defines an EasyUser parameter and a local variable with the exclamation mark JTE expression: `!{var name = value}` .
 
-```crystal
+```html
 <!-- UserRow.jte -->
-@import de.tschuehly.easy.spring.auth.domain.EasyUser
+@import de.tschuehly.easy.spring.auth.user.EasyUser
 @param EasyUser easyUser
 !{var uuid = easyUser.uuid.toString();}
 ```
@@ -143,15 +144,15 @@ As you can see we are using a static constant for the HTTP Endpoint. This makes 
 
 In the `UserRow.jte` we add a new `<td>` element and create a button element.
 
-```
-@import static de.tschuehly.easy.spring.auth.user.UserController.*
-<td>
-    <button hx-get="${URI(EDIT_USER_MODAL,uuid)}"
+<pre class="language-html"><code class="lang-html">&#x3C;!-- UserRow.jte -->
+<strong>@import static de.tschuehly.easy.spring.auth.user.UserController.*
+</strong>&#x3C;td>
+    &#x3C;button hx-get="${URI(EDIT_USER_MODAL,uuid)}"
             hx-target="#${MODAL_CONTAINER_ID}">
-        <img src="/edit.svg">
-    </button>
-</td>
-```
+        &#x3C;img src="/edit.svg">
+    &#x3C;/button>
+&#x3C;/td>
+</code></pre>
 
 `hx-get="${URI(EDIT_USER_MODAL,uuid)}` creates an HTTP get request to `/user/edit/{uuid}` when the button element is clicked. The uuid variable is interpolated with a static URI method we will define next.&#x20;
 
@@ -163,7 +164,7 @@ We now have to fill in the corresponding `EditUserForm.jte` template, to display
 
 To make this very simple we create a UserForm record:
 
-```
+```java
 // UserController.java
 public record UserForm(String uuid, String username, String password) {
 
@@ -208,7 +209,9 @@ Now let's restart the application, navigate to localhost:8080, and click the edi
 
 We now want to change a value, save it to the datastore and display the updated value in the table.&#x20;
 
-Let's create a new endpoint and call the `userService.saveUser()`  endpoint&#x20;
+Let's create a new endpoint and call the `userService.saveUser()`  endpoint.
+
+To return the table row of the updated user with the new values inserted, we add the new user value to the model and return the UserRow template.&#x20;
 
 ```java
 // UserController.java
@@ -216,8 +219,12 @@ public static final String SAVE_USER = "/save-user";
 
 @PostMapping(SAVE_USER)
 public void saveUser(UUID uuid, String username, String password) {
-  EasyUser user = userService.saveUser(uuid, username, password);
-}
+  @PostMapping(SAVE_USER)
+  public String saveUser(UUID uuid, String username, String password, Model model) {
+    EasyUser user = userService.saveUser(uuid, username, password);
+    model.addAttribute("easyUser", user);
+    return "UserRow";
+  }
 ```
 
 We can then call this endpoint by adding a button with an `hx-post` attribute that uses the `SAVE_USER` constant.
@@ -226,7 +233,7 @@ We can then call this endpoint by adding a button with an `hx-post` attribute th
 We can also place the hx- attribute on the form, as the button would trigger a form submit, that htmx catches.
 {% endhint %}
 
-<pre><code>&#x3C;!-- EditUserForm.jte -->
+<pre class="language-html"><code class="lang-html">&#x3C;!-- EditUserForm.jte -->
 <strong>@import static de.tschuehly.easy.spring.auth.user.UserController.SAVE_USER
 </strong><strong>&#x3C;form>
 </strong><strong>  &#x3C;button type="submit" hx-post="${SAVE_USER}">
@@ -235,26 +242,9 @@ We can also place the hx- attribute on the form, as the button would trigger a f
 &#x3C;/form>
 </code></pre>
 
-If you restart the app now you will see that the table value is not updated, but instead the label of the button disappears.\
+If you restart the app now you will see that the table value is not updated, but instead  the returned HTML is rendered inside the button, because htmx by default swaps the innerHTML of the element that created the request.
 
-
-<figure><img src=".gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
-
-
-
-To fix this we need to return the table row of the updated user with the new values inserted, we add the new user value to the model and return the UserRow template.&#x20;
-
-But this would render the returned HTML inside the button, because htmx by default swaps the innerHTML of the element that created the request.
-
-```
-// UserController.java
-@PostMapping(SAVE_USER)
-public String saveUser(UUID uuid, String username, String password) {
-  EasyUser user = userService.saveUser(uuid, username, password);
-  model.addAttribute("easyUser", user);
-  return "UserRow";
-}
-```
+<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
 To fix this, we can return htmx attributes as HTTP Response headers.&#x20;
 
@@ -267,8 +257,10 @@ We tell htmx to trigger the JavaScript event `CLOSE_MODAL_EVENT` using `HX-Trigg
 
 ```java
 // UserController.java
+public static final String CLOSE_MODAL_EVENT = "close-modal";
+
 @PostMapping(SAVE_USER)
-public String saveUser(UUID uuid, String username, String password) {
+public String saveUser(UUID uuid, String username, String password, Model model, HttpServletResponse response) {
   EasyUser user = userService.saveUser(uuid, username, password);
   model.addAttribute("easyUser", user);  
   response.addHeader("HX-Retarget", "#user-" + user.uuid);
@@ -280,12 +272,12 @@ public String saveUser(UUID uuid, String username, String password) {
 
 With `HX-Trigger = close-modal` we tell htmx to trigger a JavaScript event `close-modal` in the browser when the HTTP response is received.
 
-We add an `hx-on:` attribute to clear the innerHTML of the modalContainer to remove the HTML from the DOM when the event is triggered.
+Now we add an `hx-on:` attribute to clear the innerHTML of the modalContainer to remove the HTML from the DOM when the event is triggered.
 
 If we now listen to this event in the `MODAL_CONTAINER_ID`  element using `hx-on` and use the JTE `$unsafe` syntax, we can set the innerHTML to null and remove the modal.
 
-```
-// UserManagement.jte
+```html
+<!-- UserManagement.jte -->
 <div id="${MODAL_CONTAINER_ID}" 
      hx-on:$unsafe{CLOSE_MODAL_EVENT}="this.innerHTML = null">
 
@@ -297,7 +289,7 @@ If we now listen to this event in the `MODAL_CONTAINER_ID`  element using `hx-on
 If we click the `Save User` button and go to Chrome DevTools we can see Hypermedia as the Engine of Application State (HATEOAS) in action.\
 The new application state after saving the user is transferred via HTML to the browser, and the new row also includes the link to get the modal that it was just called from.
 
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Create User
 
@@ -318,7 +310,7 @@ public String getCreateUserModal() {
 We add this as table footer of the UserManagement table, in a button element and target the `MODAL_CONTAINER_ID`
 
 ```html
-// UserManagement.jte
+<!-- UserManagement.jte -->
 @import static de.tschuehly.easy.spring.auth.user.UserController.*
 <tfoot>
   <tr>
@@ -333,7 +325,9 @@ We add this as table footer of the UserManagement table, in a button element and
 
 The `CreateUserForm.jte` looks like this, as you can see here, this time we have the hx-post attribute on the `<form>` element and trigger the HTTP request with the `<button type="submit">`
 
-```
+```html
+<!-- CreateUserForm.jte -->
+@import static de.tschuehly.easy.spring.auth.user.UserController.CREATE_USER
 <form hx-post="${CREATE_USER}">
     <label>
         Username
@@ -358,6 +352,7 @@ It follows the same pattern as the `SAVE_USER` endpoint, but this time we target
 We also trigger the `CLOSE_MODAL_EVENT` and return the `UserRow.jte` template.
 
 ```java
+// UserController.java
 public static final String CREATE_USER = "/create-user";
 @PostMapping(CREATE_USER)
 public String createUser(String username, String password, Model model, HttpServletResponse response) {
@@ -373,6 +368,6 @@ public String createUser(String username, String password, Model model, HttpServ
 
 After restarting the application you now should be able to create a new user and when saving the new user they should be displayed as the first item of the table:
 
-<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 This was Lab 1, you should now feel confident to use server-side rendering with Spring Boot and JTE and be able to create an interactive application using htmx.&#x20;
