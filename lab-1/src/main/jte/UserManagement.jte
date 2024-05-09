@@ -13,6 +13,25 @@
     </h1>
 </nav>
 <main>
+    <table>
+        <thead>
+        <tr>
+            <th>
+                uuid
+            </th>
+            <th>
+                username
+            </th>
+            <th>
+                password
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+        <tfoot>
+        </tfoot>
+    </table>
 </main>
 </body>
 
