@@ -1,14 +1,57 @@
 # Building server-side web applications with htmx
 
-## Workshop Spring I/O 2024
+## Setup:
 
-### Setup:
+Please install the following:
 
 * Java 21
 * IntelliJ IDEA
 * [https://plugins.jetbrains.com/plugin/20588-htmx-support](https://plugins.jetbrains.com/plugin/20588-htmx-support)
 * [https://plugins.jetbrains.com/plugin/14521-jte](https://plugins.jetbrains.com/plugin/20588-htmx-support)
 * Gradle
+
+#### IntelliJ Code Template
+
+To create a new ViewComponent with one click we can create a new IntelliJ Code Template.
+
+Click on Create Template
+
+<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
+Name: ViewComponent
+
+File Name:  `${COMPONENT_NAME}Component.java`
+
+```
+package ${PACKAGE_NAME};
+
+import de.tschuehly.spring.viewcomponent.core.component.ViewComponent;
+import de.tschuehly.spring.viewcomponent.jte.ViewContext;
+
+@ViewComponent
+public class ${COMPONENT_NAME}Component {
+  public record ${COMPONENT_NAME}Context() implements ViewContext{}
+
+  public ViewContext render(){
+    return new ${COMPONENT_NAME}Context();
+  }
+}
+```
+
+Then click on "Create Child Template"
+
+<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+
+File Name: `${COMPONENT_NAME}Component.jte`
+
+Extension: `jte`
+
+```
+@import ${PACKAGE_NAME}.${COMPONENT_NAME}Component.${COMPONENT_NAME}Context
+@param ${COMPONENT_NAME}Context ${COMPONENT_NAME.substring(0,1).toLowerCase()}${COMPONENT_NAME.substring(1)}Context
+```
+
+## Labs
 
 ### Lab 1: Server-side rendering with Spring Boot and JTE
 

@@ -34,13 +34,14 @@ A ViewComponent needs to have a template with the same name defined in the same 
 Spring ViewComponent wraps the underlying MVC model using Spring AOP and enables us to create the frontend in a similar way to the component-oriented JavaScript frameworks
 {% endhint %}
 
-### Using Spring ViewComponent
+### Migrating the UserMangement to Spring ViewComponent
 
-To start we need to add two dependencies to the `build.gradle.kts` file.
+To start we need to add three dependencies to the `build.gradle.kts` file.
 
 ```
 implementation("de.tschuehly:spring-view-component-jte:0.7.4")
 annotationProcessor("de.tschuehly:spring-view-component-core:0.7.4")
+implementation("io.github.wimdeblauwe:htmx-spring-boot:3.2.0")
 ```
 
 
@@ -255,4 +256,170 @@ public class UserController {
 
 &#x20;We can restart the application now navigate to [localhost:8080](https://localhost:8080) and see the table rendered.&#x20;
 
-<figure><img src=".gitbook/assets/image (6).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (6) (1).png" alt=""><figcaption></figcaption></figure>
+
+{% hint style="info" %}
+Lab 2 Checkpoint 1
+{% endhint %}
+
+### Edit User
+
+We now need to migrate the edit user functionality to Spring ViewComponent.
+
+We create a `EditUserComponent` next.
+
+We autowire the userService and create a render method with a `uuid` parameter. We get the user with the `userService.findById(uuid)` method and add the uuid, username and password to the ViewContext
+
+```java
+@ViewComponent
+public class EditUserComponent {
+
+  private final UserService userService;
+
+  public EditUserComponent(UserService userService) {
+    this.userService = userService;
+  }
+
+  public ViewContext render(UUID uuid) {
+    EasyUser user = userService.findById(uuid);
+    return new EditUserContext(user.uuid, user.username, user.password);
+  }
+  
+  public record EditUserContext(UUID uuid, String username, String password) 
+    implements ViewContext {
+
+  }
+}
+```
+
+We then create the `EditUserComponent.jte` we can copy the content of the `EditUserForm.jte` and adjust the imports and replace the `UserForm` parameter with the `EditUserContext`&#x20;
+
+```html
+@import de.tschuehly.easy.spring.auth.user.management.edit.EditUserComponent.EditUserContext
+@import static de.tschuehly.easy.spring.auth.user.UserController.POST_SAVE_USER
+@param EditUserContext editUserContext
+
+<div>
+    <form>
+        <label>
+            UUID
+            <input type="text" readonly name="uuid" value="${editUserContext.uuid().toString()}">
+        </label>
+        <label>
+            Username
+            <input type="text" name="username" value="${editUserContext.username()}">
+        </label>
+        <label>
+            Password
+            <input type="text" name="password" value="${editUserContext.password()}">
+        </label>
+        <button type="submit" hx-post="${POST_SAVE_USER}">
+            Save User
+        </button>
+    </form>
+</div>
+```
+
+In the `UserController.java` we can remove the UserForm and adjust the editUserModal method.
+
+```java
+@Controller
+public class UserController {
+  public static final String EDIT_USER_MODAL = "/save-user/modal/{uuid}";
+
+  @GetMapping(EDIT_USER_MODAL)
+  public ViewContext editUserModal(@PathVariable UUID uuid) {
+    return editUserComponent.render(uuid);
+  }
+}
+```
+
+&#x20;We can restart the application navigate to [localhost:8080](https://localhost:8080) and the edit user modal works again.
+
+<figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+
+{% hint style="info" %}
+Lab 2 Checkpoint 2
+{% endhint %}
+
+We now need to fix the save user functionality. Previously we used HX Response headers to set the swapping functionality directly in the Controller:&#x20;
+
+```java
+@PostMapping(POST_SAVE_USER)
+public String saveUser(UUID uuid, String username, String password, Model model, HttpServletResponse response) {
+  EasyUser user = userService.saveUser(uuid, username, password);
+  model.addAttribute("easyUser", user);
+  response.addHeader("HX-Retarget", "#user-" + user.uuid);
+  response.addHeader("HX-Reswap", "outerHTML");
+  response.addHeader("HX-Trigger", CLOSE_MODAL_EVENT);
+  return "UserRow";
+}
+```
+
+We now want to move this functionality to the UserRowComponent.
+
+#### HtmxUtil
+
+I have already created a `HtmxUtil` class that helps us set the HX Response Headers.
+
+We are using Wim Deblauwes htmx-spring-boot library: [github.com/wimdeblauwe/htmx-spring-boo](https://github.com/wimdeblauwe/htmx-spring-boot)t. It offers a HtmxResponseHeader enum with all possible values and a HxSwapType enum.&#x20;
+
+We will add these convenience methods:
+
+```java
+// HtmxUtil.java
+public static String target(String id){
+  return "#" + id;
+}
+
+public static void retarget(String cssSelector) {
+  setHeader(HtmxResponseHeader.HX_RETARGET.getValue(), cssSelector);
+}
+
+public static void reswap(HxSwapType hxSwapType){
+  setHeader(HtmxResponseHeader.HX_RESWAP.getValue(), hxSwapType.getValue());
+}
+
+public static void trigger(String event) {
+  setHeader(HtmxResponseHeader.HX_TRIGGER.getValue(), event);
+}
+```
+
+Back to the UserRowComponent we create a rerender function where we use these utility functions.
+
+We retarget to the id of the `<tr>` element we created with the `UserRowContext.htmlUserId()` function.
+
+We swap the whole HTML and trigger the `CLOSE_MODAL_EVENT`
+
+Finally we return the UserRowContext with the easyUser
+
+<pre class="language-java"><code class="lang-java"><strong>// UserRowComponent.java
+</strong><strong>public ViewContext rerender(EasyUser easyUser) {
+</strong>  String target = HtmxUtil.target(UserRowContext.htmlUserId(easyUser.uuid));
+  HtmxUtil.retarget(target);
+  HtmxUtil.reswap(HxSwapType.OUTER_HTML);
+  HtmxUtil.trigger(CLOSE_MODAL_EVENT);
+  return new UserRowContext(easyUser);
+}
+</code></pre>
+
+In the saveUser method in the `UserController` we can just call this method:
+
+```java
+// UserController.java
+@PostMapping(POST_SAVE_USER)
+public ViewContext saveUser(UUID uuid, String username, String password) {
+  EasyUser user = userService.saveUser(uuid, username, password);
+  return userRowComponent.rerender(user);
+}
+```
+
+&#x20;We can restart the application and navigate to [localhost:8080](https://localhost:8080) and the save user function works again.&#x20;
+
+{% hint style="info" %}
+Lab 2 checkpoint 3
+{% endhint %}
+
+The advantage we now have is that the Controller doesn't need to know how the UserRowComponent template looks and what needs to be swapped. The UserRowComponent just offers an API to rerender a row.
+
+&#x20;
