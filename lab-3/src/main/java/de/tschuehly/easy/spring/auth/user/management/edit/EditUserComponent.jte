@@ -1,4 +1,4 @@
-@import static de.tschuehly.easy.spring.auth.user.management.edit.EditUserComponent.*
+@import static de.tschuehly.easy.spring.auth.user.UserController.POST_SAVE_USER
 @import de.tschuehly.easy.spring.auth.user.management.edit.EditUserComponent
 @param EditUserComponent.EditUserContext editUserContext
 
@@ -16,7 +16,7 @@
             Password
             <input type="text" name="password" value="${editUserContext.password()}">
         </label>
-        <button type="submit" hx-post="${SAVE_USER}">
+        <button type="submit" hx-post="${POST_SAVE_USER}">
             Save User
         </button>
     </form>
