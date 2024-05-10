@@ -15,7 +15,7 @@
         ${easyUser.password}
     </td>
     <td>
-        <button hx-get="${URI(EDIT_USER_MODAL,uuid)}"
+        <button hx-get="${URI(GET_EDIT_USER_MODAL,uuid)}"
                 hx-target="#${MODAL_CONTAINER_ID}">
             <img src="/edit.svg">
         </button>

@@ -22,13 +22,14 @@ repositories {
 }
 
 dependencies {
-    // LAB 2:
+    // LAB 1:
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("gg.jte:jte-spring-boot-starter-3:3.1.9")
     implementation("gg.jte:jte:3.1.9")
-    // LAB 3:
-    implementation("de.tschuehly:spring-view-component-jte:0.7.2")
-    annotationProcessor("de.tschuehly:spring-view-component-core:0.7.2")
+
+    // LAB 2:
+    implementation("de.tschuehly:spring-view-component-jte:0.7.4")
+    annotationProcessor("de.tschuehly:spring-view-component-core:0.7.4")
     implementation("io.github.wimdeblauwe:htmx-spring-boot:3.2.0")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")

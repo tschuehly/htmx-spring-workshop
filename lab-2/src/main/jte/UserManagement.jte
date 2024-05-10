@@ -39,7 +39,7 @@
         <tfoot>
         <tr>
             <td colspan="4">
-                <button hx-get="${CREATE_USER_MODAL}" hx-target="#${MODAL_CONTAINER_ID}">
+                <button hx-get="${GET_CREATE_USER_MODAL}" hx-target="#${MODAL_CONTAINER_ID}">
                     Create new User
                 </button>
             </td>

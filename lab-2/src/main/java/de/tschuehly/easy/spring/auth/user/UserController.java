@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.util.UriTemplate;
 
 @Controller
 public class UserController {
@@ -29,21 +28,21 @@ public class UserController {
     return "UserManagement";
   }
 
-  public static final String SAVE_USER = "/save-user";
-  public static final String EDIT_USER_MODAL = "/save-user/modal/{uuid}";
+  public static final String POST_SAVE_USER = "/save-user";
+  public static final String GET_EDIT_USER_MODAL = "/save-user/modal/{uuid}";
 
   public record UserForm(String uuid, String username, String password) {
 
   }
 
-  @GetMapping(EDIT_USER_MODAL)
+  @GetMapping(GET_EDIT_USER_MODAL)
   public String editUserModal(Model model, @PathVariable UUID uuid) {
     var user = userService.findById(uuid);
     model.addAttribute("userForm", new UserForm(user.uuid.toString(), user.username, user.password));
     return "EditUserForm";
   }
 
-  @PostMapping(SAVE_USER)
+  @PostMapping(POST_SAVE_USER)
   public String saveUser(UUID uuid, String username, String password, Model model, HttpServletResponse response) {
     EasyUser user = userService.saveUser(uuid, username, password);
     model.addAttribute("easyUser", user);
@@ -54,15 +53,15 @@ public class UserController {
   }
 
 
-  public static final String CREATE_USER = "/create-user";
-  public static final String CREATE_USER_MODAL = "/create-user/modal";
+  public static final String POST_CREATE_USER = "/create-user";
+  public static final String GET_CREATE_USER_MODAL = "/create-user/modal";
 
-  @GetMapping(CREATE_USER_MODAL)
+  @GetMapping(GET_CREATE_USER_MODAL)
   public String getCreateUserModal() {
     return "CreateUserForm";
   }
 
-  @PostMapping(CREATE_USER)
+  @PostMapping(POST_CREATE_USER)
   public String createUser(String username, String password, Model model, HttpServletResponse response) {
     EasyUser user = userService.createUser(username, password);
     model.addAttribute("easyUser", user);
