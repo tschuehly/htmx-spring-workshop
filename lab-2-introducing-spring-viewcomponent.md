@@ -80,7 +80,7 @@ The `param` is now a `UserManagementContext` as we put all variables into this r
 Now we will move the table into a separate component. Create a `UserTableComponent.java` in `auth.user.management.table`
 
 ```java
-// UserTableComponent.jte
+// UserTableComponent.java
 @ViewComponent
 public class UserTableComponent {
   private final UserService userService;
@@ -151,7 +151,7 @@ Then we replace  the `easyUser` variable with `userRowContext.easyUser()` .
 
 Then we replace the `<tr id="user-${uuid}">` with `<tr id="${UserRowContext.htmlUserId(uuid)}">`
 
-<pre class="language-html"><code class="lang-html"><strong>&#x3C;!-- UserRowComponent.jte -->
+<pre class="language-html"><code class="lang-html"><strong>// UserRowComponent.jte 
 </strong><strong>!{var uuid = userRowContext.easyUser().uuid;}
 </strong>&#x3C;tr id="${UserRowContext.htmlUserId(uuid)}">
     &#x3C;td>
@@ -205,9 +205,9 @@ Now we can render the UserManagement table using Spring ViewComponent!
 
 We go to UserMangement.java and autowire the UserTableComponent and put the rendered Component into the UserManagementContext:
 
-```java
-@ViewComponent
-public class UserManagement {
+<pre class="language-java"><code class="lang-java"><strong>// UserManagement.java
+</strong><strong>@ViewComponent
+</strong>public class UserManagement {
   public static final String MODAL_CONTAINER_ID = "modalContainer";
   public static final String CLOSE_MODAL_EVENT = "close-modal";
   private final UserTableComponent userTableComponent;
@@ -223,21 +223,21 @@ public class UserManagement {
     return new UserManagementContext(userTableComponent.render());
   }
 }
-```
+</code></pre>
 
 In the template, we can insert the rendered table:
 
-```html
-<main>
-${userManagementContext.userTable()}
-</main>
-```
+<pre class="language-html"><code class="lang-html"><strong>// UserManagement.jte
+</strong><strong>&#x3C;main>
+</strong>${userManagementContext.userTable()}
+&#x3C;/main>
+</code></pre>
 
 In the UserController.java we can autowire the UserManagement ViewComponent and render it in the index method:
 
-```java
-@Controller
-public class UserController {
+<pre class="language-java"><code class="lang-java"><strong>// UserController.java
+</strong><strong>@Controller
+</strong>public class UserController {
 
   private final UserService userService;
   private final UserManagement userManagement;
@@ -252,7 +252,7 @@ public class UserController {
     return userManagement.render();
   }
 }
-```
+</code></pre>
 
 &#x20;We can restart the application now navigate to [localhost:8080](https://localhost:8080) and see the table rendered.&#x20;
 
@@ -271,6 +271,7 @@ We create a `EditUserComponent` next.
 We autowire the userService and create a render method with a `uuid` parameter. We get the user with the `userService.findById(uuid)` method and add the uuid, username and password to the ViewContext
 
 ```java
+// EditUserComponent.java
 @ViewComponent
 public class EditUserComponent {
 
@@ -295,6 +296,7 @@ public class EditUserComponent {
 We then create the `EditUserComponent.jte` we can copy the content of the `EditUserForm.jte` and adjust the imports and replace the `UserForm` parameter with the `EditUserContext`&#x20;
 
 ```html
+// EditUserComponent.jte
 @import de.tschuehly.easy.spring.auth.user.management.edit.EditUserComponent.EditUserContext
 @import static de.tschuehly.easy.spring.auth.user.UserController.POST_SAVE_USER
 @param EditUserContext editUserContext
@@ -323,6 +325,7 @@ We then create the `EditUserComponent.jte` we can copy the content of the `EditU
 In the `UserController.java` we can remove the UserForm and adjust the editUserModal method.
 
 ```java
+// UserController.java
 @Controller
 public class UserController {
   public static final String EDIT_USER_MODAL = "/save-user/modal/{uuid}";
@@ -345,6 +348,7 @@ Lab 2 Checkpoint 2
 We now need to fix the save user functionality. Previously we used HX Response headers to set the swapping functionality directly in the Controller:&#x20;
 
 ```java
+// UserController.java
 @PostMapping(POST_SAVE_USER)
 public String saveUser(UUID uuid, String username, String password, Model model, HttpServletResponse response) {
   EasyUser user = userService.saveUser(uuid, username, password);
@@ -362,7 +366,7 @@ We now want to move this functionality to the UserRowComponent.
 
 I have already created a `HtmxUtil` class that helps us set the HX Response Headers.
 
-We are using Wim Deblauwes htmx-spring-boot library: [github.com/wimdeblauwe/htmx-spring-boo](https://github.com/wimdeblauwe/htmx-spring-boot)t. It offers a HtmxResponseHeader enum with all possible values and a HxSwapType enum.&#x20;
+We are using Wim Deblauwes htmx-spring-boot library: [github.com/wimdeblauwe/htmx-spring-boot](https://github.com/wimdeblauwe/htmx-spring-boot). It offers a HtmxResponseHeader enum with all possible values and a HxSwapType enum.&#x20;
 
 We will add these convenience methods:
 
@@ -476,13 +480,13 @@ public ViewContext getCreateUserModal() {
 
 <figure><img src=".gitbook/assets/image (10).png" alt=""><figcaption></figcaption></figure>
 
-Finally we need to migrate the `createUser()` function in the `UserController.java`
+Finally, we need to migrate the `createUser()` function in the `UserController.java`
 
-Currently it looks like this:
+Currently, it looks like this:
 
-```java
-@PostMapping(POST_CREATE_USER)
-public String createUser(String username, String password, Model model, HttpServletResponse response) {
+<pre class="language-java"><code class="lang-java"><strong>// UserController.java
+</strong><strong>@PostMapping(POST_CREATE_USER)
+</strong>public String createUser(String username, String password, Model model, HttpServletResponse response) {
   EasyUser user = userService.createUser(username, password);
   model.addAttribute("easyUser", user);
 
@@ -491,11 +495,12 @@ public String createUser(String username, String password, Model model, HttpServ
   response.addHeader("HX-Trigger", CLOSE_MODAL_EVENT);
   return "UserRow";
 }
-```
+</code></pre>
 
 As before we want to move this code into the UserRow component, by creating a new `renderNewRow` function:
 
 ```java
+// UserRowComponent.java
 public ViewContext renderNewRow(EasyUser user) {
   String target = HtmxUtil.target(UserTableComponent.USER_TABLE_BODY_ID);
   HtmxUtil.retarget(target);
@@ -508,6 +513,7 @@ public ViewContext renderNewRow(EasyUser user) {
 This simplifies the Controller createUser function:
 
 ```java
+// UserController.java
 @PostMapping(POST_CREATE_USER)
 public ViewContext createUser(String username, String password) {
   EasyUser user = userService.createUser(username, password);
