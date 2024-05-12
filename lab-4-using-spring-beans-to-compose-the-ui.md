@@ -87,7 +87,7 @@ public class UserController {
 We can now navigate to [localhost:8080](http://localhost:8080/) and [localhost:8080/group-management](http://localhost:8080/group-management) and both pages still work.
 
 {% hint style="info" %}
-Checkpoint 1
+Lab-4 Checkpoint 1
 {% endhint %}
 
 But now we don't have a Navigation Bar anymore and the `UserManagement` and the `GroupManagement` is not used anymore. We can now use them to define the Pages that are displayed in the Navigation Bar.
@@ -164,10 +164,10 @@ In the `LayoutComponent.jte` template we can now show a link for each page defin
 
 We can now navigate to [localhost:8080](http://localhost:8080/) and see that we have our Navigation again!
 
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="info" %}
-Checkpoint 2
+Lab-4 Checkpoint 2
 {% endhint %}
 
 
@@ -215,5 +215,5 @@ Group Management is now the first Navigation Item!
 <figure><img src=".gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="info" %}
-Checkpoint 3
+Lab-4 Checkpoint 3
 {% endhint %}
