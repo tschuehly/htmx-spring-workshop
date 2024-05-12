@@ -339,7 +339,7 @@ public class UserController {
 
 &#x20;We can restart the application navigate to [localhost:8080](https://localhost:8080) and the edit user modal works again.
 
-<figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (2) (2).png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="info" %}
 Lab 2 Checkpoint 2

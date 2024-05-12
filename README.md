@@ -16,7 +16,7 @@ To create a new ViewComponent with one click we can create a new IntelliJ Code T
 
 Click on Create Template
 
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (7).png" alt=""><figcaption></figcaption></figure>
 
 Name: ViewComponent
 
@@ -40,7 +40,7 @@ public class ${COMPONENT_NAME}Component {
 
 Then click on "Create Child Template"
 
-<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1) (2).png" alt=""><figcaption></figcaption></figure>
 
 File Name: `${COMPONENT_NAME}Component.jte`
 

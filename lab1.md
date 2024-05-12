@@ -35,7 +35,7 @@ public class UserController {
 
 We return the string `UserManagement` . This is the reference to the View we want to render:
 
-<figure><img src=".gitbook/assets/image (3).png" alt="" width="295"><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (3) (1).png" alt="" width="295"><figcaption></figcaption></figure>
 
 The JTE Spring Boot Starter looks for templates  in `src/main/jte`.&#x20;
 

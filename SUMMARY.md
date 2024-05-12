@@ -4,3 +4,4 @@
 * [Lab 1: Server-side rendering with Spring Boot and JTE](lab1.md)
 * [Lab 2: Introducing Spring ViewComponent](lab-2-introducing-spring-viewcomponent.md)
 * [Lab 3: Inline Editing](lab-3-inline-editing.md)
+* [Lab 4: Using Spring Beans to Compose the UI](lab-4-using-spring-beans-to-compose-the-ui.md)
