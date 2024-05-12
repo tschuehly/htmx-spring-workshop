@@ -52,7 +52,7 @@ public class UserController {
   @HxRequest
   @GetMapping(GET_USER_TABLE)
   public ViewContext userTable(@PathVariable String page) {
-    return userTableComponent.render(page);
+    return userTableComponent.render(Integer.parseInt(page));
   }
 
   public static final String GET_SEARCH_USER = "/search-user";

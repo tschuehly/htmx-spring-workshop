@@ -1,7 +1,6 @@
 package de.tschuehly.easy.spring.auth.user.management;
 
 import de.tschuehly.easy.spring.auth.user.UserController;
-import de.tschuehly.easy.spring.auth.user.UserService;
 import de.tschuehly.easy.spring.auth.web.Page;
 import de.tschuehly.spring.viewcomponent.core.component.ViewComponent;
 import de.tschuehly.spring.viewcomponent.jte.ViewContext;

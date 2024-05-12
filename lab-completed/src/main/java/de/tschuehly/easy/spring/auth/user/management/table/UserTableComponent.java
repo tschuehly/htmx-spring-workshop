@@ -36,8 +36,7 @@ public class UserTableComponent {
 
   public static final String USER_TABLE_BODY_ID = "userTableBody";
 
-  public ViewContext render(String page) {
-    int currentPage = Integer.parseInt(page);
+  public ViewContext render(int currentPage) {
     List<ViewContext> userRowList = userService.getPage(currentPage, 20)
         .stream().map(userRowComponent::render).toList();
     ViewContext tableBody = listComponent.render(

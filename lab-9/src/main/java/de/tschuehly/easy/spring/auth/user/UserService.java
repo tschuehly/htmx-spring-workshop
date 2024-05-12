@@ -3,9 +3,7 @@ package de.tschuehly.easy.spring.auth.user;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Random;
 import java.util.UUID;
-import java.util.random.RandomGenerator;
 import org.springframework.stereotype.Service;
 
 @Service
