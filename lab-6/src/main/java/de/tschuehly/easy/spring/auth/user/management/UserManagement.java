@@ -14,13 +14,10 @@ public class UserManagement implements Page {
     return new UserManagementContext();
   }
 
-  public record UserManagementContext() implements ViewContext {
-
-  }
+  public record UserManagementContext() implements ViewContext {}
 
   @Override
   public NavigationItem navigationItem() {
     return new NavigationItem("User Management", UserController.USER_MANAGEMENT_PATH);
   }
-
 }
