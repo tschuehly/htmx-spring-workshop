@@ -73,6 +73,10 @@ The goal of this lab is to refactor the application to use Spring ViewComponent 
 
 In this lab, we will create a group Management Page where we can add a user to a group and a navigation bar
 
+{% content-ref url="lab-3-inline-editing.md" %}
+[lab-3-inline-editing.md](lab-3-inline-editing.md)
+{% endcontent-ref %}
+
 ### Lab 4: Using Spring Beans to Compose the UI
 
 In this short lab, we will use the dependency injection capabilities of Spring to show a navigation bar where we can add new items by just creating new Components
