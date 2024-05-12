@@ -3,11 +3,7 @@ spring:
     name: easy-spring-auth
 #  view-component:
 #    local-development: true
-#org:
-#  eclipse:
-#    store:
-#      root: de.tschuehly.easy.spring.auth.store.Root
-#      storage-directory: ./storage
+#    jte-template-directories: lab-2/src/main/java
 gg:
   jte:
     developmentMode: true

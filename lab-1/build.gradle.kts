@@ -22,12 +22,12 @@ repositories {
 }
 
 dependencies {
-
     // LAB 1:
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("gg.jte:jte-spring-boot-starter-3:3.1.9")
     implementation("gg.jte:jte:3.1.9")
 
+    implementation("net.datafaker:datafaker:2.1.0")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")

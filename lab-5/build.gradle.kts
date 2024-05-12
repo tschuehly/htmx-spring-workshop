@@ -22,18 +22,16 @@ repositories {
 }
 
 dependencies {
-//    implementation("org.springframework.boot:spring-boot-starter-oauth2-authorization-server")
 
+    // LAB 1:
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("gg.jte:jte-spring-boot-starter-3:3.1.9")
-    implementation("gg.jte:jte:3.1.9")
-//
-    implementation("de.tschuehly:spring-view-component-jte:0.7.2")
-    annotationProcessor("de.tschuehly:spring-view-component-core:0.7.2")
-//    implementation("org.eclipse.store:integrations-spring-boot3:1.2.0")
 
+    // LAB 2:
+    implementation("de.tschuehly:spring-view-component-jte:0.7.4")
+    annotationProcessor("de.tschuehly:spring-view-component-core:0.7.4")
     implementation("io.github.wimdeblauwe:htmx-spring-boot:3.2.0")
 
+    implementation("net.datafaker:datafaker:2.1.0")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
