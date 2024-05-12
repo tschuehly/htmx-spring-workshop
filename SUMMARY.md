@@ -7,3 +7,4 @@
 * [Lab 4: Using Spring Beans to Compose the UI](lab-4-using-spring-beans-to-compose-the-ui.md)
 * [Lab 5: Lazy Loading](lab-5-lazy-loading.md)
 * [Lab 6: Full Text Search](lab-6-full-text-search.md)
+* [Lab 7: Infinite Scroll](lab-7-infinite-scroll.md)

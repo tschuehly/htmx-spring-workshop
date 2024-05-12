@@ -106,6 +106,6 @@ public class UserController {
 }
 ```
 
-{% hint style="info" %}
+{% hint style="success" %}
 Lab-5 Checkpoint 1
 {% endhint %}

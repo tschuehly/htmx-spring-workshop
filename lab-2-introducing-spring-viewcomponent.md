@@ -258,7 +258,7 @@ In the UserController.java we can autowire the UserManagement ViewComponent and 
 
 <figure><img src=".gitbook/assets/image (6) (1).png" alt=""><figcaption></figcaption></figure>
 
-{% hint style="info" %}
+{% hint style="success" %}
 Lab 2 Checkpoint 1
 {% endhint %}
 
@@ -341,7 +341,7 @@ public class UserController {
 
 <figure><img src=".gitbook/assets/image (2) (2).png" alt=""><figcaption></figcaption></figure>
 
-{% hint style="info" %}
+{% hint style="success" %}
 Lab 2 Checkpoint 2
 {% endhint %}
 
@@ -420,7 +420,7 @@ public ViewContext saveUser(UUID uuid, String username, String password) {
 
 &#x20;We can restart the application and navigate to [localhost:8080](https://localhost:8080) and the save user function works again.&#x20;
 
-{% hint style="info" %}
+{% hint style="success" %}
 Lab 2 Checkpoint 3
 {% endhint %}
 
@@ -525,6 +525,6 @@ Now if we restart the application we can save a new user and they are inserted a
 
 <figure><img src=".gitbook/assets/image (11).png" alt=""><figcaption></figcaption></figure>
 
-{% hint style="info" %}
+{% hint style="success" %}
 Lab 2 Checkpoint 4
 {% endhint %}

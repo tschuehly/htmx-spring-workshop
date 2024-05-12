@@ -86,7 +86,7 @@ public class UserController {
 
 We can now navigate to [localhost:8080](http://localhost:8080/) and [localhost:8080/group-management](http://localhost:8080/group-management) and both pages still work.
 
-{% hint style="info" %}
+{% hint style="success" %}
 Lab-4 Checkpoint 1
 {% endhint %}
 
@@ -166,7 +166,7 @@ We can now navigate to [localhost:8080](http://localhost:8080/) and see that we 
 
 <figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
 
-{% hint style="info" %}
+{% hint style="success" %}
 Lab-4 Checkpoint 2
 {% endhint %}
 
@@ -214,6 +214,6 @@ Group Management is now the first Navigation Item!
 
 <figure><img src=".gitbook/assets/image (3).png" alt=""><figcaption></figcaption></figure>
 
-{% hint style="info" %}
+{% hint style="success" %}
 Lab-4 Checkpoint 3
 {% endhint %}

@@ -211,7 +211,7 @@ We can now navigate to [localhost:8080/groupManagement](http://localhost:8080/gr
 
 <figure><img src=".gitbook/assets/image (12).png" alt=""><figcaption></figcaption></figure>
 
-{% hint style="info" %}
+{% hint style="success" %}
 Lab-3 Checkpoint 1
 {% endhint %}
 
@@ -341,6 +341,6 @@ We can now navigate to [localhost:8080/groupManagement](http://localhost:8080/gr
 
 <figure><img src=".gitbook/assets/image (13).png" alt=""><figcaption></figcaption></figure>
 
-{% hint style="info" %}
+{% hint style="success" %}
 Lab-3 Checkpoint 2
 {% endhint %}

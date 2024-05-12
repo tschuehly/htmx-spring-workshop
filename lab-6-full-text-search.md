@@ -2,6 +2,10 @@
 
 As we now have a lot of users in our system we want to be able to search through the list of users.
 
+{% hint style="info" %}
+If you did Lab 5 previously you can remove the `TimeUnit.SECONDS.sleep(3);` from the UserService
+{% endhint %}
+
 For this workshop, we will stream through the list of users and filter it using the Java streams API.
 
 <pre class="language-java"><code class="lang-java"><strong>// UserService.java
@@ -126,6 +130,6 @@ We can now restart the application and see that the search is working:
 
 <figure><img src=".gitbook/assets/image (14).png" alt=""><figcaption></figcaption></figure>
 
-{% hint style="info" %}
+{% hint style="success" %}
 Lab-6 Checkpoint 1
 {% endhint %}
