@@ -15,12 +15,6 @@ public class UserService {
     return easyUserList;
   }
 
-  public List<EasyUser> getPage(int pageNumber, int pageSize) {
-    var startIndex = pageNumber * pageSize;
-    var endIndex = startIndex + pageSize;
-    return easyUserList.subList(startIndex, endIndex);
-  }
-
   public EasyUser createUser(String username, String password) {
     EasyUser newUser = new EasyUser(
         username,
@@ -39,6 +33,11 @@ public class UserService {
     ).toList();
   }
 
+  public List<EasyUser> getPage(int pageNumber, int pageSize) {
+    var startIndex = pageNumber * pageSize;
+    var endIndex = startIndex + pageSize;
+    return easyUserList.subList(startIndex, endIndex);
+  }
 
   public EasyUser findById(UUID uuid) {
     return easyUserList.stream().filter(it -> Objects.equals(uuid, it.uuid)).findFirst()
