@@ -212,7 +212,7 @@ We can now navigate to [localhost:8080/groupManagement](http://localhost:8080/gr
 <figure><img src=".gitbook/assets/image (12).png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="info" %}
-Checkpoint 1
+Lab-3 Checkpoint 1
 {% endhint %}
 
 We didn't do anything new yet, now we are going to start with the inline editing feature.
@@ -342,5 +342,5 @@ We can now navigate to [localhost:8080/groupManagement](http://localhost:8080/gr
 <figure><img src=".gitbook/assets/image (13).png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="info" %}
-Checkpoint 2
+Lab-3 Checkpoint 2
 {% endhint %}
