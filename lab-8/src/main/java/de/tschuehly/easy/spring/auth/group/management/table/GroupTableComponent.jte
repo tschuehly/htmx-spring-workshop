@@ -1,5 +1,5 @@
 @import static de.tschuehly.easy.spring.auth.group.management.table.GroupTableComponent.*
-@import de.tschuehly.easy.spring.auth.group.GroupController
+@import static de.tschuehly.easy.spring.auth.group.GroupController.GET_SELECT_USER
 @import de.tschuehly.easy.spring.auth.htmx.HtmxUtil
 @param de.tschuehly.easy.spring.auth.group.management.table.GroupTableComponent.GroupTableContext groupTableContext
 <table id="${GROUP_TABLE_ID}">
@@ -30,7 +30,8 @@
                 @endfor
             </td>
             <td>
-                <button hx-get="${HtmxUtil.URI(GroupController.GET_SELECT_USER,group.groupName)}" hx-swap="outerHTML">
+                <button hx-get="${HtmxUtil.URI(GET_SELECT_USER,group.groupName)}"
+                        hx-swap="outerHTML">
                     <img src="/plus.svg">
                 </button>
             </td>
