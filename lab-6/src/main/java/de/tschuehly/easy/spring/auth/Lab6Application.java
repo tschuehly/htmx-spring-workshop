@@ -25,6 +25,9 @@ public class Lab6Application {
           "Cassandra",
           "Test1234"
       );
+      groupService.createGroup("USER_GROUP");
+      groupService.createGroup("ADMIN_GROUP");
+
       Faker faker = new Faker();
       for (int i = 0; i < 10000; i++) {
         userService.createUser(
@@ -32,8 +35,6 @@ public class Lab6Application {
             faker.internet().password()
         );
       }
-      groupService.createGroup("USER_GROUP");
-      groupService.createGroup("ADMIN_GROUP");
     };
   }
 }
