@@ -293,7 +293,7 @@ If we now listen to this event in the `MODAL_CONTAINER_ID`  element using `hx-on
 If we click the `Save User` button and go to Chrome DevTools we can see Hypermedia as the Engine of Application State (HATEOAS) in action.\
 The new application state after saving the user is transferred via HTML to the browser, and the new row also includes the link to get the modal that it was just called from.
 
-<figure><img src=".gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Create User
 
@@ -369,6 +369,6 @@ public String createUser(String username, String password, Model model, HttpServ
 
 After restarting the application you now should be able to create a new user and when saving the new user they should be displayed as the first item of the table:
 
-<figure><img src=".gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 This was Lab 1, you should now feel confident to use server-side rendering with Spring Boot and JTE and be able to create an interactive application using htmx.&#x20;

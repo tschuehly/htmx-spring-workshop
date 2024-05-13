@@ -8,3 +8,5 @@
 * [Lab 5: Lazy Loading](lab-5-lazy-loading.md)
 * [Lab 6: Full Text Search](lab-6-full-text-search.md)
 * [Lab 7: Infinite Scroll](lab-7-infinite-scroll.md)
+* [Lab 8: Exception Messages](lab-8-exception-messages.md)
+* [Lab 9: Server-Sent Events](lab-9-server-sent-events.md)
