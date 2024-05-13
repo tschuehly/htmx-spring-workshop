@@ -10,7 +10,7 @@ Please install the following:
 * [plugins.jetbrains.com/plugin/14521-jte](https://plugins.jetbrains.com/plugin/14521-jte)
 * Gradle
 
-Please clone the Git repository:&#x20;
+Please clone the Git repository:
 
 [github.com/tschuehly/htmx-spring-workshop](https://github.com/tschuehly/htmx-spring-workshop)
 
@@ -18,11 +18,17 @@ Please clone the Git repository:&#x20;
 
 In each lab there are checkpoints:
 
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
 
 You can find a branch for each lab with multiple checkpoint commits you can start over with or compare against if you are stuck:
 
-<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
+
+At the top of each code snippet, there is a comment denoting the file of the code snippet, don't copy-paste them as they will break the template files.
+
+Only the relevant imports that need to be added are shown. Imports that have already been defined before are omitted.
+
+
 
 ### Lab 1: Server-side rendering with Spring Boot and JTE
 

@@ -6,7 +6,7 @@ The goal of this lab is to refactor the application to use Spring ViewComponent 
 
 Spring ViewComponent is a way to create server-rendered UI components using the presenter pattern, inspired by similar libraries like Ruby on Rails ViewComponent.
 
-A ViewComponent is a Spring-managed bean that defines a rendering context for a corresponding template, this context is called `ViewContext`.&#x20;
+A ViewComponent is a Spring-managed bean that defines a rendering context for a corresponding template, this context is called `ViewContext`.
 
 We can create one by annotating a class with the `@ViewComponent` annotation and defining a public nested record that implements the ViewContext interface.
 
@@ -22,7 +22,7 @@ public class SimpleViewComponent {
 }
 ```
 
-A ViewComponent needs to have a template with the same name defined in the same package. In the template, we can access the properties of the record.&#x20;
+A ViewComponent needs to have a template with the same name defined in the same package. In the template, we can access the properties of the record.
 
 ```
 // SimpleViewComponent.jte
@@ -44,8 +44,6 @@ annotationProcessor("de.tschuehly:spring-view-component-core:0.7.4")
 implementation("io.github.wimdeblauwe:htmx-spring-boot:3.3.0")
 ```
 
-
-
 We start by creating a `UserManagement.java` file in the `auth.user.management` package.
 
 <pre class="language-java"><code class="lang-java"><strong>// UserManagement.java
@@ -65,11 +63,11 @@ We start by creating a `UserManagement.java` file in the `auth.user.management` 
 
 We remove both `MODAL_CONTAINER_ID` and `CLOSE_MODAL_EVENT` we added to the `UserManagement.java` from `UserController.java` and fix the imports there.
 
-We then move the `UserManagement.jte`  template to `auth.user.management` &#x20;
+We then move the `UserManagement.jte` template to `auth.user.management`
 
 We now need to adjust the imports.\
-We add a static import to the `UserManagement` class. \
-The `param` is now a `UserManagementContext` as we put all variables into this record.&#x20;
+We add a static import to the `UserManagement` class.\
+The `param` is now a `UserManagementContext` as we put all variables into this record.
 
 <pre class="language-java"><code class="lang-java">// UserManagement.jte
 @import static de.tschuehly.easy.spring.auth.user.management.UserManagement.*
@@ -115,9 +113,7 @@ Then we add the imports at the top:
 @param UserTableContext userTableContext
 ```
 
-
-
-We create a `UserRowComponent.java` class in `auth.user.management.table.row`&#x20;
+We create a `UserRowComponent.java` class in `auth.user.management.table.row`
 
 <pre class="language-java"><code class="lang-java"><strong>// UserRowComponent.java
 </strong><strong>@ViewComponent
@@ -147,7 +143,7 @@ We then replace the `@import` and `@param` with the following:
 @param UserRowContext userRowContext
 </code></pre>
 
-Then we replace  the `easyUser` variable with `userRowContext.easyUser()` .
+Then we replace the `easyUser` variable with `userRowContext.easyUser()` .
 
 Then we replace the `<tr id="user-${uuid}">` with `<tr id="${UserRowContext.htmlUserId(uuid)}">`
 
@@ -174,7 +170,7 @@ Then we replace the `<tr id="user-${uuid}">` with `<tr id="${UserRowContext.html
 
 We now go into `UserTableComponent.java` and call the `userService.findAll()` method and call the autowired `userRowComponent::render` method in a map call.
 
-We then add this `rowList` into the `UserTableContext`&#x20;
+We then add this `rowList` into the `UserTableContext`
 
 ```java
 // UserTableComponent.java
@@ -254,9 +250,9 @@ In the UserController.java we can autowire the UserManagement ViewComponent and 
 }
 </code></pre>
 
-&#x20;We can restart the application now navigate to [localhost:8080](https://localhost:8080) and see the table rendered.&#x20;
+We can restart the application now navigate to [localhost:8080](https://localhost:8080) and see the table rendered.
 
-<figure><img src=".gitbook/assets/image (6) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (6) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="success" %}
 Lab 2 Checkpoint 1
@@ -293,7 +289,7 @@ public class EditUserComponent {
 }
 ```
 
-We then create the `EditUserComponent.jte` we can copy the content of the `EditUserForm.jte` and adjust the imports and replace the `UserForm` parameter with the `EditUserContext`&#x20;
+We then create the `EditUserComponent.jte` we can copy the content of the `EditUserForm.jte` and adjust the imports and replace the `UserForm` parameter with the `EditUserContext`
 
 ```html
 // EditUserComponent.jte
@@ -337,7 +333,7 @@ public class UserController {
 }
 ```
 
-&#x20;We can restart the application navigate to [localhost:8080](https://localhost:8080) and the edit user modal works again.
+We can restart the application navigate to [localhost:8080](https://localhost:8080) and the edit user modal works again.
 
 <figure><img src=".gitbook/assets/image (2) (2).png" alt=""><figcaption></figcaption></figure>
 
@@ -345,7 +341,7 @@ public class UserController {
 Lab 2 Checkpoint 2
 {% endhint %}
 
-We now need to fix the save user functionality. Previously we used HX Response headers to set the swapping functionality directly in the Controller:&#x20;
+We now need to fix the save user functionality. Previously we used HX Response headers to set the swapping functionality directly in the Controller:
 
 ```java
 // UserController.java
@@ -366,7 +362,7 @@ We now want to move this functionality to the UserRowComponent.
 
 I have already created a `HtmxUtil` class that helps us set the HX Response Headers.
 
-We are using Wim Deblauwes htmx-spring-boot library: [github.com/wimdeblauwe/htmx-spring-boot](https://github.com/wimdeblauwe/htmx-spring-boot). It offers a HtmxResponseHeader enum with all possible values and a HxSwapType enum.&#x20;
+We are using Wim Deblauwes htmx-spring-boot library: [github.com/wimdeblauwe/htmx-spring-boot](https://github.com/wimdeblauwe/htmx-spring-boot). It offers a HtmxResponseHeader enum with all possible values and a HxSwapType enum.
 
 We will add these convenience methods:
 
@@ -418,7 +414,7 @@ public ViewContext saveUser(UUID uuid, String username, String password) {
 }
 ```
 
-&#x20;We can restart the application and navigate to [localhost:8080](https://localhost:8080) and the save user function works again.&#x20;
+We can restart the application and navigate to [localhost:8080](https://localhost:8080) and the save user function works again.
 
 {% hint style="success" %}
 Lab 2 Checkpoint 3
@@ -426,10 +422,10 @@ Lab 2 Checkpoint 3
 
 The advantage we now have is that the Controller doesn't need to know how the UserRowComponent template looks and what needs to be swapped. The UserRowComponent just offers an API to rerender a row.
 
-### &#x20;Create User
+### Create User
 
-FInally we need to migrate the CreateUser functionality to Spring ViewComponent. \
-We start by creating a `CreateUserComponent` in `auth.user.management.create`&#x20;
+FInally we need to migrate the CreateUser functionality to Spring ViewComponent.\
+We start by creating a `CreateUserComponent` in `auth.user.management.create`
 
 <pre><code><strong>// CreateUserComponent.java
 </strong><strong>@ViewComponent
@@ -476,7 +472,7 @@ public ViewContext getCreateUserModal() {
 }
 ```
 
-&#x20;We can restart the application and navigate to [localhost:8080](https://localhost:8080) and the create user modal is shown when we click on `Create User`
+We can restart the application and navigate to [localhost:8080](https://localhost:8080) and the create user modal is shown when we click on `Create User`
 
 <figure><img src=".gitbook/assets/image (10).png" alt=""><figcaption></figcaption></figure>
 
