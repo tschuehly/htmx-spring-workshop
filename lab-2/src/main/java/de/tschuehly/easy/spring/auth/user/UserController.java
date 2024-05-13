@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class UserController {
+  public static final String MODAL_CONTAINER_ID = "modalContainer";
+  public static final String USER_TABLE_BODY_ID = "userTableBody";
 
   private final UserService userService;
 
@@ -17,18 +19,12 @@ public class UserController {
     this.userService = userService;
   }
 
-
-  public static final String USER_TABLE_BODY_ID = "userTableBody";
-  public static final String MODAL_CONTAINER_ID = "modalContainer";
-  public static final String CLOSE_MODAL_EVENT = "close-modal";
-
   @GetMapping("/")
   public String index(Model model) {
     model.addAttribute("easyUserList", userService.findAll());
     return "UserManagement";
   }
 
-  public static final String POST_SAVE_USER = "/save-user";
   public static final String GET_EDIT_USER_MODAL = "/save-user/modal/{uuid}";
 
   public record UserForm(String uuid, String username, String password) {
@@ -42,6 +38,9 @@ public class UserController {
     return "EditUserForm";
   }
 
+  public static final String POST_SAVE_USER = "/save-user";
+  public static final String CLOSE_MODAL_EVENT = "close-modal";
+
   @PostMapping(POST_SAVE_USER)
   public String saveUser(UUID uuid, String username, String password, Model model, HttpServletResponse response) {
     EasyUser user = userService.saveUser(uuid, username, password);
@@ -53,13 +52,15 @@ public class UserController {
   }
 
 
-  public static final String POST_CREATE_USER = "/create-user";
   public static final String GET_CREATE_USER_MODAL = "/create-user/modal";
 
   @GetMapping(GET_CREATE_USER_MODAL)
   public String getCreateUserModal() {
     return "CreateUserForm";
   }
+
+
+  public static final String POST_CREATE_USER = "/create-user";
 
   @PostMapping(POST_CREATE_USER)
   public String createUser(String username, String password, Model model, HttpServletResponse response) {
