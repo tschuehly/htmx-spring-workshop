@@ -1,6 +1,6 @@
 # Lab 9: Server-Sent Events
 
-In this lab, we will leverage the SSE capabilities of htmx to update our table live with the newest Users that are created.
+In this lab, we will leverage the SSE capabilities of htmx to update our table live if a new user is created.
 
 
 

@@ -6,15 +6,23 @@ Please install the following:
 
 * Java 21
 * IntelliJ IDEA
-* [https://plugins.jetbrains.com/plugin/20588-htmx-support](https://plugins.jetbrains.com/plugin/20588-htmx-support)
-* [https://plugins.jetbrains.com/plugin/14521-jte](https://plugins.jetbrains.com/plugin/20588-htmx-support)
+* [plugins.jetbrains.com/plugin/20588-htmx-support](https://plugins.jetbrains.com/plugin/20588-htmx-support)
+* [plugins.jetbrains.com/plugin/14521-jte](https://plugins.jetbrains.com/plugin/20588-htmx-support)
 * Gradle
 
 Please clone the Git repository:&#x20;
 
-[https://github.com/tschuehly/htmx-spring-workshop](https://github.com/tschuehly/htmx-spring-workshop)
+[github.com/tschuehly/htmx-spring-workshop](https://github.com/tschuehly/htmx-spring-workshop)
 
 ## Labs
+
+In each lab there are checkpoints:
+
+<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
+You can find a branch for each lab with multiple checkpoint commits you can start over with or compare against if you are stuck:
+
+<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
 
 ### Lab 1: Server-side rendering with Spring Boot and JTE
 
@@ -50,7 +58,7 @@ In this lab, we will catch Exception using a Spring Controller Advice and show t
 
 ### Lab 9: Server-Sent Events
 
-In this lab, we will leverage the SSE capabilities of htmx to update our table live with the newest Users that are created.
+In this lab, we will leverage the SSE capabilities of htmx to update our table live if a new user is created.
 
 ## IntelliJ Code Template
 

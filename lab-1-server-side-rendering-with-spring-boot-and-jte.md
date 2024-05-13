@@ -8,13 +8,13 @@ We are using [JTE](https://jte.gg) as the server-side template language.
 
 We want to display a table of users like this:
 
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
 
 First, we will create a `UserController.java` in `de.tschuehly.easy.spring.auth.user` and annotate it with `@Controller`.
 
 Create a new `@GetMapping` and inside the method, we call the `userService.findAll()` function and add it to the MVC model.
 
-<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 We also define a constant for the UserTable ID and an ID for a modal container.
 

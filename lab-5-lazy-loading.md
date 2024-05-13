@@ -51,7 +51,7 @@ We use `@HxRequest` of the [htmx-spring-boot](https://github.com/wimdeblauwe/htm
 
 When you try to navigate to this route in the browser we cannot access it.
 
-<figure><img src=".gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 To render the user table we need to change the UserMangement back to a ViewComponent.
 
