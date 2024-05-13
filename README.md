@@ -16,8 +16,8 @@ Please install the following:
 
 This lab aims to build a simple user management application with base Spring Boot, JTE and htmx.
 
-{% content-ref url="lab1.md" %}
-[lab1.md](lab1.md)
+{% content-ref url="lab-1-server-side-rendering-with-spring-boot-and-jte.md" %}
+[lab-1-server-side-rendering-with-spring-boot-and-jte.md](lab-1-server-side-rendering-with-spring-boot-and-jte.md)
 {% endcontent-ref %}
 
 ### Lab 2: Introducing Spring ViewComponent
