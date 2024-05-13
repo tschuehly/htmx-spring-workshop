@@ -1,5 +1,5 @@
-@import de.tschuehly.easy.spring.auth.user.EasyUser
 @import static de.tschuehly.easy.spring.auth.user.UserController.*
+@import de.tschuehly.easy.spring.auth.user.EasyUser
 @param java.util.List<EasyUser> easyUserList
 
 <html lang="en">
