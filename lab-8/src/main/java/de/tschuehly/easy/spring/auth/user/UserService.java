@@ -25,12 +25,16 @@ public class UserService {
   }
 
   public List<EasyUser> searchUser(String searchString) {
-    return easyUserList.stream().filter(
+    List<EasyUser> easyUsers = easyUserList.stream().filter(
         it -> it.uuid.toString().contains(searchString)
               || it.username.contains(searchString)
               || it.password.contains(
             searchString)
     ).toList();
+    if (easyUsers.isEmpty()) {
+      throw new UserNotFoundException("No user found with the searchString: \"" + searchString + "\"");
+    }
+    return easyUsers;
   }
 
   public List<EasyUser> getPage(int pageNumber, int pageSize) {
@@ -38,6 +42,7 @@ public class UserService {
     var endIndex = startIndex + pageSize;
     return easyUserList.subList(startIndex, endIndex);
   }
+
 
   public EasyUser findById(UUID uuid) {
     return easyUserList.stream().filter(it -> Objects.equals(uuid, it.uuid)).findFirst()
