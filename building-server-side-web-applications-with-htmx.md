@@ -10,6 +10,10 @@ Please install the following:
 * [https://plugins.jetbrains.com/plugin/14521-jte](https://plugins.jetbrains.com/plugin/20588-htmx-support)
 * Gradle
 
+Please clone the Git repository:&#x20;
+
+[https://github.com/tschuehly/htmx-spring-workshop](https://github.com/tschuehly/htmx-spring-workshop)
+
 ## Labs
 
 ### Lab 1: Server-side rendering with Spring Boot and JTE
