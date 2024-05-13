@@ -78,7 +78,7 @@ In this lab, we will catch Exception using a Spring Controller Advice and show t
 
 ### Lab 9: Server-Sent Events
 
-We will leverage the SSE capabilities of htmx to update our table live with the newest Users that are created.
+In this lab, we will leverage the SSE capabilities of htmx to update our table live with the newest Users that are created.
 
 {% content-ref url="lab-9-server-sent-events.md" %}
 [lab-9-server-sent-events.md](lab-9-server-sent-events.md)
