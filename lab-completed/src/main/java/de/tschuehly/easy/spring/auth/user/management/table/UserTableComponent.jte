@@ -16,7 +16,6 @@
   }
 </style>
 <table>
-
     <thead>
     <tr>
        <th colspan="4">
@@ -43,7 +42,8 @@
     </tr>
     </thead>
     <tbody id="${USER_TABLE_BODY_ID}">
-    <tr hx-ext="sse" sse-connect="${GET_SUBSCRIBE_USER}" sse-swap="messageContext" hx-swap="afterend"></tr>
+    <tr hx-ext="sse" sse-connect="${GET_SUBSCRIBE_USER}"
+        sse-swap="message" hx-swap="afterend"></tr>
     ${userTableContext.userTableBody()}
     </tbody>
     <tfoot>

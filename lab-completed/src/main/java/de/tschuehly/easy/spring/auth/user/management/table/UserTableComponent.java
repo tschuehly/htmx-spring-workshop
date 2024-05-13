@@ -59,7 +59,6 @@ public class UserTableComponent {
   public Flux<String> subscribeToNewUserRow(){
     return userService.subscribeToNewUserCreation().map(
         user -> {
-//          TODO: static method to render a ViewComponent
           ViewContext viewContext = userRowComponent.render(user);
           StringOutput stringOutput = new StringOutput();
           jteTemplateEngine.render(
