@@ -8,9 +8,13 @@ We are using [JTE](https://jte.gg) as the server-side template language.
 
 We want to display a table of users like this:
 
-First, navigate to `UserController.java` here we will create the endpoint to the UserManagement page and add the data necessary for view rendering:
+<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
-Create a new `@GetMapping` and inside the method we call the `userService.findAll()` function and add it to the MVC model.
+First, we will create a `UserController.java` in `de.tschuehly.easy.spring.auth.user` and annotate it with `@Controller`.
+
+Create a new `@GetMapping` and inside the method, we call the `userService.findAll()` function and add it to the MVC model.
+
+<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
 
 We also define a constant for the UserTable ID and an ID for a modal container.
 
@@ -33,7 +37,7 @@ We return the string `UserManagement` . This is the reference to the View we wan
 
 The JTE Spring Boot Starter looks for templates in `src/main/jte`.
 
-You can find all the templates we need already there. We just need to fill them with life.
+You can find all the templates we need already there. We need to fill them with life.
 
 We start with `UserManagement.jte`, as you can see there is already a barebones html structure in place with css and htmx linked.
 

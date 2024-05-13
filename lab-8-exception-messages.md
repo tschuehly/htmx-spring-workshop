@@ -149,7 +149,7 @@ public class ExceptionAdvice {
 
 If we restart the application and search for a string that is not present in the data we will be shown the toast.
 
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="success" %}
 Lab-8 Checkpoint 1
