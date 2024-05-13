@@ -1,6 +1,6 @@
 plugins {
     java
-    id("org.springframework.boot") version "3.2.3"
+    id("org.springframework.boot") version "3.2.5"
     id("io.spring.dependency-management") version "1.1.4"
 }
 
@@ -26,6 +26,9 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("gg.jte:jte-spring-boot-starter-3:3.1.9")
     implementation("gg.jte:jte:3.1.9")
+
+    // LAB 9:
+    implementation("io.projectreactor:reactor-core:3.6.5")
 
     implementation("net.datafaker:datafaker:2.1.0")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
