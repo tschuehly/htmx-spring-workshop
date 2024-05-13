@@ -6,32 +6,24 @@ import de.tschuehly.spring.viewcomponent.jte.ViewContext;
 @ViewComponent
 public class MessageComponent {
 
-
-  public ViewContext renderSuccessToast(String message) {
-    return new Message(message,  MessageType.TOAST_SUCCESS);
+  public ViewContext renderInfoToast(String message) {
+    return new MessageContext(message,  MessageType.INFO);
   }
 
   public ViewContext renderErrorToast(String message) {
-    return new Message(message,  MessageType.TOAST_ERROR);
+    return new MessageContext(message,  MessageType.TOAST_ERROR);
   }
 
-  public ViewContext renderInfoToast(String message) {
-    return new Message(message,  MessageType.INFO);
-  }
-
-  public record Message(String message, MessageType type) implements
-      ViewContext {
-
-  }
+  public record MessageContext(String message, MessageType type) implements
+      ViewContext {}
 
   public enum MessageType {
-    TOAST_SUCCESS,
     TOAST_ERROR,
-    NONE, INFO;
+    NONE,
+    INFO;
 
     public String severity() {
       return switch (this) {
-        case TOAST_SUCCESS -> "success";
         case TOAST_ERROR -> "error";
         case INFO -> "info";
         default -> "";

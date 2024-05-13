@@ -18,12 +18,6 @@ public class UserService {
     return easyUserList;
   }
 
-  public List<EasyUser> getPage(int pageNumber, int pageSize) {
-    var startIndex = pageNumber * pageSize;
-    var endIndex = startIndex + pageSize;
-    return easyUserList.subList(startIndex, endIndex);
-  }
-
   public EasyUser createUser(String username, String password) {
     EasyUser newUser = new EasyUser(
         username,
@@ -44,6 +38,12 @@ public class UserService {
       throw new UserNotFoundException("No user found with the searchString: \"" + searchString + "\"");
     }
     return easyUsers;
+  }
+
+  public List<EasyUser> getPage(int pageNumber, int pageSize) {
+    var startIndex = pageNumber * pageSize;
+    var endIndex = startIndex + pageSize;
+    return easyUserList.subList(startIndex, endIndex);
   }
 
 

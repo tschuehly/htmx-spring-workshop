@@ -59,7 +59,6 @@ public class UserController {
 
   public static final String GET_SEARCH_USER = "/search-user";
   public static final String SEARCH_PARAM = "searchQuery";
-
   @HxRequest
   @GetMapping(GET_SEARCH_USER)
   public ViewContext searchUser(@RequestParam(SEARCH_PARAM) String searchQuery) {
