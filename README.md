@@ -1,22 +1,8 @@
----
-layout:
-  title:
-    visible: true
-  description:
-    visible: true
-  tableOfContents:
-    visible: false
-  outline:
-    visible: false
-  pagination:
-    visible: true
----
-
 # HTMX + Spring Boot Workshop
 
 You can find the workshop documentation at:
 
-{% embed url="https://tschuehly.gitbook.io/server-side-spring-htmx-workshop" %}
+https://tschuehly.gitbook.io/server-side-spring-htmx-workshop/building-server-side-web-applications-with-htmx
 
 ### Spring I/O 2024 (2h)
 
