@@ -164,7 +164,7 @@ In the `LayoutComponent.jte` template we can now show a link for each page defin
 
 We can now navigate to [localhost:8080](http://localhost:8080/) and see that we have our Navigation again!
 
-<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="success" %}
 Lab-4 Checkpoint 2
