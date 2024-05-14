@@ -121,7 +121,7 @@ We then add the uuid of the user as id to the `<tr>` element and add a `<td>`ele
 ```
 {% endcode %}
 
-We can see all currently defined users if we start the application and navigate to [localhost:8080](https://localhost:8080).
+We can see all currently defined users if we start the application and navigate to [http://localhost:8080](http://localhost:8080/).
 
 <figure><img src=".gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
 
@@ -214,7 +214,7 @@ In the corresponding `EditUserForm.jte` template we display the values in a `<fo
 &#x3C;/form>
 </code></pre>
 
-Now, restart the application, navigate to [localhost:8080](http://localhost:8080/), and click the edit button. You should now see the modal popup and the values of the user displayed.
+Now, restart the application, navigate to [http://localhost:8080](http://localhost:8080/), and click the edit button. You should now see the modal popup and the values of the user displayed.
 
 <figure><img src=".gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
 

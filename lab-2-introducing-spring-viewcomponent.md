@@ -250,7 +250,7 @@ In the UserController.java we can autowire the UserManagement ViewComponent and 
 }
 </code></pre>
 
-We can restart the application now navigate to [localhost:8080](https://localhost:8080) and see the table rendered.
+We can restart the application now navigate to [http://localhost:8080/](http://localhost:8080/) and see the table rendered.
 
 <figure><img src=".gitbook/assets/image (6) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
@@ -333,7 +333,7 @@ public class UserController {
 }
 ```
 
-We can restart the application navigate to [localhost:8080](https://localhost:8080) and the edit user modal works again.
+We can restart the application navigate to [http://localhost:8080/](http://localhost:8080/) and the edit user modal works again.
 
 <figure><img src=".gitbook/assets/image (2) (2).png" alt=""><figcaption></figcaption></figure>
 
@@ -414,7 +414,7 @@ public ViewContext saveUser(UUID uuid, String username, String password) {
 }
 ```
 
-We can restart the application and navigate to [localhost:8080](https://localhost:8080) and the save user function works again.
+We can restart the application and navigate to [http://localhost:8080/](http://localhost:8080/) and the save user function works again.
 
 {% hint style="success" %}
 Lab 2 Checkpoint 3
@@ -472,7 +472,7 @@ public ViewContext getCreateUserModal() {
 }
 ```
 
-We can restart the application and navigate to [localhost:8080](https://localhost:8080) and the create user modal is shown when we click on `Create User`
+We can restart the application and navigate to [http://localhost:8080/](http://localhost:8080/) and the create user modal is shown when we click on `Create User`
 
 <figure><img src=".gitbook/assets/image (10).png" alt=""><figcaption></figcaption></figure>
 

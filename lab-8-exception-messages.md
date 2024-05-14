@@ -91,7 +91,7 @@ Then we add a `<div>` element that has the ID set to `TOAST_CONTAINER_ID` after 
 
 Now we create a `MessageComponent` ViewComponent in the `de.tschuehly.easy.spring.auth.web.message` package.
 
-We also define a `MessageType` enum that has a `severity` method.
+We also define an `MessageType` enum that has a `severity` method.
 
 <pre class="language-java" data-title="MessageComponent.java"><code class="lang-java">package de.tschuehly.easy.spring.auth.web.message;
 
@@ -103,10 +103,6 @@ import de.tschuehly.spring.viewcomponent.jte.ViewContext;
 
   public ViewContext renderInfoToast(String message) {
     return new MessageContext(message,  MessageType.INFO);
-  }
-
-  public ViewContext renderErrorToast(String message) {
-    return new MessageContext(message,  MessageType.TOAST_ERROR);
   }
 
   public record MessageContext(String message, MessageType type) implements
@@ -155,7 +151,7 @@ Now we will create the corresponding MessageComponent.jte
 ```
 {% endcode %}
 
-(1): In the template, we create an `<div>`  element where we set the `id` to a timestamp we define as a local variable with the  `!{var}` syntax
+(1): In the template, we create an `<div>`  element where we set the `id` to a timestamp, we define as a local variable with the  `!{var}` syntax
 
 (2): We use the `<button onclick>` attribute to hide the toast when the user clicks on the X
 
