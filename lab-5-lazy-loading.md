@@ -63,7 +63,7 @@ If we now restart the application and try to navigate to [http://localhost:8080/
 
 You should not be able to access it.
 
-<figure><img src=".gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 To render the user table we need to change the UserMangement back to a ViewComponent.
 

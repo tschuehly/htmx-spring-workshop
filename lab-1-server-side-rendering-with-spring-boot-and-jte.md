@@ -14,7 +14,7 @@ First navigate to the `UserController` in `auth.user`
 
 We create a new `@GetMapping` and inside the method, we call the `userService.findAll()` function and add it to the MVC model.
 
-<figure><img src=".gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 We also define a constant for the UserTable ID and an ID for a modal container.
 
