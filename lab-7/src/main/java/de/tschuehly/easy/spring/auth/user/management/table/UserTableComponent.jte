@@ -32,9 +32,7 @@
     </tr>
     </thead>
     <tbody id="${USER_TABLE_BODY_ID}">
-    @for(var row: userTableContext.userTableRowList())
-        ${row}
-    @endfor
+    ${userTableContext.userTableBody()}
     </tbody>
     <tfoot>
     <tr>

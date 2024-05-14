@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-
 import org.springframework.stereotype.Service;
 
 @Service
@@ -34,6 +33,11 @@ public class UserService {
     ).toList();
   }
 
+  public List<EasyUser> getPage(int pageNumber, int pageSize) {
+    var startIndex = pageNumber * pageSize;
+    var endIndex = startIndex + pageSize;
+    return easyUserList.subList(startIndex, endIndex);
+  }
 
   public EasyUser findById(UUID uuid) {
     return easyUserList.stream().filter(it -> Objects.equals(uuid, it.uuid)).findFirst()
@@ -53,4 +57,5 @@ public class UserService {
     );
     return newUser;
   }
+
 }
