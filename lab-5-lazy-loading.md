@@ -1,6 +1,6 @@
 # Lab 5: Lazy Loading
 
-In this lab, we simulate a slow system as it contains a lot of users and we want to give the user faster feedback.
+In this lab, we simulate a slow system and we want to improve the user experience by giving them faster feedback.
 
 ### Simulate a large payload and slow system
 
