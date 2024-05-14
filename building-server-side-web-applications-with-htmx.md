@@ -5,7 +5,7 @@
 Please install the following:
 
 * Java 21
-* IntelliJ IDEA
+* IntelliJ IDEA Community Edition or Ultimate
 * [plugins.jetbrains.com/plugin/20588-htmx-support](https://plugins.jetbrains.com/plugin/20588-htmx-support)
 * [plugins.jetbrains.com/plugin/14521-jte](https://plugins.jetbrains.com/plugin/14521-jte)
 * Gradle

@@ -3,13 +3,14 @@
 As we now have a lot of users in our system we want to be able to search through the list of users.
 
 {% hint style="info" %}
-If you did Lab 5 previously you can remove the `TimeUnit.SECONDS.sleep(3);` from the UserService
+If you did Lab 5 previously you can remove the `TimeUnit.SECONDS.sleep(3);` from the UserService.findAll
 {% endhint %}
 
-For this workshop, we will stream through the list of users and filter it using the Java streams API.
+For this workshop, we will stream through the list of users and filter it using the Java streams API.&#x20;
 
-<pre class="language-java"><code class="lang-java"><strong>// UserService.java
-</strong><strong>public List&#x3C;EasyUser> searchUser(String searchString) {
+Create a new method `searchUser` in the UserService.
+
+<pre class="language-java" data-title="UserService.java"><code class="lang-java"><strong>public List&#x3C;EasyUser> searchUser(String searchString) {
 </strong>  return easyUserList.stream().filter(
       it -> it.uuid.toString().contains(searchString)
             || it.username.contains(searchString)
@@ -19,8 +20,11 @@ For this workshop, we will stream through the list of users and filter it using 
 }
 </code></pre>
 
-Now we will create a utility List ViewComponent in `auth.web.list`, that receives a `List<ViewContext>` as a parameter and passes it to the `ListContext` &#x20;
+Create a new package `de.t.e.s.auth.web.list and then create a ListComponent.java`
 
+Now we will create a new ViewComponent utility List ViewComponent in the `de.t.e.s.auth.web.list` , that receives a `List<ViewContext>` as a parameter and passes it to the `ListContext` &#x20;
+
+{% code title="ListComponent.java" %}
 ```java
 // ListComponent.java
 @ViewComponent
@@ -34,6 +38,7 @@ public class ListComponent {
     implements ViewContext {}
 }
 ```
+{% endcode %}
 
 In the template, we loop through the ViewContext List and render each ViewContext.
 
