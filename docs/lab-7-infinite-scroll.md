@@ -4,7 +4,7 @@ In Lab 5 we improved the perceived responsiveness of our application by lazy loa
 
 Even without a simulated delay, the response was still quite slow as we transferred a 4.1 MB HTML table:&#x20;
 
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
 In this lab we will fix this by using pagination with the infinite scroll mechanism, only loading new users when the user wants to see them.
 

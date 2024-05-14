@@ -210,7 +210,7 @@ Restart the application and navigate to [http://localhost:8080](http://localhost
 
 Now search for a string not present in the data, and then you will see the toast message with the exception message.
 
-<figure><img src=".gitbook/assets/image (2) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="success" %}
 Lab-8 Checkpoint 1

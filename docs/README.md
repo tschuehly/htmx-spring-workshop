@@ -12,17 +12,19 @@ Please install the following:
 
 Please clone the Git repository:
 
-[github.com/tschuehly/htmx-spring-workshop](https://github.com/tschuehly/htmx-spring-workshop)
+```sh
+git clone https://github.com/tschuehly/htmx-spring-workshop.git
+```
 
 ## Labs
 
 In each lab there are checkpoints:
 
-<figure><img src=".gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
 
 You can find a branch for each lab with multiple checkpoint commits you can start over with or compare against if you are stuck:
 
-<figure><img src=".gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 At the top of each code snippet, there is a comment denoting the file of the code snippet, don't copy-paste them as they will break the template files.
 

@@ -4,64 +4,71 @@ This lab aims to build a simple user management application with Spring Boot and
 
 We are using [JTE](https://jte.gg) as the server-side template language.
 
-### Display a List of Users
+## Display Users
 
 We want to display a table of users like this:
 
-<figure><img src=".gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
 
-First navigate to the `UserController` in `auth.user`
+### UserController
 
-We create a new `@GetMapping` and inside the method, we call the `userService.findAll()` function and add it to the MVC model.
+First, navigate to the `UserController` in `de.tschuehly.easy.spring.auth.user`
 
-<figure><img src=".gitbook/assets/image (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+We create a new `@GetMapping` and inside the method, we call the `userService.findAll()` function and add it to the MVC model as `easyUserList` attribute.
 
-We also define a constant for the UserTable ID and an ID for a modal container.
+We also define a constant for the `USER_TABLE_BODY_ID` and the `MODAL_CONTAINER_ID`
 
 {% code title="UserController.java" %}
 ```java
+package de.tschuehly.easy.spring.auth.user;
+
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class UserController {
   public static final String MODAL_CONTAINER_ID = "modalContainer";
   public static final String USER_TABLE_BODY_ID = "userTableBody";
-  
-  @GetMapping("/")
+
+  private final UserService userService;
+
+  public UserController(UserService userService) {
+    this.userService = userService;
+  }
+
+  @GetMapping("/") 
   public String index(Model model) {
     model.addAttribute("easyUserList", userService.findAll());
     return "UserManagement";
-  }
-  // ...
+  }  
 }
 ```
 {% endcode %}
 
-We return the string `UserManagement` . This is the reference to the View we want to render:
+We return the string `UserManagement` . This is the reference to the View we want to render.
 
-<figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
-
-The JTE Spring Boot Starter looks for templates in `src/main/jte`.
+Spring MVC will look for templates in the `src/main/jte` directory as we use the `gg.jte:jte-spring-boot-starter-3`&#x20;
 
 You can find all the templates we need already there. We now need to fill them with life.
 
-#### JTE Template
+### UserMangament
 
-We start with `UserManagement.jte`, as you can see there is already a barebones html structure in place with css and htmx linked.
+We start with `UserManagement.jte` template. As you can see, a barebones html structure is already in place with CSS and htmx already referenced.
 
-We can import all static variables defined in UserController with `@import`
+We need to import all static variables defined in UserController with the `@import` JTE syntax
 
 {% code title="UserManagement.jte " %}
 ```crystal
 @import static de.tschuehly.easy.spring.auth.user.UserController.*
+@import de.tschuehly.easy.spring.auth.user.EasyUser
 ```
 {% endcode %}
 
-We add the easyUserList we defined earlier in the model as a parameter to the template with `@param`.
+Then wee add the easyUserList we defined earlier in the model as a parameter to the template with `@param`.
 
 {% code title="UserManagement.jte " %}
 ```crystal
-@import de.tschuehly.easy.spring.auth.user.EasyUser
 @param List<EasyUser> easyUserList
 ```
 {% endcode %}
@@ -86,12 +93,60 @@ We also add an empty div with the id set to `MODAL_CONTAINER_ID` to show a modal
 
 {% code title="UserManagement.jte" %}
 ```html
-</table>
 <div id="${MODAL_CONTAINER_ID}"></div>
 ```
 {% endcode %}
 
-#### Display one User as Table Row
+Your UserManagement.jte template should now look like this:&#x20;
+
+```html
+@import static de.tschuehly.easy.spring.auth.user.UserController.*
+@import de.tschuehly.easy.spring.auth.user.EasyUser
+@param java.util.List<EasyUser> easyUserList
+<html lang="en">
+
+<head>
+    <title>Easy Spring Auth</title>
+    <link rel="stylesheet" href="/css/sakura.css" type="text/css">
+    <script src="/htmx_1.9.11.js"></script>
+    <script src="/htmx_debug.js"></script>
+</head>
+<body hx-ext="debug">
+<nav>
+    <h1>
+        Easy Spring Auth
+    </h1>
+</nav>
+<main>
+    <table>
+        <thead>
+        <tr>
+            <th>
+                uuid
+            </th>
+            <th>
+                username
+            </th>
+            <th>
+                password
+            </th>
+        </tr>
+        </thead>
+        <tbody>
+        @for(var user: easyUserList)
+            @template.userRow(easyUser = user)
+        @endfor
+        </tbody>
+        <tfoot>
+        </tfoot>
+    </table>
+</main>
+</body>
+<div id="${MODAL_CONTAINER_ID}"></div>
+</html>
+```
+
+### UserRow
 
 The UserRow.jte template defines an EasyUser parameter and a local variable with the exclamation mark JTE expression: `!{var name = value}` .
 
@@ -123,10 +178,14 @@ We then add the uuid of the user as id to the `<tr>` element and add a `<td>`ele
 
 We can see all currently defined users if we start the application and navigate to [http://localhost:8080](http://localhost:8080/).
 
-<figure><img src=".gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (4).png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="success" %}
 Lab-1 Checkpoint 1
+
+If you are stuck you can resume at this checkpoint with:&#x20;
+
+`git checkout tags/lab-1-checkpoint-1 -b current_lab`
 {% endhint %}
 
 ### Edit users
@@ -147,6 +206,8 @@ public String editUserModal(Model model, @PathVariable UUID uuid) {
 
 As you can see we are using a static constant for the HTTP Endpoint. This makes it easy to understand what controller mappings htmx sends requests to.
 
+#### UserRow
+
 In the `UserRow.jte` we add a new `<td>` element and create a button element.
 
 {% code title="UserRow.jte" %}
@@ -154,23 +215,23 @@ In the `UserRow.jte` we add a new `<td>` element and create a button element.
 @import de.tschuehly.easy.spring.auth.htmx.HtmxUtil
 @import static de.tschuehly.easy.spring.auth.user.UserController.*
 <td>
-    <button hx-get="${HtmxUtil.URI(EDIT_USER_MODAL,uuid)}"
-            hx-target="#${MODAL_CONTAINER_ID}">
+    <button hx-get="${HtmxUtil.URI(EDIT_USER_MODAL,uuid)}" <%-- (1) --%>
+            hx-target="#${MODAL_CONTAINER_ID}">  <%-- (2) --%>
         <img src="/edit.svg">
     </button>
 </td>
 ```
 {% endcode %}
 
-`hx-get="${URI(EDIT_USER_MODAL,uuid)}` creates an HTTP get request to `/user/edit/{uuid}` when the button element is clicked. \
-The uuid variable is interpolated with a static URI method we will define next.
+(1): `hx-get="${URI(EDIT_USER_MODAL,uuid)}` creates an HTTP get request to `/user/edit/{uuid}` when the button element is clicked.&#x20;
 
-We leverage the `URI()` utility function from the `HtmxUtil`.\
-This method creates a `UriTemplate` and fills it with the variables we pass.
+{% hint style="info" %}
+We use the `HtmxUtil.URI()` method that creates a `UriTemplate` and fills it with the variables we pass.
+{% endhint %}
 
-`hx-target="#${MODAL_CONTAINER_ID}"` tells HTMX to swap the response body with the `div` element we created earlier in the `UserManagement.jte` template
+(2): `hx-target="#${MODAL_CONTAINER_ID}"` tells HTMX to swap the response body with the element where the id equals `modalContainer` . We created this earlier in the `UserManagement.jte` template
 
-We now have to fill in the corresponding `EditUserForm.jte` template, to display the data that the user currently has.
+
 
 To make this very simple we create a UserForm record:
 
@@ -216,10 +277,14 @@ In the corresponding `EditUserForm.jte` template we display the values in a `<fo
 
 Now, restart the application, navigate to [http://localhost:8080](http://localhost:8080/), and click the edit button. You should now see the modal popup and the values of the user displayed.
 
-<figure><img src=".gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="success" %}
 Lab-1 Checkpoint 2
+
+If you are stuck you can resume at this checkpoint with:&#x20;
+
+`git checkout tags/lab-1-checkpoint-2 -b current_lab`
 {% endhint %}
 
 ### Save edited User
@@ -257,7 +322,7 @@ We can also place the hx- attribute on the form, as the button would trigger a f
 
 If you restart the app now you will see that the table value is not updated, but instead the table row is rendered in the button, because htmx by default swaps the innerHTML of the element that created the request.
 
-<figure><img src=".gitbook/assets/image (6).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (6).png" alt=""><figcaption></figcaption></figure>
 
 To fix this, we can return htmx attributes as HTTP Response headers.
 
@@ -295,10 +360,14 @@ If we now listen to this event in the `MODAL_CONTAINER_ID` element using `hx-on`
 If we click the `Save User` button and go to Chrome DevTools we see Hypermedia as the Engine of Application State (HATEOAS) in action.\
 The new application state after saving the user is transferred via HTML to the browser, and the new row also includes the link to get the modal it was just called from.
 
-<figure><img src=".gitbook/assets/image (7).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (7).png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="success" %}
 Lab-1 Checkpoint 3
+
+If you are stuck you can resume at this checkpoint with:&#x20;
+
+`git checkout tags/lab-1-checkpoint-3 -b current_lab`
 {% endhint %}
 
 ### Create User
@@ -381,10 +450,13 @@ We also trigger the `CLOSE_MODAL_EVENT` and return the `UserRow.jte` template.
 
 After restarting the application you should be able to create a new user and when saving the new user they should be displayed as the first item of the table:
 
-<figure><img src=".gitbook/assets/image (8).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (8).png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="success" %}
-Lab-1 Checkpoint 4
+Lab-1 Checkpoint 4\
+If you are stuck you can resume at this checkpoint with:&#x20;
+
+`git checkout tags/lab-1-checkpoint-4 -b current_lab`
 {% endhint %}
 
 This was Lab 1, you should now feel confident to use server-side rendering with Spring Boot and JTE and be able to create an interactive application using htmx.

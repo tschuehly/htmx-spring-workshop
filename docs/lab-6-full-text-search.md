@@ -137,7 +137,7 @@ Then we will create a new `<tr>` element as the first child of the `<thead>`:
 
 If we restart the application and navigate to [http://localhost:8080](http://localhost:8080/) we can see that the search is working:
 
-<figure><img src=".gitbook/assets/image (14).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (14).png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="success" %}
 Lab-6 Checkpoint 1

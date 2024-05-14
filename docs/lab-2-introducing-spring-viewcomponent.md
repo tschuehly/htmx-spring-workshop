@@ -252,7 +252,7 @@ In the UserController.java we can autowire the UserManagement ViewComponent and 
 
 We can restart the application now navigate to [http://localhost:8080/](http://localhost:8080/) and see the table rendered.
 
-<figure><img src=".gitbook/assets/image (6) (1) (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (6) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="success" %}
 Lab 2 Checkpoint 1
@@ -335,7 +335,7 @@ public class UserController {
 
 We can restart the application navigate to [http://localhost:8080/](http://localhost:8080/) and the edit user modal works again.
 
-<figure><img src=".gitbook/assets/image (2) (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (2) (2).png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="success" %}
 Lab 2 Checkpoint 2
@@ -474,7 +474,7 @@ public ViewContext getCreateUserModal() {
 
 We can restart the application and navigate to [http://localhost:8080/](http://localhost:8080/) and the create user modal is shown when we click on `Create User`
 
-<figure><img src=".gitbook/assets/image (10).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (10).png" alt=""><figcaption></figcaption></figure>
 
 Finally, we need to migrate the `createUser()` function in the `UserController.java`
 
@@ -519,7 +519,7 @@ public ViewContext createUser(String username, String password) {
 
 Now if we restart the application we can save a new user and they are inserted at the start of the table.
 
-<figure><img src=".gitbook/assets/image (11).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (11).png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="success" %}
 Lab 2 Checkpoint 4

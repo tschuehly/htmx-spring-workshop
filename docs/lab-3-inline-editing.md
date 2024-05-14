@@ -209,7 +209,7 @@ public class GroupController {
 
 We can now navigate to [localhost:8080/groupManagement](http://localhost:8080/groupManagement) and see the rendered groups and members.
 
-<figure><img src=".gitbook/assets/image (12).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (12).png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="success" %}
 Lab-3 Checkpoint 1
@@ -339,7 +339,7 @@ We also add a static import to `GET_SELECT_USER` and `HtmxUtil`
 
 We can now navigate to [localhost:8080/groupManagement](http://localhost:8080/groupManagement) and click on the plus, you can see the selector to add a User to the group. When clicking on `Add User to group` the table is rerendered.
 
-<figure><img src=".gitbook/assets/image (13).png" alt=""><figcaption></figcaption></figure>
+<figure><img src="../.gitbook/assets/image (13).png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="success" %}
 Lab-3 Checkpoint 2
