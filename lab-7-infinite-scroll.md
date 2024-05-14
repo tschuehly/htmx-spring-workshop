@@ -166,7 +166,7 @@ We need to adjust the `UserMangement.jte` template to pass in 0 as the parameter
 
 ### Sucess!
 
-If we restart the application we can see that the infinite scroll is working again!
+If we restart the application and navigate to [http://localhost:8080](http://localhost:8080/) we can see that the infinite scroll is working again!
 
 {% embed url="https://youtu.be/lRN1peOblF0" %}
 
