@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -14,7 +13,7 @@ public class UserService {
 
   public List<EasyUser> findAll() {
     try {
-      TimeUnit.SECONDS.sleep(3);
+      Thread.sleep(3000);
     } catch (InterruptedException e) {
       throw new RuntimeException(e);
     }
