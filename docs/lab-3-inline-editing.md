@@ -4,33 +4,27 @@ In this lab, we will create a group Management Page where we can add a user to a
 
 ### Group Management
 
-We start by creating a GroupManagement ViewComponent in `auth.group.management`
+We start by creating a GroupManagement ViewComponent in the `de.tschuehly.easy.spring.auth.group.management` package:
 
+{% code title="GroupManagement.java" %}
 ```java
-// GroupManagement.java
 @ViewComponent
 public class GroupManagement {
   public static final String MODAL_CONTAINER_ID = "modalContainer";
   public static final String CLOSE_MODAL_EVENT = "close-modal";
 
-  public record GroupManagementContext() implements ViewContext {
-
-  }
+  public record GroupManagementContext() implements ViewContext {  }
 
   public ViewContext render() {
     return new GroupManagementContext();
   }
 }
 ```
+{% endcode %}
 
-The template is the same as the UserManagement but we added two `<a>` links to the `<nav>` element.&#x20;
+The template is the same as the `UserManagement.jte` but we added two `<a>` links to the `<nav>` element.&#x20;
 
-{% hint style="info" %}
-We also need to add these two `<a>` elements to the UserManagement template
-{% endhint %}
-
-<pre class="language-html"><code class="lang-html"><strong>// GroupManagement.jte
-</strong><strong>@import static de.tschuehly.easy.spring.auth.group.management.GroupManagement.CLOSE_MODAL_EVENT
+<pre class="language-html" data-title="GroupManagement.jte"><code class="lang-html"><strong>@import static de.tschuehly.easy.spring.auth.group.management.GroupManagement.CLOSE_MODAL_EVENT
 </strong>@import static de.tschuehly.easy.spring.auth.group.management.GroupManagement.MODAL_CONTAINER_ID
 @import de.tschuehly.easy.spring.auth.group.management.GroupManagement.GroupManagementContext
 @param GroupManagementContext groupManagementContext
@@ -62,14 +56,18 @@ We also need to add these two `<a>` elements to the UserManagement template
 &#x3C;/html>
 </code></pre>
 
+{% hint style="danger" %}
+We also need to add these two `<a>` elements to the UserManagement template
+{% endhint %}
 
+***
 
-Next we will create a GroupTable ViewComponent in `auth.group.management.table.`&#x20;
+Next, we will create a `GroupTableComponent` in  the `de.tschuehly.easy.spring.auth.group.management.table` package.
 
-We autowire the groupService and create a GROUP\_TABLE\_ID constant.
+We autowire the `groupService` and create a `GROUP_TABLE_ID` constant.
 
+{% code title="GroupTableComponent.java" %}
 ```java
-// GroupTableComponent.java
 @ViewComponent
 public class GroupTableComponent {
 
@@ -77,9 +75,7 @@ public class GroupTableComponent {
 
   public final static String GROUP_TABLE_ID = "groupTable";
 
-  public record GroupTableContext() implements ViewContext {
-
-  }
+  public record GroupTableContext() implements ViewContext { }
 
   public ViewContext render() {
     return new GroupTableContext();
@@ -90,11 +86,12 @@ public class GroupTableComponent {
   }
 }
 ```
+{% endcode %}
 
 We add the corresponding template `GroupTableComponent.jte` and set the `<table>` id to `${GROUP_TABLE_ID}`
 
+{% code title="GroupTableComponent.jte" %}
 ```html
-// GroupTableComponent.jte
 @import static de.tschuehly.easy.spring.auth.group.management.table.GroupTableComponent.*
 @param de.tschuehly.easy.spring.auth.group.management.table.GroupTableComponent.GroupTableContext groupTableContext
 <table id="${GROUP_TABLE_ID}">
@@ -115,11 +112,12 @@ We add the corresponding template `GroupTableComponent.jte` and set the `<table>
     </tbody>
 </table>
 ```
+{% endcode %}
 
-Now back in the GroupTableComponent we retreive all groups with the `groupService.getAll()` method and add this List of groups to the ViewContext
+Now back in the `GroupTableComponent.java`, we retrieve all groups with the `groupService.getAll()` method and add this List of groups to the ViewContext
 
+{% code title="GroupTableComponent.java" %}
 ```java
-// GroupTableComponent.java
 @ViewComponent
 public class GroupTableComponent {
   private final GroupService groupService;
@@ -138,21 +136,21 @@ public class GroupTableComponent {
   }
 }
 ```
+{% endcode %}
 
-We can then loop over this groupList with the `@for` syntax and then show the groupName and then loop over the memberList of each group and show each member username or a `no member` message.
+Now we need to replace the `<tbody>` element of the `GroupTableComponent.jte`
 
-<pre><code>// GroupTableComponent.jte
-<strong>&#x3C;tbody>
-</strong>@for(var group: groupTableContext.groupList())
+<pre data-title="GroupTableComponent.jte"><code><strong>&#x3C;tbody>
+</strong>@for(var group: groupTableContext.groupList()) &#x3C;%-- (1) --%>
     &#x3C;tr>
         &#x3C;td>
-            ${group.groupName}
+            ${group.groupName} &#x3C;%-- (2) --%>
         &#x3C;/td>
         &#x3C;td>
-            @for(var member: group.memberList)
-                &#x3C;span>${member.username}&#x3C;/span>
+            @for(var member: group.memberList) &#x3C;%-- (3) --%>
+                &#x3C;span>${member.username}&#x3C;/span> &#x3C;%-- (4) --%>
             @else
-                &#x3C;span>no member&#x3C;/span>
+                &#x3C;span>no member&#x3C;/span> &#x3C;%-- (5) --%>
             @endfor
         &#x3C;/td>
     &#x3C;/tr>
@@ -160,10 +158,22 @@ We can then loop over this groupList with the `@for` syntax and then show the gr
 &#x3C;/tbody>
 </code></pre>
 
+**(1):** We loop over the `groupTableContext.groupList()` variable with the `@for` syntax
+
+**(2):** We show the `groupName` in a `<td>`
+
+**(3):** We loop over the `group.memberList`
+
+**(4):** We show the username in a `<span>`
+
+**(5):** If the group has no users we show a `no member` message
+
+***
+
 Then we render the GroupTableComponent in the GroupManagement, by autowiring it and passing it into the ViewContext
 
+{% code title="GroupManagement.java" %}
 ```java
-// GroupManagement.java
 @ViewComponent
 public class GroupManagement {
   private final GroupTableComponent groupTableComponent;
@@ -175,37 +185,36 @@ public class GroupManagement {
     this.groupTableComponent = groupTableComponent;
   }
 
-  public record GroupManagementContext(ViewContext viewContext) implements ViewContext{}
+  public record GroupManagementContext(ViewContext viewContext) 
+      implements ViewContext{}
 
   public ViewContext render(){
     return new GroupManagementContext(groupTableComponent.render());
   }
-
 }
 ```
+{% endcode %}
 
-In the GroupManagement template we can render it in the `<main>` element
+In the `GroupManagement.jte` template we can render it in the `<main>` element, by using the `viewContext`&#x20;
 
+{% code title="GroupManagement.jte" %}
 ```html
-// GroupManagement.jte
 <main>
     ${groupManagementContext.viewContext()}
 </main>
 ```
+{% endcode %}
 
-Now we need to add the path to render the GroupManagement page to the `GroupController`
+Now we need to add the `/groupManagement` endpoint to render the group management to the `GroupController`:
 
+{% code title="GroupController.java" %}
 ```java
-// GroupController.java
-@Controller
-public class GroupController {
-  //...
-  @GetMapping("/groupManagement")
-  public ViewContext groupManagement(){
-    return groupManagement.render();  
-  }
+@GetMapping("/groupManagement")
+public ViewContext groupManagement(){
+  return groupManagement.render();
 }
 ```
+{% endcode %}
 
 We can now navigate to [localhost:8080/groupManagement](http://localhost:8080/groupManagement) and see the rendered groups and members.
 
@@ -217,34 +226,28 @@ Lab-3 Checkpoint 1
 
 We didn't do anything new yet, now we are going to start with the inline editing feature.
 
-### Inline Editing
+## Inline Editing
 
-We want to add a new User to one of the groups.&#x20;
+We now want to add a new User to one of the groups.&#x20;
 
-We create an endpoint `POST_ADD_USER` that calls the `addUserToGroup` function and then renders the groupTableComponent.
+We create an endpoint `POST_ADD_USER`  in the `GroupController` that calls the `addUserToGroup` function and then renders the groupTableComponent.
 
+{% code title="GroupController.java" %}
 ```java
-// GroupController.java
-@Controller
-public class GroupController {
-  // ...
-  public final static String POST_ADD_USER = "/group/{groupName}/add-user";
-  public final static String USER_ID_PARAM = "userId";
-  @PostMapping(POST_ADD_USER)
-  public ViewContext addUser(@PathVariable String groupName,
-      @RequestParam(USER_ID_PARAM) UUID userId){
-    groupService.addUserToGroup(groupName,userId);
-    return groupTableComponent.render();
-  }
-}
+public final static String POST_ADD_USER = "/group/{groupName}/add-user";
+public final static String USER_ID_PARAM = "userId";
+@PostMapping(POST_ADD_USER)
+public ViewContext addUser(@PathVariable String groupName,
+    @RequestParam(USER_ID_PARAM) UUID userId){
+  groupService.addUserToGroup(groupName,userId);
+  return groupTableComponent.render();
+}  
 ```
+{% endcode %}
 
-&#x20;Then we create a  `AddUserComponent` .&#x20;
+&#x20;Now we create a  `AddUserComponent` in the `de.tschuehly.easy.spring.auth.group.management.table.user` package:
 
-In the render method, we have a `groupName` parameter and pass it and the List of all users into the ViewContext.
-
-<pre class="language-java"><code class="lang-java"><strong>// AddUserComponent.java
-</strong><strong>@ViewComponent
+<pre class="language-java" data-title="AddUserComponent.java"><code class="lang-java"><strong>@ViewComponent
 </strong>public class AddUserComponent {
   private final UserService userService;
 
@@ -252,29 +255,32 @@ In the render method, we have a `groupName` parameter and pass it and the List o
     this.userService = userService;
   }
 
-  public record AddUserContext(String groupName, List&#x3C;EasyUser> easyUserList)
+  public record AddUserContext(String groupName, List&#x3C;EasyUser> easyUserList) 
       implements ViewContext{}
 
-  public ViewContext render(String groupName){
+  public ViewContext render(String groupName){ // (1)
     return new AddUserContext(groupName,userService.findAll());
   }
 }
 </code></pre>
 
-In the template, we create a `<form>` and `<select>` and use the `@for` loop syntax to create an option element for each user.
+(1): The render method has a `groupName` parameter&#x20;
 
-We create an `hx-post` attribute that targets the `POST_ADD_USER` endpoint and inserts the `groupName` in the ViewContext into the Endpoint URI using the `HtmxUtil`
+(2): We pass the groupName and the `userService.findAll` to the `AddUserContext`.
 
-We target the `GROUP_TABLE_ID` and swap the `outerHTML` of the target element.
+***
 
+Now we create a `AddUserComponent.jte` template in the same package as the `AddUserComponent.java`
+
+{% code title="AddUserComponent.jte" %}
 ```html
 @import static de.tschuehly.easy.spring.auth.group.GroupController.*
 @param de.tschuehly.easy.spring.auth.group.management.table.user.AddUserComponent.AddUserContext addUserContext
-<form hx-post="${HtmxUtil.URI(POST_ADD_USER,addUserContext.groupName())}"
-      hx-target="${HtmxUtil.target(GroupTableComponent.GROUP_TABLE_ID)}"
-      hx-swap="outerHTML">
+<form hx-post="${HtmxUtil.URI(POST_ADD_USER,addUserContext.groupName())}" <%-- (1) --%>
+      hx-target="${HtmxUtil.target(GroupTableComponent.GROUP_TABLE_ID)}" <%-- (2) --%>
+      hx-swap="outerHTML"> <%-- (2) --%>
     <select>
-        @for(var easyUser: addUserContext.easyUserList())
+        @for(var easyUser: addUserContext.easyUserList()) <%-- (3) --%>
             <option value="${easyUser.uuid.toString()}">
                 ${easyUser.username}
             </option>
@@ -283,61 +289,62 @@ We target the `GROUP_TABLE_ID` and swap the `outerHTML` of the target element.
     <button type="submit">Add User to group</button>
 </form>
 ```
+{% endcode %}
+
+(1): We create a `<form>` element add an `hx-post` attribute that targets the `POST_ADD_USER` endpoint and inserts the `groupName` in the ViewContext into the Endpoint URI using the `HtmxUtil` &#x20;
+
+(2): We target the `GROUP_TABLE_ID` and swap the `outerHTML` of the target element.
+
+(3): We create a `<select>` and use the `@for` loop syntax to create an option element for each user.
 
 {% hint style="info" %}
 As you can see in contrast to the `rerender` method of the `UserRowComponent` here the htmx logic is in the template. &#x20;
 {% endhint %}
 
-We now add a `GET_SELECT_USER` endpoint to the GroupController
+***
 
+We now add an `GET_SELECT_USER` endpoint to the `GroupController`
+
+{% code title="GroupController.java" %}
 ```java
-// GroupController.java
-@Controller
-public class GroupController {
-  // ...
-  public final static String GET_SELECT_USER = "/group/{groupName}/select-user";
+public final static String GET_SELECT_USER = "/group/{groupName}/select-user";
 
-  @GetMapping(GET_SELECT_USER)
-  public ViewContext selectUser(@PathVariable String groupName) {
-    return addUserComponent.render(groupName);
-  }
+@GetMapping(GET_SELECT_USER)
+public ViewContext selectUser(@PathVariable String groupName) {
+  return addUserComponent.render(groupName);
 }
 ```
+{% endcode %}
 
 
 
-Back to the `GroupTableComponent` we add a new `<td>` element with a `<button>` that has a `hx-get` attribute that creates an HTTP GET request to `/group/groupName/select-user`
+Back to the `GroupTableComponent.jte` we add a static import to `GET_SELECT_USER` and `HtmxUtil`
 
-We also add a static import to `GET_SELECT_USER` and `HtmxUtil`
-
-```html
+{% code title="GroupTableComponent.jte" %}
+```java
 @import static de.tschuehly.easy.spring.auth.group.GroupController.GET_SELECT_USER
 @import de.tschuehly.easy.spring.auth.htmx.HtmxUtil
-<tbody>
-@for(var group: groupTableContext.groupList())
-    <tr>
-        <td>
-            ${group.groupName}
-        </td>
-        <td>
-            @for(var member: group.memberList)
-                <span>${member.username}</span>
-            @else
-                <span>no member</span>
-            @endfor
-        </td>
-        <td>
-            <button hx-get="${HtmxUtil.URI(GET_SELECT_USER,group.groupName)}" 
-                    hx-swap="outerHTML">
-                <img src="/plus.svg">
-            </button>
-        </td>
-    </tr>
-@endfor
-</tbody>
 ```
+{% endcode %}
 
-We can now navigate to [localhost:8080/groupManagement](http://localhost:8080/groupManagement) and click on the plus, you can see the selector to add a User to the group. When clicking on `Add User to group` the table is rerendered.
+We add a new `<td>` as last element of the `<tr>` element.
+
+We create a `<button>` element that has a `hx-get` attribute that creates an GET request to `/group/groupName/select-user`
+
+{% code title="GroupTableComponent.jte" %}
+```html
+<td>
+    <button hx-get="${HtmxUtil.URI(GET_SELECT_USER,group.groupName)}"
+            hx-swap="outerHTML">
+        <img src="/plus.svg">
+    </button>
+</td>
+```
+{% endcode %}
+
+We can now navigate to [localhost:8080/groupManagement](http://localhost:8080/groupManagement) and click on the plus.
+
+You can see the selector to add a User to the group. When clicking on `Add User to group` the table is rerendered.
 
 <figure><img src="../.gitbook/assets/image (13).png" alt=""><figcaption></figcaption></figure>
 
