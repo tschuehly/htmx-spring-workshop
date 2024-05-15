@@ -15,7 +15,7 @@ public class UserManagement {
     this.userTableComponent = userTableComponent;
   }
 
-  public record UserManagementContext(ViewContext viewContext) implements ViewContext{}
+  public record UserManagementContext(ViewContext userTable) implements ViewContext{}
 
   public ViewContext render(){
     return new UserManagementContext(userTableComponent.render());

@@ -8,6 +8,7 @@ import java.util.List;
 
 @ViewComponent
 public class UserTableComponent {
+
   private final UserService userService;
   private final UserRowComponent userRowComponent;
 
@@ -16,13 +17,15 @@ public class UserTableComponent {
     this.userRowComponent = userRowComponent;
   }
 
-  public record UserTableContext(List<ViewContext> userTableRowList) implements ViewContext{
+  public record UserTableContext(List<ViewContext> userTableRowList) implements ViewContext {
 
   }
+
   public static final String USER_TABLE_BODY_ID = "userTableBody";
 
-  public ViewContext render(){
-    List<ViewContext> rowList = userService.findAll().stream().map(userRowComponent::render).toList();
+  public ViewContext render() {
+    List<ViewContext> rowList = userService.findAll()
+        .stream().map(userRowComponent::render).toList();
     return new UserTableContext(rowList);
   }
 }

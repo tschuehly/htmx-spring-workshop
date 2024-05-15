@@ -2,7 +2,7 @@
 @import static de.tschuehly.easy.spring.auth.user.UserController.*
 @import static de.tschuehly.easy.spring.auth.user.management.UserManagement.MODAL_CONTAINER_ID
 @import de.tschuehly.easy.spring.auth.user.management.table.row.UserRowComponent.UserRowContext
-@param de.tschuehly.easy.spring.auth.user.management.table.row.UserRowComponent.UserRowContext userRowContext
+@param UserRowContext userRowContext
 
 !{var uuid = userRowContext.easyUser().uuid;}
 <tr id="${UserRowContext.htmlUserId(uuid)}">
@@ -21,4 +21,5 @@
             <img src="/edit.svg">
         </button>
     </td>
+
 </tr>
