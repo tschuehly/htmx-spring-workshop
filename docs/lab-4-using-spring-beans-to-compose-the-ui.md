@@ -5,28 +5,28 @@ As you have seen in Lab 3 we have a lot of duplication between the `UserManageme
 
 We start by creating a shared `LayoutComponent` in `auth.web.layout`. We have a ViewContext parameter and the modal-related constants.
 
+{% code title="LayoutComponent.java" %}
 ```java
-// LayoutComponent.java
 @ViewComponent
 public class LayoutComponent {
 
   public static final String MODAL_CONTAINER_ID = "modalContainer";
   public static final String CLOSE_MODAL_EVENT = "close-modal";
 
-  public record LayoutContext(ViewContext content) implements ViewContext {
-
-  }
+  public record LayoutContext(ViewContext content) 
+    implements ViewContext {}
 
   public ViewContext render(ViewContext content) {
     return new LayoutContext(content);
   }
 }
 ```
+{% endcode %}
 
 &#x20;In the template, we define the shared HTML between the pages.
 
+{% code title="LayoutComponent.jte" %}
 ```html
-// LayoutComponent.jte
 @import static de.tschuehly.easy.spring.auth.web.layout.LayoutComponent.CLOSE_MODAL_EVENT
 @import static de.tschuehly.easy.spring.auth.web.layout.LayoutComponent.MODAL_CONTAINER_ID
 @import de.tschuehly.easy.spring.auth.web.layout.LayoutComponent.LayoutContext
@@ -55,34 +55,32 @@ public class LayoutComponent {
 </div>
 </html>
 ```
+{% endcode %}
 
 Now we can use the LayoutComponent in both the GroupController and UserController:
 
+{% code title="GroupController.java" %}
 ```java
-// GroupController.java
-@Controller
-public class GroupController {
-  // ...
-  public static final String GROUP_MANAGEMENT =  "/group-management";
-  @GetMapping(GROUP_MANAGEMENT)
-  public ViewContext groupManagement(){
-    return layoutComponent.render(groupTableComponent.render());
-  }
-}
-```
+public static final String GROUP_MANAGEMENT =  "/group-management";
 
-```java
-// UserController.java
-@Controller
-public class UserController {
-  // ...
-  public static final String USER_MANAGEMENT_PATH = "/";
-  @GetMapping(USER_MANAGEMENT_PATH)
-  public ViewContext userManagement() {
-    return layoutComponent.render(userTableComponent.render());
-  }
+@GetMapping(GROUP_MANAGEMENT)
+public ViewContext groupManagement(){
+  return layoutComponent.render(groupTableComponent.render());
 }
 ```
+{% endcode %}
+
+{% code title="UserController.java" %}
+```java
+public static final String USER_MANAGEMENT_PATH = "/";
+
+@GetMapping(USER_MANAGEMENT_PATH)
+public ViewContext userManagement() {
+  return layoutComponent.render(userTableComponent.render());
+}
+
+```
+{% endcode %}
 
 We can now navigate to [localhost:8080](http://localhost:8080/) and [localhost:8080/group-management](http://localhost:8080/group-management) and both pages still work.
 
@@ -96,17 +94,19 @@ But now we don't have a Navigation Bar anymore and the `UserManagement` and the 
 
 We start by creating a `Page` interface in `auth.web`. We define a NavigationItem record and a navigationItem method.
 
+{% code title="Page.java" %}
 ```java
-// Page.java
 public interface Page {
   record NavigationItem(String displayName, String URI){}
 
   NavigationItem navigationItem();
 }
 ```
+{% endcode %}
 
 We can now slim down the `UserManagement` that defines the NavigationItem and the path to the Endpoint. We can also delete the `UserManagement.jte` template.
 
+{% code title="UserManagement.java" %}
 ```java
 @Component
 public class UserManagement implements Page {
@@ -117,6 +117,7 @@ public class UserManagement implements Page {
   }
 }
 ```
+{% endcode %}
 
 {% hint style="info" %}
 We now need to fix `CLOSE_MODAL_EVENT` and the `MODAL_CONTAINER_ID` in the UserRowComponent and UserTableComponent
@@ -124,8 +125,8 @@ We now need to fix `CLOSE_MODAL_EVENT` and the `MODAL_CONTAINER_ID` in the UserR
 
 Now in the `LayoutComponent`, we can use Autowiring to get all Pages as a List and aggregate all `NavigationItems` into a List and pass it into the ViewContext
 
+{% code title="LayoutComponent.java" %}
 ```java
-// LayoutComponent.java
 @ViewComponent
 public class LayoutComponent {
 
@@ -146,11 +147,12 @@ public class LayoutComponent {
   }
 }
 ```
+{% endcode %}
 
 In the `LayoutComponent.jte` template we can now show a link for each page defined in the Spring ApplicationContext.
 
+{% code title="LayoutComponent.jte" %}
 ```html
-// LayoutComponent.jte
 <nav>
     <h2>
         Easy Spring Auth
@@ -161,6 +163,7 @@ In the `LayoutComponent.jte` template we can now show a link for each page defin
     <hr>
 </nav>
 ```
+{% endcode %}
 
 We can now navigate to [localhost:8080](http://localhost:8080/) and see that we have our Navigation again!
 
@@ -170,12 +173,12 @@ We can now navigate to [localhost:8080](http://localhost:8080/) and see that we 
 Lab-4 Checkpoint 2
 {% endhint %}
 
-
+***
 
 Now we just need to add the `GroupManagement` page back to our navigation. We delete the GroupMangament.jte template and change the `GroupManagement.java` :
 
-```
-// GroupManagement.java
+{% code title="GroupManagement.java" %}
+```java
 @Component
 public class GroupManagement implements Page {
 
@@ -185,6 +188,7 @@ public class GroupManagement implements Page {
   }
 }
 ```
+{% endcode %}
 
 And now the GroupManagement is back!
 
@@ -192,12 +196,13 @@ And now the GroupManagement is back!
 
 The nice thing is that the Navigation Bar doesn't know that Page even exists. If we change the URL of any page it all still works.
 
-
+***
 
 But what if we want to show the GroupManagement as the first element? Well we can use a native Spring Framework Annotation!&#x20;
 
 With the `@Order` annotation we can define where the Navigation element is shown:
 
+{% code title="GroupManagement.java" %}
 ```java
 @Component
 @Order(1)
@@ -209,6 +214,7 @@ public class GroupManagement implements Page {
   }
 }
 ```
+{% endcode %}
 
 Group Management is now the first Navigation Item!
 
