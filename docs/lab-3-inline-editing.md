@@ -279,7 +279,7 @@ Now we create a `AddUserComponent.jte` template in the same package as the `AddU
 <form hx-post="${HtmxUtil.URI(POST_ADD_USER,addUserContext.groupName())}" <%-- (1) --%>
       hx-target="${HtmxUtil.target(GroupTableComponent.GROUP_TABLE_ID)}" <%-- (2) --%>
       hx-swap="outerHTML"> <%-- (2) --%>
-    <select>
+    <select name="${USER_ID_PARAM}">
         @for(var easyUser: addUserContext.easyUserList()) <%-- (3) --%>
             <option value="${easyUser.uuid.toString()}">
                 ${easyUser.username}

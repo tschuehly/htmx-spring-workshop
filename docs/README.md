@@ -32,7 +32,11 @@ Only the relevant imports that need to be added are shown. Imports that have alr
 
 To create a new ViewComponent with one click we can create a new IntelliJ Code Template.
 
-Click on Create Template
+Go to settings -> Editor -> File and Code Templates &#x20;
+
+Click on the little plus icon
+
+<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
 
 Name: ViewComponent
 
