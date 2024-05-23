@@ -205,7 +205,7 @@ textarea, select, input {
   padding: 6px 10px; /* The 6px vertically centers text on FF, ignored by Webkit */
   margin-bottom: 10px;
   background-color: #f1f1f1;
-  border: 1px solid #f1f1f1;
+  border: 1px solid #505050;
   border-radius: 4px;
   box-shadow: none;
   box-sizing: border-box;
