@@ -107,7 +107,6 @@ Your UserManagement.jte template should now look like this:&#x20;
     <link rel="stylesheet" href="/css/sakura.css" type="text/css">
     <script src="/htmx_1.9.11.js"></script>
     <script src="/htmx_debug.js"></script>
-    <script src="http://localhost:35729/livereload.js"></script>
 </head>
 <body hx-ext="debug">
 <nav>
@@ -130,7 +129,7 @@ Your UserManagement.jte template should now look like this:&#x20;
             </th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="${USER_TABLE_BODY_ID}">
         @for(var user: easyUserList)
             @template.userRow(easyUser = user)
         @endfor
@@ -192,20 +191,29 @@ Next, we want to edit a user that has already been created and change his userna
 
 ### UserController
 
-We create a new GetMapping endpoint in the `UserController`
+First, we need to create an HTTP endpoint that will display the `EditUserForm`. Add this to the `UserController`:
 
 {% code title="UserController.java" %}
 ```java
-public static final String EDIT_USER_MODAL = "/save-user/modal/{uuid}";
-
-@GetMapping(EDIT_USER_MODAL)
+public record UserForm(String uuid, String username, String password) {} // (1)
+  
+public static final String GET_EDIT_USER_MODAL = "/save-user/modal/{uuid}"; // (2)
+  
+@GetMapping(GET_EDIT_USER_MODAL)
 public String editUserModal(Model model, @PathVariable UUID uuid) {
+  var user = userService.findById(uuid);
+  model.addAttribute("userForm", 
+    new UserForm(user.uuid.toString(), user.username, user.password)); // (3)
   return "EditUserForm";
 }
 ```
 {% endcode %}
 
-As you can see we are using a static constant for the HTTP Endpoint. This makes it easy to understand what controller mappings htmx sends requests to.
+**(1):** We create a UserForm record that represents the user.&#x20;
+
+**(2):** We create a static constant `GET_EDIT_USER_MODAL` for the HTTP Endpoint. This makes it easy to understand what controller mappings htmx sends requests to.
+
+**(3):** We retrieve the data from the datastore and add it to the model, using the record we just defined.
 
 ### UserRow
 
@@ -239,39 +247,13 @@ In the `UserRow.jte` we add a new `<td>` element and create a button element.
 ```
 {% endcode %}
 
-**(1):** `hx-get="${URI(EDIT_USER_MODAL,uuid)}` creates an HTTP get request to `/user/edit/{uuid}` when the button element is clicked.&#x20;
+**(1):** `hx-get="${URI(GET_EDIT_USER_MODAL,uuid)}` creates an HTTP get request to `/user/edit/{uuid}` when the button element is clicked.&#x20;
 
 {% hint style="info" %}
 We use the `HtmxUtil.URI()` method, that creates a `UriTemplate` and fills it with the variables we pass.
 {% endhint %}
 
 **(2):** `hx-target="#${MODAL_CONTAINER_ID}"` tells HTMX to swap the response body with the element where the id equals `modalContainer` . We created this earlier in the `UserManagement.jte` template
-
-### UserController
-
-Now we need to create an HTTP endpoint that will display the `EditUserForm`. Add this to the `UserController`:
-
-{% code title="UserController.java" %}
-```java
-public record UserForm(String uuid, String username, String password) {} // (1)
-  
-public static final String GET_EDIT_USER_MODAL = "/save-user/modal/{uuid}"; // (2)
-  
-@GetMapping(GET_EDIT_USER_MODAL)
-public String editUserModal(Model model, @PathVariable UUID uuid) {
-  var user = userService.findById(uuid);
-  model.addAttribute("userForm", 
-    new UserForm(user.uuid.toString(), user.username, user.password)); // (3)
-  return "EditUserForm";
-}
-```
-{% endcode %}
-
-**(1):** We create a UserForm record that represents the user.&#x20;
-
-**(2):** We create a constant `GET_EDIT_USER_MODAL`
-
-**(3):** We retrieve the data from the datastore and add it to the model, using the record we just defined.
 
 ### EditUserForm
 

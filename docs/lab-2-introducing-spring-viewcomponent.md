@@ -1,6 +1,7 @@
-# Lab 2: Introducing Spring ViewComponent
+# Lab 2: Using Spring ViewComponent
 
-The goal of this lab is to refactor the application to use Spring ViewComponent and htmx-spring-boot to delegate rendering responsibility to the ViewComponents and remove it from the Controller
+This lab aims to build the same application as Lab 1. \
+But this time we will use Spring ViewComponent and htmx-spring-boot to delegate rendering responsibility to the ViewComponent.
 
 ### An Introduction to Spring ViewComponent
 
@@ -12,7 +13,7 @@ We can create a ViewComponent by annotating a class with the `@ViewComponent` an
 ```java
 @ViewComponent
 public class SimpleViewComponent {
-    public record SimpleView(String helloWorld) implements ViewContext {
+    public record SimpleViewContext(String helloWorld) implements ViewContext {
     }
 
     public SimpleView render() {
@@ -26,8 +27,8 @@ A ViewComponent needs to have a template with the same name defined in the same 
 
 {% code title="SimpleViewComponent.jte" %}
 ```
-@param SimpleViewComponent.SimpleView simpleView
-<div>${simpleView.helloWorld()}</div>
+@param SimpleViewComponent.SimpleViewContext simpleViewContext
+<div>${simpleViewContext.helloWorld()}</div>
 ```
 {% endcode %}
 
@@ -35,7 +36,7 @@ A ViewComponent needs to have a template with the same name defined in the same 
 Spring ViewComponent wraps the underlying MVC model using Spring AOP and enables us to create the frontend in a similar way to the component-oriented JavaScript frameworks
 {% endhint %}
 
-### Migrating the UserMangement to Spring ViewComponent
+### Creating the UserMangement with Spring ViewComponent
 
 To start we need to add three dependencies to the `build.gradle.kts` file.
 
