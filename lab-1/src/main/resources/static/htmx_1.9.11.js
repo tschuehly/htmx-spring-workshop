@@ -52,7 +52,7 @@
             refreshOnHistoryMiss:false,
             defaultSwapStyle:'innerHTML',
             defaultSwapDelay:0,
-            defaultSettleDelay:20,
+            defaultSettleDelay:1000,
             includeIndicatorStyles:true,
             indicatorClass:'htmx-indicator',
             requestClass:'htmx-request',
