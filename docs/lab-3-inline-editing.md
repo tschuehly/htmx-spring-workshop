@@ -216,7 +216,7 @@ public ViewContext groupManagement(){
 ```
 {% endcode %}
 
-We can now navigate to [localhost:8080/groupManagement](http://localhost:8080/groupManagement) and see the rendered groups and members.
+If we now run `Lab3Application.java` and navigate to [localhost:8080/groupManagement](http://localhost:8080/groupManagement) we can see the rendered groups and members.
 
 <figure><img src="../.gitbook/assets/image (12).png" alt=""><figcaption></figcaption></figure>
 
