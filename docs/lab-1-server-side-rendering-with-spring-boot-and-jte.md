@@ -12,11 +12,7 @@ We want to display a table of users like this:
 
 ### UserController
 
-First, navigate to the `UserController` in `de.tschuehly.easy.spring.auth.user` in the `lab-1` folder.
-
-We create a new `@GetMapping` and inside the method, we call the `userService.findAll()` function and add it to the MVC model as `easyUserList` attribute.
-
-We also define a constant for the `USER_TABLE_BODY_ID` and the `MODAL_CONTAINER_ID`
+First, navigate to the `UserController` in `de.tschuehly.easy.spring.auth.user` in the `lab-1` folder and change it to the following.
 
 {% code title="UserController.java" %}
 ```java
@@ -28,8 +24,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class UserController {
-  public static final String MODAL_CONTAINER_ID = "modalContainer";
-  public static final String USER_TABLE_BODY_ID = "userTableBody";
+  public static final String MODAL_CONTAINER_ID = "modalContainer"; // (1)
+  public static final String USER_TABLE_BODY_ID = "userTableBody"; // (1)
 
   private final UserService userService;
 
@@ -37,24 +33,34 @@ public class UserController {
     this.userService = userService;
   }
 
-  @GetMapping("/") 
+  @GetMapping("/") // (1)
   public String index(Model model) {
-    model.addAttribute("easyUserList", userService.findAll());
+    model.addAttribute("easyUserList", userService.findAll()); // (2)
     return "UserManagement";
   }  
 }
 ```
 {% endcode %}
 
-We return the string `UserManagement` . This is the reference to the View we want to render.
+**(1):** We define a constant for the `USER_TABLE_BODY_ID` and the `MODAL_CONTAINER_ID`
 
-Spring MVC will look for templates in the `src/main/jte` directory as we use the `jte-spring-boot-starter-3`&#x20;
+**(2):** We create a new `@GetMapping` to the `/` path.
+
+**(3):** Inside the method, we call the `userService.findAll()` function and add it to the MVC model as `easyUserList` attribute.
+
+**(4):** We return the string `UserManagement` . This is the reference to the View we want to render.
+
+{% hint style="info" %}
+Spring MVC will look for templates in the `src/main/jte` directory as we use the `jte-spring-boot-starter-3.`
 
 You can find all the templates we need already there. We now need to fill them with life.
+{% endhint %}
 
 ### UserMangament
 
-We start with `UserManagement.jte` template. As you can see, a barebones html structure is already in place with CSS and htmx already referenced.
+We start with the `UserManagement.jte` template.&#x20;
+
+As you can see, a barebones html structure is already in place with CSS and htmx referenced.
 
 We need to import all static variables defined in UserController with the `@import` JTE syntax at the top of the file and we add the easyUserList we defined earlier in the model as a parameter to the template with `@param` after the imports.
 
@@ -62,6 +68,7 @@ We need to import all static variables defined in UserController with the `@impo
 ```crystal
 @import static de.tschuehly.easy.spring.auth.user.UserController.*
 @import de.tschuehly.easy.spring.auth.user.EasyUser
+@import java.util.List
 @param List<EasyUser> easyUserList
 ```
 {% endcode %}
@@ -72,15 +79,15 @@ We replace the table body element with the following:
 
 {% code title="UserManagement.jte " %}
 ```html
-<tbody id="${USER_TABLE_BODY_ID}"> // (1)
-@for(var user: easyUserList) // (2)
-    @template.userRow(easyUser = user) // (3)
+<tbody id="${USER_TABLE_BODY_ID}"> <%-- (1) --%>
+@for(var user: easyUserList) <%-- (2) --%>
+    @template.userRow(easyUser = user) <%-- (3) --%>
 @endfor
 </tbody>
 ```
 {% endcode %}
 
-**(1):** We also add the `public static final String USER_TABLE_BODY_ID` to the `tbody` element to reference it statically from other places.
+**(1):** We set the id of the `tbody` to  `USER_TABLE_BODY_ID` to reference it statically from other places.
 
 &#x20;**(2):** We loop over the easyUserList with the `@for` JTE syntax
 
@@ -94,7 +101,7 @@ We also add an empty `<div>` after the `</body>` element with the `id` set to `M
 ```
 {% endcode %}
 
-Your UserManagement.jte template should now look like this:&#x20;
+Your `UserManagement.jte` template should now look like this:&#x20;
 
 ```html
 @import static de.tschuehly.easy.spring.auth.user.UserController.*
@@ -145,7 +152,7 @@ Your UserManagement.jte template should now look like this:&#x20;
 
 ### UserRow
 
-In the UserRow.jte template we define an EasyUser parameter and a local variable with the exclamation mark JTE expression: `!{var name = value}`  at the top of the file.
+In the `UserRow.jte` template we define an EasyUser parameter and a local variable with the exclamation mark JTE expression: `!{var name = value}`  at the top of the file.
 
 {% code title="UserRow.jte" %}
 ```crystal
@@ -261,7 +268,6 @@ In the corresponding `EditUserForm.jte` template we display the values in a `<fo
 
 {% code title="EditUserForm.jte" %}
 ```html
-@import static de.tschuehly.easy.spring.auth.user.UserController.POST_SAVE_USER
 @param de.tschuehly.easy.spring.auth.user.UserController.UserForm userForm
 
 <div style="width: 100dvw; height: 100dvh; position: fixed; top: 0;left: 0; background-color: rgba(128,128,128,0.69); display: flex; justify-content: center; align-items: center;">
@@ -297,28 +303,36 @@ If you are stuck you can resume at this checkpoint with:&#x20;
 
 ## Save the user
 
-We now want to change a value, save it to the datastore and display the updated value in the table.
+We now want to change a value, save it to the datastore and display the updated value in the table. We create a new endpoint in the `UserController.java`.
 
 We create a new endpoint and call the `userService.saveUser()` endpoint, then we add the new user value to the model and return the UserRow template:
 
 {% code title="UserController.java" %}
 ```java
-public static final String POST_SAVE_USER = "/save-user";
+public static final String POST_SAVE_USER = "/save-user"; // (1)
 
-@PostMapping(POST_SAVE_USER)
+@PostMapping(POST_SAVE_USER) // (2)
 public String saveUser(UUID uuid, String username, String password, Model model) {
-  EasyUser user = userService.saveUser(uuid, username, password);
+  EasyUser user = userService.saveUser(uuid, username, password); // (3)
   model.addAttribute("easyUser", user);
-  return "UserRow";
+  return "UserRow"; // (4)
 }
 ```
 {% endcode %}
 
-We can then call this endpoint by adding a button with an `hx-post` attribute that uses the `POST_SAVE_USER` constant in the `EditUserForm`
+(1): We create a constant `POST_SAVE_USER`
+
+(2): We create a new `@PostMapping` endpoint
+
+(3): We save the user and add it to the model
+
+(4): We return the `UserRow.jte` template
+
+We then change the `EditUserForm.jte` template:
 
 {% code title="EditUserForm.jte" %}
 ```html
-@import static de.tschuehly.easy.spring.auth.user.UserController.POST_SAVE_USER
+@import static de.tschuehly.easy.spring.auth.user.UserController.POST_SAVE_USER 
 @param de.tschuehly.easy.spring.auth.user.UserController.UserForm userForm
 
 <div style="width: 100dvw; height: 100dvh; position: fixed; top: 0;left: 0; background-color: rgba(128,128,128,0.69); display: flex; justify-content: center; align-items: center;">
@@ -343,6 +357,10 @@ We can then call this endpoint by adding a button with an `hx-post` attribute th
 ```
 {% endcode %}
 
+We import the `POST_SAVE_USER` constant at the top of the file with `@import`
+
+(1): We create an `HTTP POST` request to the `POST_SAVE_USER`endpoint by adding a button with an `hx-post` attribute.
+
 {% hint style="info" %}
 We can also place the `hx-post` attribute on the form, as the button would trigger a form submit, that htmx catches.
 {% endhint %}
@@ -361,6 +379,7 @@ To fix this, we can return htmx attributes as HTTP Response headers in the `User
 ```java
 public static final String POST_SAVE_USER = "/save-user";
 public static final String CLOSE_MODAL_EVENT = "close-modal";
+
 @PostMapping(POST_SAVE_USER)
 public String saveUser(UUID uuid, String username, String password, Model model, HttpServletResponse response) {
   EasyUser user = userService.saveUser(uuid, username, password);
@@ -406,6 +425,8 @@ If you are stuck you can resume at this checkpoint with:&#x20;
 
 `git checkout tags/lab-1-checkpoint-3 -b current_lab`
 {% endhint %}
+
+## Bonus Exercise
 
 ### Create User
 
@@ -464,7 +485,7 @@ It follows the same pattern as the `POST_SAVE_USER` endpoint.
 
 **(1):** We target the `<body>` element using `HX-Retarget: #USER_TABLE_BODY_ID`&#x20;
 
-**(2):** We use `HX-Reswap: afterbegin` to insert the content of the response as the first child of the target element.
+**(2):** We use `HX-Reswap: afterbegin` to insert the response's content as the target element's first child.
 
 **(3):** We trigger the `CLOSE_MODAL_EVENT`&#x20;
 

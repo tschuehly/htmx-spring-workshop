@@ -36,9 +36,9 @@ Go to settings -> Editor -> File and Code Templates &#x20;
 
 Click on the little plus icon
 
-<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
 
-Name: ViewComponent
+Name: `ViewComponent`
 
 File Name: `${COMPONENT_NAME}Component.java`
 
@@ -58,7 +58,9 @@ public class ${COMPONENT_NAME}Component {
 }
 ```
 
-Then click on "Create Child Template"
+Then click on the plus next to the first one "Create Child Template"
+
+<figure><img src=".gitbook/assets/image.png" alt="" width="560"><figcaption></figcaption></figure>
 
 File Name: `${COMPONENT_NAME}Component.jte`
 

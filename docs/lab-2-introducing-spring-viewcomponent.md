@@ -42,8 +42,8 @@ To start we need to add three dependencies to the `build.gradle.kts` file.
 
 {% code title="build.gradle.kts" %}
 ```kotlin
-implementation("de.tschuehly:spring-view-component-jte:0.7.4")
-annotationProcessor("de.tschuehly:spring-view-component-core:0.7.4")
+implementation("de.tschuehly:spring-view-component-jte:0.7.5-SNAPSHOT")
+annotationProcessor("de.tschuehly:spring-view-component-core:0.7.5-SNAPSHOT")
 implementation("io.github.wimdeblauwe:htmx-spring-boot:3.3.0")
 ```
 {% endcode %}
@@ -64,27 +64,46 @@ We start by creating a `UserManagement.java` file in the `de.tschuehly.easy.spri
 }
 </code></pre>
 
-We remove both `MODAL_CONTAINER_ID` and `CLOSE_MODAL_EVENT` from `UserController.java` and replace the imports:
+We then create a `UserManagement.jte` template in the `de.tschuehly.easy.spring.auth.user.management` package:
 
-{% code title="UserController.java" %}
+{% code title="UserManagement.jte" overflow="wrap" %}
 ```java
-import static de.tschuehly.easy.spring.auth.user.management.UserManagement.CLOSE_MODAL_EVENT;
-import static de.tschuehly.easy.spring.auth.user.management.table.UserTableComponent.USER_TABLE_BODY_ID;
+@import static de.tschuehly.easy.spring.auth.user.management.UserManagement.*
+@import de.tschuehly.easy.spring.auth.user.management.UserManagement.UserManagementContext
+@param UserManagementContext userManagementContext
+<html lang="en">
+
+<head>
+    <title>Easy Spring Auth</title>
+    <link rel="stylesheet" href="/css/sakura.css" type="text/css">
+    <script src="/htmx_1.9.11.js"></script>
+    <script src="/htmx_debug.js"></script>
+    <script src="http://localhost:35729"></script>
+</head>
+<body hx-ext="debug">
+<nav>
+    <h1>
+        Easy Spring Auth
+    </h1>
+</nav>
+<main>
+ 
+</main>
+</body>
+<div id="${MODAL_CONTAINER_ID}" hx-on:${CLOSE_MODAL_EVENT}="this.innerHTML = null">
+</div>
+</html>
 ```
 {% endcode %}
 
-We then move the `UserManagement.jte` template to `de.tschuehly.easy.spring.auth.user.management`
-
-We now need to adjust the imports.\
 We add a static import to the `UserManagement` class.\
-The `param` is now a `UserManagementContext` as we put all variables into this record.
+The `param` is a `UserManagementContext` as we put all variables into this record.
 
-<pre class="language-java" data-title="UserManagement.jte" data-overflow="wrap"><code class="lang-java">@import static de.tschuehly.easy.spring.auth.user.management.UserManagement.*
-<strong>@import de.tschuehly.easy.spring.auth.user.management.UserManagement.UserManagementContext
-</strong>@param UserManagementContext userManagementContext
-</code></pre>
+Now we will create a separate component for the table.
 
-Now we will move the table into a separate component. Create a `UserTableComponent.java` in `de.tschuehly.easy.spring.auth.user.management.table`
+#### UserTableComponent
+
+Create a `UserTableComponent.java` in `de.tschuehly.easy.spring.auth.user.management.table`
 
 {% code title="UserTableComponent.java" %}
 ```java
@@ -108,9 +127,9 @@ public class UserTableComponent {
 ```
 {% endcode %}
 
-Once again we remove the `USER_TABLE_BODY_ID` from the `UserController.java` as we now define it in the `UserTableComponent.java` .
+In the last lab, we defined the `USER_TABLE_BODY_ID` in the `UserController.java`. Now define it in the `UserTableComponent.java` .
 
-Then we move the `<table>` element from `UserManagement.jte` into a `UserTableComponent.jte` and add the imports at the top:
+Now we will create a `UserManagement.jte` template in the same package as the `UserTableComponent.java`:
 
 {% code title="UserTableComponent.jte" %}
 ```java
@@ -134,14 +153,13 @@ Then we move the `<table>` element from `UserManagement.jte` into a `UserTableCo
     </tr>
     </thead>
     <tbody id="${USER_TABLE_BODY_ID}">
-    @for(var row: userTableContext.userTableRowList())
-        ${row}
-    @endfor
+    
     </tbody>
     <tfoot>
     <tr>
         <td colspan="4">
-            <button hx-get="${GET_CREATE_USER_MODAL}" hx-target="#${MODAL_CONTAINER_ID}">
+            <button hx-get="${GET_CREATE_USER_MODAL}" 
+                    hx-target="#${MODAL_CONTAINER_ID}">
                 Create new User
             </button>
         </td>
@@ -151,7 +169,7 @@ Then we move the `<table>` element from `UserManagement.jte` into a `UserTableCo
 ```
 {% endcode %}
 
-We then create a `UserRowComponent.java` class in `de.tschuehly.easy.spring.auth.user.management.table.row`
+We then create a `UserRowComponent.java` class in `de.tschuehly.easy.spring.auth.user.management.table.row` package:
 
 <pre class="language-java" data-title="UserRowComponent.java"><code class="lang-java"><strong>@ViewComponent
 </strong>public class UserRowComponent {
@@ -168,7 +186,7 @@ We then create a `UserRowComponent.java` class in `de.tschuehly.easy.spring.auth
 }
 </code></pre>
 
-We then move the `UserRow.jte` template to `auth.user.management.table.row` and rename it to `UserRowComponent.jte` we also replace the `@import` and `@param` :
+We then create a `UserRowComponent.jte` template in the `auth.user.management.table.row` package.
 
 ```java
 @import static de.tschuehly.easy.spring.auth.htmx.HtmxUtil.URI
@@ -197,49 +215,50 @@ We then move the `UserRow.jte` template to `auth.user.management.table.row` and 
 </tr>
 ```
 
-(1): Then we replace the `easyUser` variable with `userRowContext.easyUser()` .
+(1): We use the `userRowContext.easyUser()` attribute to access the user we want to render.
 
-(2): Then we replace the `<tr id="user-${uuid}">` with `<tr id="${UserRowContext.htmlUserId(uuid)}">`
+(2): We set the id of the table row using the `UserRowContext.htmlUserId(uuid)` function
 
 ### UserTableComponent
 
-We now change the render method in the `UserTableComponent.java`
-
-We then add this `rowList` into the `UserTableContext`
+We now change the `UserTableComponent.java`:
 
 {% code title="UserTableComponent.java" %}
 ```java
 @ViewComponent
 public class UserTableComponent {
   private final UserService userService;
-  private final UserRowComponent userRowComponent;
+  private final UserRowComponent userRowComponent; // (1)
 
   public UserTableComponent(UserService userService, UserRowComponent userRowComponent) {
     this.userService = userService;
-    this.userRowComponent = userRowComponent;
+    this.userRowComponent = userRowComponent; // (1)
   }
 
-  public record UserTableContext(List<ViewContext> userTableRowList) implements ViewContext{
+  public record UserTableContext(List<ViewContext> userTableRowList) // (2)
+    implements ViewContext{
 
   }
   public static final String USER_TABLE_BODY_ID = "userTableBody";
 
   public ViewContext render(){
-    List<ViewContext> rowList = userService.findAll() // (1)
-        .stream().map(userRowComponent::render).toList(); // (2)
+    List<ViewContext> rowList = userService.findAll() // (3)
+        .stream().map(userRowComponent::render).toList(); // (4)
     return new UserTableContext(rowList);
   }
 }
 ```
 {% endcode %}
 
-(1):  We call the `userService.findAll()` method
+**(1):** We autowire the userRowComponent.
 
-(2): Then we call the autowired `userRowComponent::render` method in a map call.
+**(2):** We add  a `List<ViewContext>` property to the `UserTableContext`
 
+**(3):**  We call the `userService.findAll()` method
 
+**(4):** Then we call the autowired `userRowComponent::render` method in the `.stream().map()` function.
 
-We will now replace the `@template.UserRow` method by looping through the `userTableRowList` and rendering the `row` in the `UserTableComponent.jte`
+Now we will render the `userTableRowList` in the `UserTableComponent.jte`:
 
 {% code title="UserTableComponent.jte" %}
 ```java
@@ -263,8 +282,8 @@ We will now replace the `@template.UserRow` method by looping through the `userT
     </tr>
     </thead>
     <tbody id="${USER_TABLE_BODY_ID}">
-    @for(var row: userTableContext.userTableRowList())
-        ${row}
+    @for(var row: userTableContext.userTableRowList()) <%-- (1) --%>
+        ${row} <%-- (2) --%>
     @endfor
     </tbody>
     <tfoot>
@@ -280,18 +299,20 @@ We will now replace the `@template.UserRow` method by looping through the `userT
 ```
 {% endcode %}
 
-Now we can render the UserManagement table using Spring ViewComponent!
+(1): We loop through the `userTableRowList` and create a `row` loop variable.
 
-We go to `UserMangement.java`, autowire the `UserTableComponent` and put the rendered component into the `UserManagementContext`:
+(2): We render the `row` ViewContext in the `<tbody>`
+
+Now we can render the table using Spring ViewComponent in the `UserMangement.java:`
 
 <pre class="language-java" data-title="UserMangement.java"><code class="lang-java"><strong>@ViewComponent
 </strong>public class UserManagement {
   public static final String MODAL_CONTAINER_ID = "modalContainer";
   public static final String CLOSE_MODAL_EVENT = "close-modal";
-  private final UserTableComponent userTableComponent;
+  private final UserTableComponent userTableComponent; // (1)
 
-  public UserManagement(UserTableComponent userTableComponent) {
-    this.userTableComponent = userTableComponent;
+  public UserManagement(UserTableComponent userTableComponent) {// (1)
+    this.userTableComponent = userTableComponent; 
   }
 
   public record UserManagementContext(ViewContext userTable)
@@ -303,7 +324,13 @@ We go to `UserMangement.java`, autowire the `UserTableComponent` and put the ren
 }
 </code></pre>
 
-In the template, we can insert the rendered table:
+(1): We autowire the `UserTableComponent`
+
+(2): We add a `userTable` ViewContext field to the `UserManagementContext`
+
+(3): In the `UserManagement.render` method we call the `userTableComponent.render` and pass it into the `UserManagementContext` constructor.
+
+In the `UserManagement.jte` template, we can insert the rendered table:
 
 {% code title="UserManagement.jte" %}
 ```html
@@ -337,7 +364,7 @@ In the template, we can insert the rendered table:
 ```
 {% endcode %}
 
-In the UserController.java we can autowire the UserManagement ViewComponent and render it in the index method:
+In the UserController.java we can autowire the `UserManagement` ViewComponent and render it in the index method:
 
 <pre class="language-java" data-title="UserController.java"><code class="lang-java"><strong>@Controller
 </strong>public class UserController {
@@ -371,7 +398,7 @@ If you are stuck you can resume at this checkpoint with:&#x20;
 
 ### Edit User
 
-We now need to migrate the edit user functionality to Spring ViewComponent.
+We now create the edit user functionality with Spring ViewComponent.
 
 We create an `EditUserComponent.java` in the `de.tschuehly.easy.spring.auth.user.management.edit` package:
 
@@ -466,7 +493,7 @@ If you are stuck you can resume at this checkpoint with:&#x20;
 
 ### Fix the Save User functionality&#x20;
 
-Previously we used HX Response headers to set the swapping functionality directly in the `UserController.java`:
+In Lab1 we used HX Response headers to set the swapping functionality directly in the `UserController.java`:
 
 {% code title="UserController.java" %}
 ```java
