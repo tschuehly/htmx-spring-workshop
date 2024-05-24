@@ -20,7 +20,7 @@
     ${userManagementContext.userTable()}
 </main>
 </body>
-<div id="${MODAL_CONTAINER_ID}" hx-on:$unsafe{CLOSE_MODAL_EVENT}="this.innerHTML = null">
+<div id="${MODAL_CONTAINER_ID}" hx-on:${CLOSE_MODAL_EVENT}="this.innerHTML = null">
 
 </div>
 

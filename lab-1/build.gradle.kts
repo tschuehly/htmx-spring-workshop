@@ -19,13 +19,19 @@ configurations {
 
 repositories {
     mavenCentral()
+    maven {
+        url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+        mavenContent {
+            snapshotsOnly()
+        }
+    }
 }
 
 dependencies {
     // LAB 1:
     implementation("org.springframework.boot:spring-boot-starter-web")
-    implementation("gg.jte:jte-spring-boot-starter-3:3.1.9")
-    implementation("gg.jte:jte:3.1.9")
+    implementation("gg.jte:jte-spring-boot-starter-3:3.1.12")
+    implementation("gg.jte:jte:3.1.12")
 
     // LAB 9:
     implementation("io.projectreactor:reactor-core:3.6.5")

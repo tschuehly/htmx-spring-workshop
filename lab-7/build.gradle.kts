@@ -17,8 +17,15 @@ configurations {
     }
 }
 
+
 repositories {
     mavenCentral()
+    maven {
+        url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
+        mavenContent {
+            snapshotsOnly()
+        }
+    }
 }
 
 dependencies {
@@ -26,8 +33,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
 
     // LAB 2:
-    implementation("de.tschuehly:spring-view-component-jte:0.7.4")
-    annotationProcessor("de.tschuehly:spring-view-component-core:0.7.4")
+    implementation("de.tschuehly:spring-view-component-jte:0.7.5-SNAPSHOT")
+    annotationProcessor("de.tschuehly:spring-view-component-core:0.7.5-SNAPSHOT")
     implementation("io.github.wimdeblauwe:htmx-spring-boot:3.3.0")
 
     // LAB 9:
