@@ -33,9 +33,9 @@ public class UserController {
     this.userService = userService;
   }
 
-  @GetMapping("/") // (1)
+  @GetMapping("/") // (2)
   public String index(Model model) {
-    model.addAttribute("easyUserList", userService.findAll()); // (2)
+    model.addAttribute("easyUserList", userService.findAll()); // (3)
     return "UserManagement";
   }  
 }
