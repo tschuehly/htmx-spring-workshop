@@ -16,18 +16,6 @@ Please clone the Git repository:
 git clone https://github.com/tschuehly/htmx-spring-workshop.git
 ```
 
-## Info
-
-In each lab there are checkpoints:
-
-<figure><img src="../.gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
-
-You can find a branch for each lab with multiple checkpoint commits you can start over with or compare against if you are stuck:
-
-<figure><img src="../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
-
-Only the relevant imports that need to be added are shown. Imports that have already been defined before are omitted.
-
 ## IntelliJ Code Template
 
 To create a new ViewComponent with one click we can create a new IntelliJ Code Template.
@@ -70,6 +58,18 @@ Extension: `jte`
 @import ${PACKAGE_NAME}.${COMPONENT_NAME}Component.${COMPONENT_NAME}Context
 @param ${COMPONENT_NAME}Context ${COMPONENT_NAME.substring(0,1).toLowerCase()}${COMPONENT_NAME.substring(1)}Context
 ```
+
+## Info
+
+In each lab there are checkpoints:
+
+<figure><img src="../.gitbook/assets/image (9).png" alt=""><figcaption></figcaption></figure>
+
+You can find a branch for each lab with multiple checkpoint commits you can start over with or compare against if you are stuck:
+
+<figure><img src="../.gitbook/assets/image (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
+
+Only the relevant imports that need to be added are shown. Imports that have already been defined before are omitted.
 
 ## Labs
 
