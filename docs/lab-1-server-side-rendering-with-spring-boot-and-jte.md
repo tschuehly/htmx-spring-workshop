@@ -81,7 +81,7 @@ We replace the table body element with the following:
 ```html
 <tbody id="${USER_TABLE_BODY_ID}"> <%-- (1) --%>
 @for(var user: easyUserList) <%-- (2) --%>
-    @template.userRow(easyUser = user) <%-- (3) --%>
+    @template.UserRow(easyUser = user) <%-- (3) --%>
 @endfor
 </tbody>
 ```
@@ -138,7 +138,7 @@ Your `UserManagement.jte` template should now look like this:&#x20;
         </thead>
         <tbody id="${USER_TABLE_BODY_ID}">
         @for(var user: easyUserList)
-            @template.userRow(easyUser = user)
+            @template.UserRow(easyUser = user)
         @endfor
         </tbody>
         <tfoot>
