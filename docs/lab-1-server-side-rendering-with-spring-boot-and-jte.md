@@ -377,7 +377,6 @@ To fix this, we can return htmx attributes as HTTP Response headers in the `User
 
 {% code title="UserController.java" %}
 ```java
-public static final String POST_SAVE_USER = "/save-user";
 public static final String CLOSE_MODAL_EVENT = "close-modal";
 
 @PostMapping(POST_SAVE_USER)

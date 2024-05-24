@@ -39,9 +39,9 @@ The template is the same as the `UserManagement.jte` but we added two `<a>` link
 &#x3C;/head>
 &#x3C;body hx-ext="debug">
 &#x3C;nav>
-    &#x3C;h2>
+    &#x3C;h1>
         Easy Spring Auth
-    &#x3C;/h2>
+    &#x3C;/h1>
     &#x3C;a href="/">UserManagement&#x3C;/a>
     &#x3C;a href="/groupManagement">GroupManagement&#x3C;/a>
     &#x3C;hr>
