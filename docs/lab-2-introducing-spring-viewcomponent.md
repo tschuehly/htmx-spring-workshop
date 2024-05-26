@@ -628,9 +628,9 @@ We can now call the `createUserComponent.render` method in the `UserController.g
 
 {% code title="UserController.java" %}
 ```java
-public static final String CREATE_USER_MODAL = "/create-user/modal";
+public static final String GET_CREATE_USER_MODAL = "/create-user/modal";
 
-@GetMapping(CREATE_USER_MODAL)
+@GetMapping(GET_CREATE_USER_MODAL)
 public ViewContext getCreateUserModal() {
   return createUserComponent.render();
 }

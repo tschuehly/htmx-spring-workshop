@@ -433,27 +433,27 @@ If you are stuck you can resume at this checkpoint with:&#x20;
 
 As the next step, we want to create a new User.
 
-To start we create a new endpoint `CREATE_USER_MODAL` where we return the `CreateUserForm` template in the `UserController`
+To start we create a new endpoint `GET_CREATE_USER_MODAL` where we return the `CreateUserForm` template in the `UserController`
 
 {% code title="UserController.java" %}
 ```java
-public static final String CREATE_USER_MODAL = "/create-user/modal";
+public static final String GET_CREATE_USER_MODAL = "/create-user/modal";
 
-@GetMapping(CREATE_USER_MODAL)
+@GetMapping(GET_CREATE_USER_MODAL)
 public String getCreateUserModal() {
   return "CreateUserForm";
 }
 ```
 {% endcode %}
 
-We replace the `<tfoot>` element of the `UserManagement`, adding a button element that creates a GET request to the `CREATE_USER_MODAL` endpoint and targeting the `MODAL_CONTAINER_ID`
+We replace the `<tfoot>` element of the `UserManagement`, adding a button element that creates a GET request to the `GET_CREATE_USER_MODAL` endpoint and targeting the `MODAL_CONTAINER_ID`
 
 {% code title="UserManagement.jte" %}
 ```html
 <tfoot>
   <tr>
     <td colspan="4">
-        <button hx-get="${CREATE_USER_MODAL}" <%-- (1) --%>
+        <button hx-get="${GET_CREATE_USER_MODAL}" <%-- (1) --%>
                 hx-target="#${MODAL_CONTAINER_ID}"> <%-- (2) --%>
             Create new User
         </button>
