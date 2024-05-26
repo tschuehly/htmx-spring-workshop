@@ -1,6 +1,6 @@
 package de.tschuehly.easy.spring.auth.user;
 
-import de.tschuehly.easy.spring.auth.user.management.UserManagement;
+import de.tschuehly.easy.spring.auth.user.management.UserManagementComponent;
 import de.tschuehly.easy.spring.auth.user.management.create.CreateUserComponent;
 import de.tschuehly.easy.spring.auth.user.management.edit.EditUserComponent;
 import de.tschuehly.easy.spring.auth.user.management.table.UserTableComponent;
@@ -24,26 +24,26 @@ public class UserController {
   private final CreateUserComponent createUserComponent;
   private final LayoutComponent layoutComponent;
   private final UserTableComponent userTableComponent;
-  private final UserManagement userManagement;
+  private final UserManagementComponent userManagementComponent;
 
   public UserController(UserService userService, EditUserComponent editUserComponent,
       UserRowComponent userRowComponent, CreateUserComponent createUserComponent, LayoutComponent layoutComponent,
-      UserTableComponent userTableComponent, UserManagement userManagement) {
+      UserTableComponent userTableComponent, UserManagementComponent userManagementComponent) {
     this.userService = userService;
     this.editUserComponent = editUserComponent;
     this.userRowComponent = userRowComponent;
     this.createUserComponent = createUserComponent;
     this.layoutComponent = layoutComponent;
     this.userTableComponent = userTableComponent;
-    this.userManagement = userManagement;
+    this.userManagementComponent = userManagementComponent;
   }
 
   public static final String USER_MANAGEMENT_PATH = "/";
 
   @GetMapping(USER_MANAGEMENT_PATH)
-  public ViewContext userManagement() {
+  public ViewContext userManagementComponent() {
     return layoutComponent.render(
-        userManagement.render()
+        userManagementComponent.render()
     );
   }
 

@@ -1,6 +1,6 @@
 @import de.tschuehly.easy.spring.auth.user.management.table.UserTableComponent.UserTableContext
 @import static de.tschuehly.easy.spring.auth.user.UserController.GET_CREATE_USER_MODAL
-@import static de.tschuehly.easy.spring.auth.user.management.UserManagement.MODAL_CONTAINER_ID
+@import static de.tschuehly.easy.spring.auth.user.management.UserManagementComponent.MODAL_CONTAINER_ID
 @import static de.tschuehly.easy.spring.auth.user.management.table.UserTableComponent.USER_TABLE_BODY_ID
 @param UserTableContext userTableContext
 <table>

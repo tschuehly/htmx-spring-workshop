@@ -148,11 +148,11 @@ ${userTableContext.userTableBody()}
 ```
 {% endcode %}
 
-### UserManagement
+### UserManagementComponent
 
 We need to adjust the `UserMangement.jte` template to pass in 0 as the parameter.
 
-{% code title="UserManagement.jte" %}
+{% code title="UserManagementComponent.jte" %}
 ```html
 @import static de.tschuehly.easy.spring.auth.user.UserController.*
 @import de.tschuehly.easy.spring.auth.htmx.HtmxUtil

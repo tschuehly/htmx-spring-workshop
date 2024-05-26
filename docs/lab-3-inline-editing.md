@@ -22,7 +22,7 @@ public class GroupManagement {
 ```
 {% endcode %}
 
-The template is the same as the `UserManagement.jte` but we added two `<a>` links to the `<nav>` element.&#x20;
+The template is the same as the `UserManagementComponent.jte` but we added two `<a>` links to the `<nav>` element.&#x20;
 
 <pre class="language-html" data-title="GroupManagement.jte"><code class="lang-html"><strong>@import static de.tschuehly.easy.spring.auth.group.management.GroupManagement.CLOSE_MODAL_EVENT
 </strong>@import static de.tschuehly.easy.spring.auth.group.management.GroupManagement.MODAL_CONTAINER_ID
@@ -42,7 +42,7 @@ The template is the same as the `UserManagement.jte` but we added two `<a>` link
     &#x3C;h1>
         Easy Spring Auth
     &#x3C;/h1>
-    &#x3C;a href="/">UserManagement&#x3C;/a>
+    &#x3C;a href="/">UserManagementComponent&#x3C;/a>
     &#x3C;a href="/groupManagement">GroupManagement&#x3C;/a>
     &#x3C;hr>
 &#x3C;/nav>
@@ -57,7 +57,7 @@ The template is the same as the `UserManagement.jte` but we added two `<a>` link
 </code></pre>
 
 {% hint style="danger" %}
-We also need to add these two `<a>` elements to the UserManagement template
+We also need to add these two `<a>` elements to the UserManagementComponent template
 {% endhint %}
 
 ***

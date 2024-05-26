@@ -67,9 +67,9 @@ You should not be able to access it.
 
 To render the user table we need to change the UserMangement back to a ViewComponent.
 
-<pre class="language-java" data-title="UserManagement.java"><code class="lang-java"><strong>@ViewComponent
+<pre class="language-java" data-title="UserManagementComponent.java"><code class="lang-java"><strong>@ViewComponent
 </strong>@Order(1)
-public class UserManagement implements Page {
+public class UserManagementComponent implements Page {
 
   public ViewContext render() {
     return new UserManagementContext();
@@ -84,7 +84,7 @@ public class UserManagement implements Page {
 }
 </code></pre>
 
-Now create a `UserManagement.jte` file in the same package as the `UserManagement`
+Now create a `UserManagementComponent.jte` file in the same package as the `UserManagementComponent`
 
 ```
 @import static de.tschuehly.easy.spring.auth.user.UserController.GET_USER_TABLE
@@ -107,16 +107,16 @@ We can show a loading spinner with an `<img>` element. \
 
 Now back in the `UserController` we autowire the `userMangement` by injecting it in the constructor.
 
-Then we replace the `userTableComponent.render()` method with `userManagement.render()`&#x20;
+Then we replace the `userTableComponent.render()` method with `userManagementComponent.render()`&#x20;
 
 {% code title="UserController.java" %}
 ```java
 public static final String USER_MANAGEMENT_PATH = "/";
 
 @GetMapping(USER_MANAGEMENT_PATH)
-public ViewContext userManagement() {
+public ViewContext userManagementComponent() {
   return layoutComponent.render(
-      userManagement.render()
+      userManagementComponent.render()
   );
 }
 ```

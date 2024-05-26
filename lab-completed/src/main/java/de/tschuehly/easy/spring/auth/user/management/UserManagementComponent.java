@@ -8,7 +8,7 @@ import org.springframework.core.annotation.Order;
 
 @ViewComponent
 @Order(1)
-public class UserManagement implements Page {
+public class UserManagementComponent implements Page {
 
   public ViewContext render() {
     return new UserManagementContext();

@@ -48,10 +48,10 @@ implementation("io.github.wimdeblauwe:htmx-spring-boot:3.3.0")
 ```
 {% endcode %}
 
-We start by creating a `UserManagement.java` file in the `de.tschuehly.easy.spring.auth.user.management` package.
+We start by creating a `UserManagementComponent.java` file in the `de.tschuehly.easy.spring.auth.user.management` package.
 
-<pre class="language-java" data-title="UserManagement.java"><code class="lang-java"><strong>@ViewComponent
-</strong>public class UserManagement {
+<pre class="language-java" data-title="UserManagementComponent.java"><code class="lang-java"><strong>@ViewComponent
+</strong>public class UserManagementComponent {
   public static final String MODAL_CONTAINER_ID = "modalContainer";
   public static final String CLOSE_MODAL_EVENT = "close-modal";
   
@@ -64,12 +64,12 @@ We start by creating a `UserManagement.java` file in the `de.tschuehly.easy.spri
 }
 </code></pre>
 
-We then create a `UserManagement.jte` template in the `de.tschuehly.easy.spring.auth.user.management` package:
+We then create a `UserManagementComponent.jte` template in the `de.tschuehly.easy.spring.auth.user.management` package:
 
-{% code title="UserManagement.jte" overflow="wrap" %}
+{% code title="UserManagementComponent.jte" overflow="wrap" %}
 ```java
-@import static de.tschuehly.easy.spring.auth.user.management.UserManagement.*
-@import de.tschuehly.easy.spring.auth.user.management.UserManagement.UserManagementContext
+@import static de.tschuehly.easy.spring.auth.user.management.UserManagementComponent.*
+@import de.tschuehly.easy.spring.auth.user.management.UserManagementComponent.UserManagementContext
 @param UserManagementContext userManagementContext
 <html lang="en">
 
@@ -96,7 +96,7 @@ We then create a `UserManagement.jte` template in the `de.tschuehly.easy.spring.
 ```
 {% endcode %}
 
-We add a static import to the `UserManagement` class.\
+We add a static import to the `UserManagementComponent` class.\
 The `param` is a `UserManagementContext` as we put all variables into this record.
 
 Now we will create a separate component for the table.
@@ -129,13 +129,13 @@ public class UserTableComponent {
 
 In the last lab, we defined the `USER_TABLE_BODY_ID` in the `UserController.java`. Now define it in the `UserTableComponent.java` .
 
-Now we will create a `UserManagement.jte` template in the same package as the `UserTableComponent.java`:
+Now we will create a `UserManagementComponent.jte` template in the same package as the `UserTableComponent.java`:
 
 {% code title="UserTableComponent.jte" %}
 ```java
 @import de.tschuehly.easy.spring.auth.user.management.table.UserTableComponent.UserTableContext
 @import static de.tschuehly.easy.spring.auth.user.UserController.GET_CREATE_USER_MODAL
-@import static de.tschuehly.easy.spring.auth.user.management.UserManagement.MODAL_CONTAINER_ID
+@import static de.tschuehly.easy.spring.auth.user.management.UserManagementComponent.MODAL_CONTAINER_ID
 @import static de.tschuehly.easy.spring.auth.user.management.table.UserTableComponent.USER_TABLE_BODY_ID
 @param UserTableContext userTableContext
 <table>
@@ -191,7 +191,7 @@ We then create a `UserRowComponent.jte` template in the `auth.user.management.ta
 ```java
 @import static de.tschuehly.easy.spring.auth.htmx.HtmxUtil.URI
 @import static de.tschuehly.easy.spring.auth.user.UserController.*
-@import static de.tschuehly.easy.spring.auth.user.management.UserManagement.MODAL_CONTAINER_ID
+@import static de.tschuehly.easy.spring.auth.user.management.UserManagementComponent.MODAL_CONTAINER_ID
 @import de.tschuehly.easy.spring.auth.user.management.table.row.UserRowComponent.UserRowContext
 @param UserRowContext userRowContext
 
@@ -264,7 +264,7 @@ Now we will render the `userTableRowList` in the `UserTableComponent.jte`:
 ```java
 @import de.tschuehly.easy.spring.auth.user.management.table.UserTableComponent.UserTableContext
 @import static de.tschuehly.easy.spring.auth.user.UserController.GET_CREATE_USER_MODAL
-@import static de.tschuehly.easy.spring.auth.user.management.UserManagement.MODAL_CONTAINER_ID
+@import static de.tschuehly.easy.spring.auth.user.management.UserManagementComponent.MODAL_CONTAINER_ID
 @import static de.tschuehly.easy.spring.auth.user.management.table.UserTableComponent.USER_TABLE_BODY_ID
 @param UserTableContext userTableContext
 <table>
@@ -306,12 +306,12 @@ Now we will render the `userTableRowList` in the `UserTableComponent.jte`:
 Now we can render the table using Spring ViewComponent in the `UserMangement.java:`
 
 <pre class="language-java" data-title="UserMangement.java"><code class="lang-java"><strong>@ViewComponent
-</strong>public class UserManagement {
+</strong>public class UserManagementComponent {
   public static final String MODAL_CONTAINER_ID = "modalContainer";
   public static final String CLOSE_MODAL_EVENT = "close-modal";
   private final UserTableComponent userTableComponent; // (1)
 
-  public UserManagement(UserTableComponent userTableComponent) {// (1)
+  public UserManagementComponent(UserTableComponent userTableComponent) {// (1)
     this.userTableComponent = userTableComponent; 
   }
 
@@ -328,14 +328,14 @@ Now we can render the table using Spring ViewComponent in the `UserMangement.jav
 
 (2): We add a `userTable` ViewContext field to the `UserManagementContext`
 
-(3): In the `UserManagement.render` method we call the `userTableComponent.render` and pass it into the `UserManagementContext` constructor.
+(3): In the `UserManagementComponent.render` method we call the `userTableComponent.render` and pass it into the `UserManagementContext` constructor.
 
-In the `UserManagement.jte` template, we can insert the rendered table:
+In the `UserManagementComponent.jte` template, we can insert the rendered table:
 
-{% code title="UserManagement.jte" %}
+{% code title="UserManagementComponent.jte" %}
 ```html
-@import static de.tschuehly.easy.spring.auth.user.management.UserManagement.*
-@import de.tschuehly.easy.spring.auth.user.management.UserManagement.UserManagementContext
+@import static de.tschuehly.easy.spring.auth.user.management.UserManagementComponent.*
+@import de.tschuehly.easy.spring.auth.user.management.UserManagementComponent.UserManagementContext
 @param UserManagementContext userManagementContext
 <html lang="en">
 
@@ -364,22 +364,22 @@ In the `UserManagement.jte` template, we can insert the rendered table:
 ```
 {% endcode %}
 
-In the UserController.java we can autowire the `UserManagement` ViewComponent and render it in the index method:
+In the UserController.java we can autowire the `UserManagementComponent` ViewComponent and render it in the index method:
 
 <pre class="language-java" data-title="UserController.java"><code class="lang-java"><strong>@Controller
 </strong>public class UserController {
 
   private final UserService userService;
-  private final UserManagement userManagement;
+  private final UserManagementComponent userManagementComponent;
 
-  public UserController(UserService userService, UserManagement userManagement) {
+  public UserController(UserService userService, UserManagementComponent userManagementComponent) {
     this.userService = userService;
-    this.userManagement = userManagement;
+    this.userManagementComponent = userManagementComponent;
   }
 
   @GetMapping("/")
   public ViewContext index() {
-    return userManagement.render();
+    return userManagementComponent.render();
   }
 }
 </code></pre>
@@ -664,7 +664,7 @@ public ViewContext renderNewRow(EasyUser user) {
   String target = HtmxUtil.target(UserTableComponent.USER_TABLE_BODY_ID);
   HtmxUtil.retarget(target);
   HtmxUtil.reswap(HxSwapType.AFTER_BEGIN);
-  HtmxUtil.trigger(UserManagement.CLOSE_MODAL_EVENT);
+  HtmxUtil.trigger(UserManagementComponent.CLOSE_MODAL_EVENT);
   return new UserRowContext(user);
 }
 ```

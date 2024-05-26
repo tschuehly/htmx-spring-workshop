@@ -1,5 +1,5 @@
-@import static de.tschuehly.easy.spring.auth.user.management.UserManagement.*
-@import de.tschuehly.easy.spring.auth.user.management.UserManagement.UserManagementContext
+@import static de.tschuehly.easy.spring.auth.user.management.UserManagementComponent.*
+@import de.tschuehly.easy.spring.auth.user.management.UserManagementComponent.UserManagementContext
 @param UserManagementContext userManagementContext
 <html lang="en">
 

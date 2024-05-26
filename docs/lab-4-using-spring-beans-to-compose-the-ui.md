@@ -1,6 +1,6 @@
 # Lab 4: Using Spring Beans to Compose the UI
 
-As you have seen in Lab 3 we have a lot of duplication between the `UserManagement` and the `GroupManagement` ViewComponent.\
+As you have seen in Lab 3 we have a lot of duplication between the `UserManagementComponent` and the `GroupManagement` ViewComponent.\
 
 
 We start by creating a shared `LayoutComponent` in `auth.web.layout`. We have a ViewContext parameter and the modal-related constants.
@@ -75,7 +75,7 @@ public ViewContext groupManagement(){
 public static final String USER_MANAGEMENT_PATH = "/";
 
 @GetMapping(USER_MANAGEMENT_PATH)
-public ViewContext userManagement() {
+public ViewContext userManagementComponent() {
   return layoutComponent.render(userTableComponent.render());
 }
 
@@ -92,7 +92,7 @@ If you are stuck you can resume at this checkpoint with:
 `git checkout tags/lab-4-checkpoint-1 -b lab-4-c1`
 {% endhint %}
 
-But now we don't have a Navigation Bar anymore and the `UserManagement` and the `GroupManagement` is not used anymore. We can now use them to define the Pages that are displayed in the Navigation Bar.
+But now we don't have a Navigation Bar anymore and the `UserManagementComponent` and the `GroupManagement` is not used anymore. We can now use them to define the Pages that are displayed in the Navigation Bar.
 
 
 
@@ -108,12 +108,12 @@ public interface Page {
 ```
 {% endcode %}
 
-We can now slim down the `UserManagement` that defines the NavigationItem and the path to the Endpoint. We can also delete the `UserManagement.jte` template.
+We can now slim down the `UserManagementComponent` that defines the NavigationItem and the path to the Endpoint. We can also delete the `UserManagementComponent.jte` template.
 
-{% code title="UserManagement.java" %}
+{% code title="UserManagementComponent.java" %}
 ```java
 @Component
-public class UserManagement implements Page {
+public class UserManagementComponent implements Page {
 
   @Override
   public NavigationItem navigationItem() {

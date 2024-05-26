@@ -1,6 +1,6 @@
 package de.tschuehly.easy.spring.auth.user;
 
-import de.tschuehly.easy.spring.auth.user.management.UserManagement;
+import de.tschuehly.easy.spring.auth.user.management.UserManagementComponent;
 import de.tschuehly.easy.spring.auth.user.management.create.CreateUserComponent;
 import de.tschuehly.easy.spring.auth.user.management.edit.EditUserComponent;
 import de.tschuehly.easy.spring.auth.user.management.table.row.UserRowComponent;
@@ -16,15 +16,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class UserController {
 
-  private final UserManagement userManagement;
+  private final UserManagementComponent userManagementComponent;
   private final UserService userService;
   private final EditUserComponent editUserComponent;
   private final UserRowComponent userRowComponent;
   private final CreateUserComponent createUserComponent;
 
-  public UserController(UserManagement userManagement, UserService userService, EditUserComponent editUserComponent,
+  public UserController(UserManagementComponent userManagementComponent, UserService userService, EditUserComponent editUserComponent,
       UserRowComponent userRowComponent, CreateUserComponent createUserComponent) {
-    this.userManagement = userManagement;
+    this.userManagementComponent = userManagementComponent;
     this.userService = userService;
     this.editUserComponent = editUserComponent;
     this.userRowComponent = userRowComponent;
@@ -32,8 +32,8 @@ public class UserController {
   }
 
   @GetMapping("/")
-  public ViewContext userManagement() {
-    return userManagement.render();
+  public ViewContext userManagementComponent() {
+    return userManagementComponent.render();
   }
 
   public static final String GET_EDIT_USER_MODAL = "/save-user/modal/{uuid}";

@@ -35,7 +35,7 @@ public class UserController {
   public static final String USER_MANAGEMENT_PATH = "/";
 
   @GetMapping(USER_MANAGEMENT_PATH)
-  public ViewContext userManagement() {
+  public ViewContext userManagementComponent() {
     return layoutComponent.render(userTableComponent.render());
   }
 

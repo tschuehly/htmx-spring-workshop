@@ -8,16 +8,19 @@ import org.springframework.core.annotation.Order;
 
 @ViewComponent
 @Order(1)
-public class UserManagement implements Page {
+public class UserManagementComponent implements Page {
 
   public ViewContext render() {
     return new UserManagementContext();
   }
 
-  public record UserManagementContext() implements ViewContext {}
+  public record UserManagementContext() implements ViewContext {
+
+  }
 
   @Override
   public NavigationItem navigationItem() {
     return new NavigationItem("User Management", UserController.USER_MANAGEMENT_PATH);
   }
+
 }

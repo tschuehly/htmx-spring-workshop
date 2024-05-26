@@ -5,13 +5,13 @@ import de.tschuehly.spring.viewcomponent.core.component.ViewComponent;
 import de.tschuehly.spring.viewcomponent.jte.ViewContext;
 
 @ViewComponent
-public class UserManagement {
+public class UserManagementComponent {
   private final UserTableComponent userTableComponent;
 
   public static final String MODAL_CONTAINER_ID = "modalContainer";
   public static final String CLOSE_MODAL_EVENT = "close-modal";
 
-  public UserManagement(UserTableComponent userTableComponent) {
+  public UserManagementComponent(UserTableComponent userTableComponent) {
     this.userTableComponent = userTableComponent;
   }
 
