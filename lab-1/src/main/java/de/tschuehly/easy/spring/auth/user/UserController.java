@@ -1,9 +1,11 @@
 package de.tschuehly.easy.spring.auth.user;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.UUID;
 
@@ -34,6 +36,21 @@ public class UserController {
     model.addAttribute("userForm",
             new UserForm(user.uuid.toString(), user.username, user.password)); // (3)
     return "EditUserForm";
+  }
+
+  public static final String POST_SAVE_USER = "/save-user"; // (1)
+
+  public static final String CLOSE_MODAL_EVENT = "close-modal";
+
+  @PostMapping(POST_SAVE_USER)
+  public String saveUser(UUID uuid, String username, String password, Model model,
+                         HttpServletResponse response) {
+    EasyUser user = userService.saveUser(uuid, username, password);
+    model.addAttribute("easyUser", user);
+    response.addHeader("HX-Retarget", "#user-" + user.uuid); // (1)
+    response.addHeader("HX-Reswap", "outerHTML");
+    response.addHeader("HX-Trigger", CLOSE_MODAL_EVENT);
+    return "UserRow";
   }
 
 }
