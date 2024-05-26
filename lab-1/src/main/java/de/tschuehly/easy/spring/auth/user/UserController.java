@@ -53,4 +53,24 @@ public class UserController {
     return "UserRow";
   }
 
+  public static final String GET_CREATE_USER_MODAL = "/create-user/modal";
+
+  @GetMapping(GET_CREATE_USER_MODAL)
+  public String getCreateUserModal() {
+    return "CreateUserForm";
+  }
+
+  public static final String POST_CREATE_USER = "/create-user";
+
+  @PostMapping(POST_CREATE_USER)
+  public String createUser(String username, String password, Model model, HttpServletResponse response) {
+    EasyUser user = userService.createUser(username, password);
+    model.addAttribute("easyUser", user);
+
+    response.addHeader("HX-Retarget", "#" + USER_TABLE_BODY_ID); // (1)
+    response.addHeader("HX-Reswap", "afterbegin"); // (2)
+    response.addHeader("HX-Trigger", CLOSE_MODAL_EVENT); // (3)
+    return "UserRow"; // (4)
+  }
+
 }
