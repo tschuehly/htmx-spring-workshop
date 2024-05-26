@@ -5,13 +5,13 @@ import de.tschuehly.spring.viewcomponent.core.component.ViewComponent;
 import de.tschuehly.spring.viewcomponent.jte.ViewContext;
 
 @ViewComponent
-public class GroupManagement {
+public class GroupManagementComponent {
   private final GroupTableComponent groupTableComponent;
 
   public static final String MODAL_CONTAINER_ID = "modalContainer";
   public static final String CLOSE_MODAL_EVENT = "close-modal";
 
-  public GroupManagement(GroupTableComponent groupTableComponent) {
+  public GroupManagementComponent(GroupTableComponent groupTableComponent) {
     this.groupTableComponent = groupTableComponent;
   }
 

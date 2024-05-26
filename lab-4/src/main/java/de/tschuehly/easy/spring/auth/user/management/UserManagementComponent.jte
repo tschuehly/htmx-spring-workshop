@@ -16,7 +16,7 @@
         Easy Spring Auth
     </h2>
     <a href="/">UserManagement</a>
-    <a href="/groupManagement">GroupManagement</a>
+    <a href="/group-management">GroupManagement</a>
     <hr>
 </nav>
 <main>

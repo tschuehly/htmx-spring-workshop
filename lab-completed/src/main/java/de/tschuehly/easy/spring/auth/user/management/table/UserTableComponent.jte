@@ -6,15 +6,6 @@
 @import static de.tschuehly.easy.spring.auth.user.management.table.UserTableComponent.USER_TABLE_BODY_ID
 @import static de.tschuehly.easy.spring.auth.web.layout.LayoutComponent.MODAL_CONTAINER_ID
 @param UserTableContext userTableContext
-<style>
-  tr.htmx-added {
-    opacity: 0;
-  }
-  tr{
-    opacity: 1;
-    transition: opacity 1s ease-out;
-  }
-</style>
 <table>
     <thead>
     <tr>

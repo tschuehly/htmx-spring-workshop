@@ -4,12 +4,12 @@ In this lab, we will create a group Management Page where we can add a user to a
 
 ### Group Management
 
-We start by creating a GroupManagement ViewComponent in the `de.tschuehly.easy.spring.auth.group.management` package:
+We start by creating a GroupManagementComponent ViewComponent in the `de.tschuehly.easy.spring.auth.group.management` package:
 
-{% code title="GroupManagement.java" %}
+{% code title="GroupManagementComponent.java" %}
 ```java
 @ViewComponent
-public class GroupManagement {
+public class GroupManagementComponent {
   public static final String MODAL_CONTAINER_ID = "modalContainer";
   public static final String CLOSE_MODAL_EVENT = "close-modal";
 
@@ -24,9 +24,9 @@ public class GroupManagement {
 
 The template is the same as the `UserManagementComponent.jte` but we added two `<a>` links to the `<nav>` element.&#x20;
 
-<pre class="language-html" data-title="GroupManagement.jte"><code class="lang-html"><strong>@import static de.tschuehly.easy.spring.auth.group.management.GroupManagement.CLOSE_MODAL_EVENT
-</strong>@import static de.tschuehly.easy.spring.auth.group.management.GroupManagement.MODAL_CONTAINER_ID
-@import de.tschuehly.easy.spring.auth.group.management.GroupManagement.GroupManagementContext
+<pre class="language-html" data-title="GroupManagementComponent.jte"><code class="lang-html"><strong>@import static de.tschuehly.easy.spring.auth.group.management.GroupManagementComponent.CLOSE_MODAL_EVENT
+</strong>@import static de.tschuehly.easy.spring.auth.group.management.GroupManagementComponent.MODAL_CONTAINER_ID
+@import de.tschuehly.easy.spring.auth.group.management.GroupManagementComponent.GroupManagementContext
 @param GroupManagementContext groupManagementContext
 &#x3C;html lang="en">
 
@@ -43,7 +43,7 @@ The template is the same as the `UserManagementComponent.jte` but we added two `
         Easy Spring Auth
     &#x3C;/h1>
     &#x3C;a href="/">UserManagementComponent&#x3C;/a>
-    &#x3C;a href="/groupManagement">GroupManagement&#x3C;/a>
+    &#x3C;a href="/group-management">GroupManagementComponent&#x3C;/a>
     &#x3C;hr>
 &#x3C;/nav>
 &#x3C;main>
@@ -170,18 +170,18 @@ Now we need to replace the `<tbody>` element of the `GroupTableComponent.jte`
 
 ***
 
-Then we render the GroupTableComponent in the GroupManagement, by autowiring it and passing it into the ViewContext
+Then we render the GroupTableComponent in the GroupManagementComponent, by autowiring it and passing it into the ViewContext
 
-{% code title="GroupManagement.java" %}
+{% code title="GroupManagementComponent.java" %}
 ```java
 @ViewComponent
-public class GroupManagement {
+public class GroupManagementComponent {
   private final GroupTableComponent groupTableComponent;
 
   public static final String MODAL_CONTAINER_ID = "modalContainer";
   public static final String CLOSE_MODAL_EVENT = "close-modal";
 
-  public GroupManagement(GroupTableComponent groupTableComponent) {
+  public GroupManagementComponent(GroupTableComponent groupTableComponent) {
     this.groupTableComponent = groupTableComponent;
   }
 
@@ -195,9 +195,9 @@ public class GroupManagement {
 ```
 {% endcode %}
 
-In the `GroupManagement.jte` template we can render it in the `<main>` element, by using the `viewContext`&#x20;
+In the `GroupManagementComponent.jte` template we can render it in the `<main>` element, by using the `viewContext`&#x20;
 
-{% code title="GroupManagement.jte" %}
+{% code title="GroupManagementComponent.jte" %}
 ```html
 <main>
     ${groupManagementContext.viewContext()}
@@ -205,18 +205,18 @@ In the `GroupManagement.jte` template we can render it in the `<main>` element, 
 ```
 {% endcode %}
 
-Now we need to add the `/groupManagement` endpoint to render the group management to the `GroupController`:
+Now we need to add the `/group-management` endpoint to render the group management to the `GroupController`:
 
 {% code title="GroupController.java" %}
 ```java
-@GetMapping("/groupManagement")
-public ViewContext groupManagement(){
-  return groupManagement.render();
+@GetMapping("/group-management")
+public ViewContext groupManagementComponent(){
+  return groupManagementComponent.render();
 }
 ```
 {% endcode %}
 
-If we now run `Lab3Application.java` and navigate to [localhost:8080/groupManagement](http://localhost:8080/groupManagement) we can see the rendered groups and members.
+If we now run `Lab3Application.java` and navigate to [localhost:8080/group-management](http://localhost:8080/group-management) we can see the rendered groups and members.
 
 <figure><img src="../.gitbook/assets/image (12).png" alt=""><figcaption></figcaption></figure>
 
@@ -348,7 +348,7 @@ We create a `<button>` element that has a `hx-get` attribute that creates an GET
 ```
 {% endcode %}
 
-We can now navigate to [localhost:8080/groupManagement](http://localhost:8080/groupManagement) and click on the plus.
+We can now navigate to [localhost:8080/group-management](http://localhost:8080/group-management) and click on the plus.
 
 You can see the selector to add a User to the group. When clicking on `Add User to group` the table is rerendered.
 

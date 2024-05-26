@@ -29,7 +29,7 @@ public class GroupController {
 
   public static final String GROUP_MANAGEMENT =  "/group-management";
   @GetMapping(GROUP_MANAGEMENT)
-  public ViewContext groupManagement(){
+  public ViewContext groupManagementComponent(){
     return layoutComponent.render(groupTableComponent.render());
   }
 

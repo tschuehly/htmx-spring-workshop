@@ -1,6 +1,6 @@
-@import static de.tschuehly.easy.spring.auth.group.management.GroupManagement.CLOSE_MODAL_EVENT
-@import static de.tschuehly.easy.spring.auth.group.management.GroupManagement.MODAL_CONTAINER_ID
-@import de.tschuehly.easy.spring.auth.group.management.GroupManagement.GroupManagementContext
+@import static de.tschuehly.easy.spring.auth.group.management.GroupManagementComponent.CLOSE_MODAL_EVENT
+@import static de.tschuehly.easy.spring.auth.group.management.GroupManagementComponent.MODAL_CONTAINER_ID
+@import de.tschuehly.easy.spring.auth.group.management.GroupManagementComponent.GroupManagementContext
 @param GroupManagementContext groupManagementContext
 <html lang="en">
 
@@ -17,7 +17,7 @@
         Easy Spring Auth
     </h2>
     <a href="/">UserManagement</a>
-    <a href="/groupManagement">GroupManagement</a>
+    <a href="/group-management">GroupManagement</a>
     <hr>
 </nav>
 <main>

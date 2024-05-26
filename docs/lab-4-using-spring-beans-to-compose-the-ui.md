@@ -1,6 +1,6 @@
 # Lab 4: Using Spring Beans to Compose the UI
 
-As you have seen in Lab 3 we have a lot of duplication between the `UserManagementComponent` and the `GroupManagement` ViewComponent.\
+As you have seen in Lab 3 we have a lot of duplication between the `UserManagementComponent` and the `GroupManagementComponent` ViewComponent.\
 
 
 We start by creating a shared `LayoutComponent` in `auth.web.layout`. We have a ViewContext parameter and the modal-related constants.
@@ -64,7 +64,7 @@ Now we can use the LayoutComponent in both the GroupController and UserControlle
 public static final String GROUP_MANAGEMENT =  "/group-management";
 
 @GetMapping(GROUP_MANAGEMENT)
-public ViewContext groupManagement(){
+public ViewContext groupManagementComponent(){
   return layoutComponent.render(groupTableComponent.render());
 }
 ```
@@ -92,7 +92,7 @@ If you are stuck you can resume at this checkpoint with:
 `git checkout tags/lab-4-checkpoint-1 -b lab-4-c1`
 {% endhint %}
 
-But now we don't have a Navigation Bar anymore and the `UserManagementComponent` and the `GroupManagement` is not used anymore. We can now use them to define the Pages that are displayed in the Navigation Bar.
+But now we don't have a Navigation Bar anymore and the `UserManagementComponent` and the `GroupManagementComponent` is not used anymore. We can now use them to define the Pages that are displayed in the Navigation Bar.
 
 
 
@@ -183,12 +183,12 @@ If you are stuck you can resume at this checkpoint with:
 
 ***
 
-Now we just need to add the `GroupManagement` page back to our navigation. We delete the GroupMangament.jte template and change the `GroupManagement.java` :
+Now we just need to add the `GroupManagementComponent` page back to our navigation. We delete the GroupMangament.jte template and change the `GroupManagementComponent.java` :
 
-{% code title="GroupManagement.java" %}
+{% code title="GroupManagementComponent.java" %}
 ```java
 @Component
-public class GroupManagement implements Page {
+public class GroupManagementComponent implements Page {
 
   @Override
   public NavigationItem navigationItem() {
@@ -198,7 +198,7 @@ public class GroupManagement implements Page {
 ```
 {% endcode %}
 
-And now the GroupManagement is back!
+And now the GroupManagementComponent is back!
 
 <figure><img src="../.gitbook/assets/image (2) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
@@ -206,15 +206,15 @@ The nice thing is that the Navigation Bar doesn't know that Page even exists. If
 
 ***
 
-But what if we want to show the GroupManagement as the first element? Well we can use a native Spring Framework Annotation!&#x20;
+But what if we want to show the GroupManagementComponent as the first element? Well we can use a native Spring Framework Annotation!&#x20;
 
 With the `@Order` annotation we can define where the Navigation element is shown:
 
-{% code title="GroupManagement.java" %}
+{% code title="GroupManagementComponent.java" %}
 ```java
 @Component
 @Order(1)
-public class GroupManagement implements Page {
+public class GroupManagementComponent implements Page {
 
   @Override
   public NavigationItem navigationItem() {

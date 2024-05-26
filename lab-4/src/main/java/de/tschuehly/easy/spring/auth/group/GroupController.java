@@ -1,6 +1,6 @@
 package de.tschuehly.easy.spring.auth.group;
 
-import de.tschuehly.easy.spring.auth.group.management.GroupManagement;
+import de.tschuehly.easy.spring.auth.group.management.GroupManagementComponent;
 import de.tschuehly.easy.spring.auth.group.management.table.GroupTableComponent;
 import de.tschuehly.easy.spring.auth.group.management.table.user.AddUserComponent;
 import de.tschuehly.spring.viewcomponent.jte.ViewContext;
@@ -13,22 +13,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class GroupController {
-  private final GroupManagement groupManagement;
+  private final GroupManagementComponent groupManagementComponent;
   private final AddUserComponent addUserComponent;
   private final GroupTableComponent groupTableComponent;
   private final GroupService groupService;
 
-  public GroupController(GroupManagement groupManagement, AddUserComponent addUserComponent,
+  public GroupController(GroupManagementComponent groupManagementComponent, AddUserComponent addUserComponent,
       GroupTableComponent groupTableComponent, GroupService groupService) {
-    this.groupManagement = groupManagement;
+    this.groupManagementComponent = groupManagementComponent;
     this.addUserComponent = addUserComponent;
     this.groupTableComponent = groupTableComponent;
     this.groupService = groupService;
   }
 
-  @GetMapping("/groupManagement")
-  public ViewContext groupManagement(){
-    return groupManagement.render();
+  @GetMapping("/group-management")
+  public ViewContext groupManagementComponent(){
+    return groupManagementComponent.render();
   }
 
   public final static String GET_SELECT_USER =  "/group/{groupName}/select-user";

@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="Lab9Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-    <module name="lab-9.main" />
+    <module name="de.tschuehly.lab-9.main" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="de.tschuehly.easy.spring.auth.Lab9Application" />
     <extension name="net.ashald.envfile">
       <option name="IS_ENABLED" value="false" />

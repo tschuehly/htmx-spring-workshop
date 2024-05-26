@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Order(2)
-public class GroupManagement implements Page {
+public class GroupManagementComponent implements Page {
 
   @Override
   public NavigationItem navigationItem() {
