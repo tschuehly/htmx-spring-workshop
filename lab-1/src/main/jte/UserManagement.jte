@@ -38,6 +38,14 @@
         @endfor
         </tbody>
         <tfoot>
+        <tr>
+            <td colspan="4">
+                <button hx-get="${GET_CREATE_USER_MODAL}" <%-- (1) --%>
+                        hx-target="#${MODAL_CONTAINER_ID}"> <%-- (2) --%>
+                    Create new User
+                </button>
+            </td>
+        </tr>
         </tfoot>
     </table>
 </main>
