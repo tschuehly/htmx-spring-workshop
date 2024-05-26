@@ -1,3 +1,4 @@
+@import static de.tschuehly.easy.spring.auth.user.UserController.POST_SAVE_USER
 @param de.tschuehly.easy.spring.auth.user.UserController.UserForm userForm
 
 <div style="width: 100dvw; height: 100dvh; position: fixed; top: 0;left: 0; background-color: rgba(128,128,128,0.69); display: flex; justify-content: center; align-items: center;">
@@ -14,5 +15,8 @@
             Password
             <input type="text" name="password" value="${userForm.password()}">
         </label>
+        <button type="submit" hx-post="${POST_SAVE_USER}"> <%-- (1) --%>
+            Save User
+        </button>
     </form>
 </div>
