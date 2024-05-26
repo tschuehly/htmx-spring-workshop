@@ -1,3 +1,7 @@
+@import static de.tschuehly.easy.spring.auth.user.UserController.*
+@import de.tschuehly.easy.spring.auth.user.EasyUser
+@import java.util.List
+@param List<EasyUser> easyUserList
 <html lang="en">
 
 <head>
@@ -28,12 +32,15 @@
             </th>
         </tr>
         </thead>
-        <tbody>
+        <tbody id="${USER_TABLE_BODY_ID}"> <%-- (1) --%>
+        @for(var user: easyUserList) <%-- (2) --%>
+            @template.UserRow(easyUser = user) <%-- (3) --%>
+        @endfor
         </tbody>
         <tfoot>
         </tfoot>
     </table>
 </main>
 </body>
-
+<div id="${MODAL_CONTAINER_ID}"></div>
 </html>
