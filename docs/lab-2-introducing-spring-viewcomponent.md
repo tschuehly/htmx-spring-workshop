@@ -393,7 +393,7 @@ Lab 2 Checkpoint 1
 
 If you are stuck you can resume at this checkpoint with:&#x20;
 
-`git checkout tags/lab-2-checkpoint-1 -b current_lab`
+`git checkout tags/lab-2-checkpoint-1 -b lab-2-c1`
 {% endhint %}
 
 ### Edit User
@@ -488,7 +488,7 @@ Lab 2 Checkpoint 2
 
 If you are stuck you can resume at this checkpoint with:&#x20;
 
-`git checkout tags/lab-2-checkpoint-2 -b current_lab`
+`git checkout tags/lab-2-checkpoint-2 -b lab-2-c2`
 {% endhint %}
 
 ### Fix the Save User functionality&#x20;
@@ -691,5 +691,5 @@ Lab 2 Checkpoint 4
 
 If you are stuck you can resume at this checkpoint with:&#x20;
 
-`git checkout tags/lab-2-checkpoint-4 -b current_lab`
+`git checkout tags/lab-2-checkpoint-4 -b lab-2-c4`
 {% endhint %}

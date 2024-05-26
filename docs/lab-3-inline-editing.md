@@ -222,9 +222,13 @@ If we now run `Lab3Application.java` and navigate to [localhost:8080/groupManage
 
 {% hint style="success" %}
 Lab-3 Checkpoint 1
+
+If you are stuck you can resume at this checkpoint with:
+
+`git checkout tags/lab-3-checkpoint-1 -b lab-3-c1`
 {% endhint %}
 
-We didn't do anything new yet, now we are going to start with the inline editing feature.
+We haven't done anything new yet, now we are going to start with the inline editing feature.
 
 ## Inline Editing
 
@@ -275,6 +279,8 @@ Now we create a `AddUserComponent.jte` template in the same package as the `AddU
 {% code title="AddUserComponent.jte" %}
 ```html
 @import static de.tschuehly.easy.spring.auth.group.GroupController.*
+@import de.tschuehly.easy.spring.auth.group.management.table.GroupTableComponent
+@import de.tschuehly.easy.spring.auth.htmx.HtmxUtil
 @param de.tschuehly.easy.spring.auth.group.management.table.user.AddUserComponent.AddUserContext addUserContext
 <form hx-post="${HtmxUtil.URI(POST_ADD_USER,addUserContext.groupName())}" <%-- (1) --%>
       hx-target="${HtmxUtil.target(GroupTableComponent.GROUP_TABLE_ID)}" <%-- (2) --%>
@@ -350,4 +356,8 @@ You can see the selector to add a User to the group. When clicking on `Add User 
 
 {% hint style="success" %}
 Lab-3 Checkpoint 2
+
+If you are stuck you can resume at this checkpoint with:
+
+`git checkout tags/lab-3-checkpoint-1 -b lab-3-c2`
 {% endhint %}

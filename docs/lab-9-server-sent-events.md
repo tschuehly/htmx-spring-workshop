@@ -119,4 +119,8 @@ If we now restart the application we can see a new user is added every 5 seconds
 
 {% hint style="success" %}
 Lab-9 Checkpoint 1
+
+If you are stuck you can resume at this checkpoint with:
+
+`git checkout tags/lab-9-checkpoint-1 -b lab-9-c1`
 {% endhint %}

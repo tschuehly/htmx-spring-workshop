@@ -141,4 +141,8 @@ If we restart the application and navigate to [http://localhost:8080](http://loc
 
 {% hint style="success" %}
 Lab-6 Checkpoint 1
+
+If you are stuck you can resume at this checkpoint with:
+
+`git checkout tags/lab-6-checkpoint-1 -b lab-6-c1`
 {% endhint %}

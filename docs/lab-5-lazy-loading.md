@@ -128,4 +128,8 @@ If you restart the application and navigate to [http://localhost:8080](http://lo
 
 {% hint style="success" %}
 Lab-5 Checkpoint 1
+
+If you are stuck you can resume at this checkpoint with:
+
+`git checkout tags/lab-5-checkpoint-1 -b lab-5-c1`
 {% endhint %}

@@ -86,13 +86,17 @@ We can now navigate to [localhost:8080](http://localhost:8080/) and [localhost:8
 
 {% hint style="success" %}
 Lab-4 Checkpoint 1
+
+If you are stuck you can resume at this checkpoint with:
+
+`git checkout tags/lab-4-checkpoint-1 -b lab-4-c1`
 {% endhint %}
 
 But now we don't have a Navigation Bar anymore and the `UserManagement` and the `GroupManagement` is not used anymore. We can now use them to define the Pages that are displayed in the Navigation Bar.
 
 
 
-We start by creating a `Page` interface in `auth.web`. We define a NavigationItem record and a navigationItem method.
+We start by creating an `Page` interface in `auth.web`. We define a NavigationItem record and a navigationItem method.
 
 {% code title="Page.java" %}
 ```java
@@ -171,6 +175,10 @@ We can now navigate to [localhost:8080](http://localhost:8080/) and see that we 
 
 {% hint style="success" %}
 Lab-4 Checkpoint 2
+
+If you are stuck you can resume at this checkpoint with:
+
+`git checkout tags/lab-4-checkpoint-2 -b lab-4-c2`
 {% endhint %}
 
 ***
@@ -222,4 +230,8 @@ Group Management is now the first Navigation Item!
 
 {% hint style="success" %}
 Lab-4 Checkpoint 3
+
+If you are stuck you can resume at this checkpoint with:
+
+`git checkout tags/lab-4-checkpoint-3 -b lab-4-c3`
 {% endhint %}

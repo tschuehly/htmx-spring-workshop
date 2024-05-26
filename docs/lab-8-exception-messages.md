@@ -214,4 +214,8 @@ Now search for a string not present in the data, and then you will see the toast
 
 {% hint style="success" %}
 Lab-8 Checkpoint 1
+
+If you are stuck you can resume at this checkpoint with:
+
+`git checkout tags/lab-8-checkpoint-1 -b lab-8-c1`
 {% endhint %}

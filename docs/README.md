@@ -46,9 +46,9 @@ public class ${COMPONENT_NAME}Component {
 }
 ```
 
-Then click on the plus next to the first one "Create Child Template"
+Select the ViewComponent and then click on the file plus icon next to the first one "Create Child Template"
 
-<figure><img src=".gitbook/assets/image.png" alt="" width="560"><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
 
 File Name: `${COMPONENT_NAME}Component.jte`
 

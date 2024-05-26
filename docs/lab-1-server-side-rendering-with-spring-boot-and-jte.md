@@ -189,7 +189,7 @@ Lab-1 Checkpoint 1
 
 If you are stuck you can resume at this checkpoint with:&#x20;
 
-`git checkout tags/lab-1-checkpoint-1 -b current_lab`
+`git checkout tags/lab-1-checkpoint-1 -b lab-1-c1`
 {% endhint %}
 
 ## Edit users
@@ -298,7 +298,7 @@ Lab-1 Checkpoint 2
 
 If you are stuck you can resume at this checkpoint with:&#x20;
 
-`git checkout tags/lab-1-checkpoint-2 -b current_lab`
+`git checkout tags/lab-1-checkpoint-2 -b lab-1-c2`
 {% endhint %}
 
 ## Save the user
@@ -422,8 +422,10 @@ Lab-1 Checkpoint 3
 
 If you are stuck you can resume at this checkpoint with:&#x20;
 
-`git checkout tags/lab-1-checkpoint-3 -b current_lab`
+`git checkout tags/lab-1-checkpoint-3 -b lab-1-c3`
 {% endhint %}
+
+**This is the end of lab 1.** If you are ahead of the others you can do the bonus exercise below
 
 ## Bonus Exercise
 
@@ -530,7 +532,7 @@ After restarting the application you should be able to create a new user and whe
 Lab-1 Checkpoint 4\
 If you are stuck you can resume at this checkpoint with:&#x20;
 
-`git checkout tags/lab-1-checkpoint-4 -b current_lab`
+`git checkout tags/lab-1-checkpoint-4 -b lab-1-c4`
 {% endhint %}
 
 This was Lab 1, you should now feel confident to use server-side rendering with Spring Boot and JTE and be able to create an interactive application using htmx.
