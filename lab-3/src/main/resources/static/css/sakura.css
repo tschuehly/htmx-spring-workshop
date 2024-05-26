@@ -226,14 +226,23 @@ label, legend, fieldset {
 }
 
 .htmx-added{
-  animation: yellowfade 1s;
+  animation: yellowfade 2s;
 }
 
 @keyframes yellowfade {
   from {
-    background: yellow;
+    -webkit-box-shadow: inset 4px 2px 24px 6px rgba(255,255,0,0);
+    -moz-box-shadow: inset 4px 2px 24px 6px rgba(255,255,0,0);
+    box-shadow: inset 4px 2px 24px 6px rgba(255,255,0,0);
+  }
+  50% {
+    -webkit-box-shadow: inset 1px 2px 24px 6px rgba(255,255,0,1);
+    -moz-box-shadow: inset 1px 2px 24px 6px rgba(255,255,0,1);
+    box-shadow: inset 1px 2px 24px 6px rgba(255,255,0,1);
   }
   to {
-    background: transparent;
+    -webkit-box-shadow: inset 4px 2px 24px 6px rgba(255,255,0,0);
+    -moz-box-shadow: inset 4px 2px 24px 6px rgba(255,255,0,0);
+    box-shadow: inset 4px 2px 24px 6px rgba(255,255,0,0);
   }
 }
