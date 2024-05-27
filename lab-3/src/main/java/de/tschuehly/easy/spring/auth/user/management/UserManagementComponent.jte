@@ -15,6 +15,9 @@
     <h1>
         Easy Spring Auth
     </h1>
+    <a href="/">UserManagementComponent</a>
+    <a href="/group-management">GroupManagementComponent</a>
+    <hr>
 </nav>
 <main>
     ${userManagementContext.userTable()}
