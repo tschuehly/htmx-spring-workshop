@@ -16,6 +16,10 @@ Please clone the Git repository:
 git clone https://github.com/tschuehly/htmx-spring-workshop.git
 ```
 
+After opening the project, run the `Setup and build all` run configuration.
+
+<figure><img src=".gitbook/assets/image.png" alt=""><figcaption></figcaption></figure>
+
 ## IntelliJ Code Template
 
 To create a new ViewComponent with one click we can create a new IntelliJ Code Template.
@@ -24,7 +28,7 @@ Go to settings -> Editor -> File and Code Templates &#x20;
 
 Click on the little plus icon
 
-<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1) (1).png" alt=""><figcaption></figcaption></figure>
 
 Name: `ViewComponent`
 
@@ -48,7 +52,7 @@ public class ${COMPONENT_NAME}Component {
 
 Select the ViewComponent and then click on the file plus icon next to the first one "Create Child Template"
 
-<figure><img src=".gitbook/assets/image (2).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (2) (1).png" alt=""><figcaption></figcaption></figure>
 
 File Name: `${COMPONENT_NAME}Component.jte`
 

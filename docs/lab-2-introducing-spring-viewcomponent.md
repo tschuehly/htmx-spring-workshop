@@ -1,6 +1,6 @@
 # Lab 2: Using Spring ViewComponent
 
-This lab aims to build the same application as Lab 1. \
+This lab aims to build the same application as Lab 1.\
 But this time we will use Spring ViewComponent and htmx-spring-boot to delegate rendering responsibility to the ViewComponent.
 
 ### An Introduction to Spring ViewComponent
@@ -45,6 +45,23 @@ To start we need to add three dependencies to the `build.gradle.kts` file.
 implementation("de.tschuehly:spring-view-component-jte:0.7.5-SNAPSHOT")
 annotationProcessor("de.tschuehly:spring-view-component-core:0.7.5-SNAPSHOT")
 implementation("io.github.wimdeblauwe:htmx-spring-boot:3.3.0")
+```
+{% endcode %}
+
+We can enable live-reload for Spring ViewComponent with these properties in `application.yaml`.
+
+Also, uncomment the `gg.jte` properties
+
+{% code title="application.yaml" %}
+```
+spring:
+  view-component:
+    local-development: true
+    jte-template-directories: lab-2/src/main/java
+#gg:
+ # jte:
+  #  developmentMode: true
+   # templateLocation: lab-2/src/main/jte
 ```
 {% endcode %}
 
@@ -252,9 +269,9 @@ public class UserTableComponent {
 
 **(1):** We autowire the userRowComponent.
 
-**(2):** We add  a `List<ViewContext>` property to the `UserTableContext`
+**(2):** We add a `List<ViewContext>` property to the `UserTableContext`
 
-**(3):**  We call the `userService.findAll()` method
+**(3):** We call the `userService.findAll()` method
 
 **(4):** Then we call the autowired `userRowComponent::render` method in the `.stream().map()` function.
 
@@ -391,7 +408,7 @@ We can restart the application, navigate to [http://localhost:8080/](http://loca
 {% hint style="success" %}
 Lab 2 Checkpoint 1
 
-If you are stuck you can resume at this checkpoint with:&#x20;
+If you are stuck you can resume at this checkpoint with:
 
 `git checkout tags/lab-2-checkpoint-1 -b lab-2-c1`
 {% endhint %}
@@ -426,7 +443,7 @@ public class EditUserComponent {
 ```
 {% endcode %}
 
-**(1):** We first autowire the `userService` in the constructor&#x20;
+**(1):** We first autowire the `userService` in the constructor
 
 **(2):** Then we create a render method with a `uuid` parameter.
 
@@ -444,8 +461,8 @@ We then create the `EditUserComponent.jte` template in the same package as the `
 @import static de.tschuehly.easy.spring.auth.user.UserController.POST_SAVE_USER
 @param EditUserContext editUserContext
 
-<div>
-    <form>
+<div style="width: 100dvw; height: 100dvh; position: fixed; top: 0;left: 0; background-color: rgba(128,128,128,0.69); display: flex; justify-content: center; align-items: center;">
+    <form style="background-color: whitesmoke; padding: 2rem;">
         <label>
             UUID
             <input type="text" readonly name="uuid" value="${editUserContext.uuid().toString()}">
@@ -466,7 +483,7 @@ We then create the `EditUserComponent.jte` template in the same package as the `
 ```
 {% endcode %}
 
-In the `UserController.java` we remove the `UserForm` record, autowire the `EditUserComponent` and then change the `editUserModal` method.
+In the `UserController.java` we remove the `UserForm` record, autowire the `EditUserComponent` and then change the `editUserModal` method to call the `editUserComponent.render` method.
 
 {% code title="UserController.java" %}
 ```java
@@ -486,12 +503,12 @@ We can restart the application navigate to [http://localhost:8080/](http://local
 {% hint style="success" %}
 Lab 2 Checkpoint 2
 
-If you are stuck you can resume at this checkpoint with:&#x20;
+If you are stuck you can resume at this checkpoint with:
 
 `git checkout tags/lab-2-checkpoint-2 -b lab-2-c2`
 {% endhint %}
 
-### Fix the Save User functionality&#x20;
+### Fix the Save User functionality
 
 In Lab1 we used HX Response headers to set the swapping functionality directly in the `UserController.java`:
 
@@ -517,7 +534,7 @@ I have already created a `HtmxUtil` class in the `de.tschuehly.easy.spring.auth.
 
 We are using Wim Deblauwes htmx-spring-boot library: [github.com/wimdeblauwe/htmx-spring-boot](https://github.com/wimdeblauwe/htmx-spring-boot). It offers a HtmxResponseHeader enum with all possible values and a HxSwapType enum.
 
-We will add these convenience methods to the `HtmxUtil.java` class:&#x20;
+We will add these convenience methods to the `HtmxUtil.java` class:
 
 {% code title="HtmxUtil.java" %}
 ```java
@@ -545,14 +562,14 @@ Back to the `UserRowComponent` we create a `rerender` function where we use thes
 </strong>  String target = HtmxUtil.target(UserRowContext.htmlUserId(easyUser.uuid)); // (1)
   HtmxUtil.retarget(target); 
   HtmxUtil.reswap(HxSwapType.OUTER_HTML); // (2)
-  HtmxUtil.trigger(CLOSE_MODAL_EVENT); // (3)
+  HtmxUtil.trigger(UserManagementComponent.CLOSE_MODAL_EVENT); // (3)
   return new UserRowContext(easyUser); // (4)
 }
 </code></pre>
 
 **(1):** We retarget to the id of the `<tr>` element we created with the `UserRowContext.htmlUserId()` function.
 
-**(2):** We swap the outerHTML of the target element &#x20;
+**(2):** We swap the outerHTML of the target element
 
 **(3).** And we trigger the `CLOSE_MODAL_EVENT`
 
@@ -560,7 +577,7 @@ Back to the `UserRowComponent` we create a `rerender` function where we use thes
 
 ***
 
-In the `UserController.saveUser` method we can call the `userRowComponent.rerender` method&#x20;
+In the `UserController.saveUser` method we can call the `userRowComponent.rerender` method
 
 {% code title="UserController.java" %}
 ```java
@@ -577,12 +594,12 @@ We can restart the application and navigate to [http://localhost:8080/](http://l
 {% hint style="success" %}
 Lab 2 Checkpoint 3
 
-If you are stuck you can resume at this checkpoint with:&#x20;
+If you are stuck you can resume at this checkpoint with:
 
-`git checkout tags/lab-2-checkpoint-3 -b current_lab`
+`git checkout tags/lab-2-checkpoint-3 -b lab-2-c3`
 {% endhint %}
 
-We have the advantage that the Controller doesn't need to know how the UserRowComponent template looks and what needs to be swapped. \
+We have the advantage that the Controller doesn't need to know how the UserRowComponent template looks and what needs to be swapped.\
 The UserRowComponent offers an API to rerender a row.
 
 ### Create User
@@ -637,11 +654,22 @@ public ViewContext getCreateUserModal() {
 ```
 {% endcode %}
 
+{% code title="UserController.java" %}
+```java
+public static final String GET_CREATE_USER_MODAL = "/create-user/modal";
+
+@GetMapping(GET_CREATE_USER_MODAL)
+public ViewContext getCreateUserModal() {
+  return createUserComponent.render();
+}
+```
+{% endcode %}
+
 We can restart the application and navigate to [http://localhost:8080/](http://localhost:8080/) and the create user modal is shown when we click on `Create User`
 
 <figure><img src="../.gitbook/assets/image (10).png" alt=""><figcaption></figcaption></figure>
 
-Finally, we need to migrate the `UserController.createUser` method. \
+Finally, we need to migrate the `UserController.createUser` method.\
 Currently, it looks like this:
 
 <pre class="language-java" data-title="UserController.java"><code class="lang-java"><strong>@PostMapping(POST_CREATE_USER)
@@ -656,7 +684,7 @@ Currently, it looks like this:
 }
 </code></pre>
 
-As before we want to move this code into the UserRow component, by creating a new `renderNewRow` function:
+As before we want to move this code into the `UserRowComponent.java`, by creating a new `renderNewRow` function:
 
 {% code title="UserRowComponent.java" %}
 ```java
@@ -684,12 +712,12 @@ public ViewContext createUser(String username, String password) {
 
 Now if we restart the application we can save a new user and they are inserted at the start of the table.
 
-<figure><img src="../.gitbook/assets/image (11).png" alt=""><figcaption></figcaption></figure>
+<figure><img src=".gitbook/assets/image (1).png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="success" %}
 Lab 2 Checkpoint 4
 
-If you are stuck you can resume at this checkpoint with:&#x20;
+If you are stuck you can resume at this checkpoint with:
 
 `git checkout tags/lab-2-checkpoint-4 -b lab-2-c4`
 {% endhint %}

@@ -58,7 +58,7 @@ You can find all the templates we need already there. We now need to fill them w
 
 ### UserMangament
 
-We start with the `UserManagement.jte` template.&#x20;
+We start with the `UserManagement.jte` template.
 
 As you can see, a barebones html structure is already in place with CSS and htmx referenced.
 
@@ -87,13 +87,13 @@ We replace the table body element with the following:
 ```
 {% endcode %}
 
-**(1):** We set the id of the `tbody` to  `USER_TABLE_BODY_ID` to reference it statically from other places.
+**(1):** We set the id of the `tbody` to `USER_TABLE_BODY_ID` to reference it statically from other places.
 
-&#x20;**(2):** We loop over the easyUserList with the `@for` JTE syntax
+**(2):** We loop over the easyUserList with the `@for` JTE syntax
 
 **(3):** Then in the loop body we call the userRow.jte template with the `@template` syntax and pass the `user` loop variable into the template.
 
-We also add an empty `<div>` after the `</body>` element with the `id` set to `MODAL_CONTAINER_ID` to show a modal&#x20;
+We also add an empty `<div>` after the `</body>` element with the `id` set to `MODAL_CONTAINER_ID` to show a modal
 
 {% code title="UserManagement.jte" %}
 ```html
@@ -101,7 +101,7 @@ We also add an empty `<div>` after the `</body>` element with the `id` set to `M
 ```
 {% endcode %}
 
-Your `UserManagement.jte` template should now look like this:&#x20;
+Your `UserManagement.jte` template should now look like this:
 
 ```html
 @import static de.tschuehly.easy.spring.auth.user.UserController.*
@@ -152,7 +152,7 @@ Your `UserManagement.jte` template should now look like this:&#x20;
 
 ### UserRow
 
-In the `UserRow.jte` template we define an EasyUser parameter and a local variable with the exclamation mark JTE expression: `!{var name = value}`  at the top of the file.
+In the `UserRow.jte` template we define an EasyUser parameter and a local variable with the exclamation mark JTE expression: `!{var name = value}` at the top of the file.
 
 {% code title="UserRow.jte" %}
 ```crystal
@@ -187,7 +187,7 @@ We can see all currently defined users if we start the application and navigate 
 {% hint style="success" %}
 Lab-1 Checkpoint 1
 
-If you are stuck you can resume at this checkpoint with:&#x20;
+If you are stuck you can resume at this checkpoint with:
 
 `git checkout tags/lab-1-checkpoint-1 -b lab-1-c1`
 {% endhint %}
@@ -216,7 +216,7 @@ public String editUserModal(Model model, @PathVariable UUID uuid) {
 ```
 {% endcode %}
 
-**(1):** We create a UserForm record that represents the user.&#x20;
+**(1):** We create a UserForm record that represents the user.
 
 **(2):** We create a static constant `GET_EDIT_USER_MODAL` for the HTTP Endpoint. This makes it easy to understand what controller mappings htmx sends requests to.
 
@@ -254,7 +254,7 @@ In the `UserRow.jte` we add a new `<td>` element and create a button element.
 ```
 {% endcode %}
 
-**(1):** `hx-get="${URI(GET_EDIT_USER_MODAL,uuid)}` creates an HTTP get request to `/user/edit/{uuid}` when the button element is clicked.&#x20;
+**(1):** `hx-get="${URI(GET_EDIT_USER_MODAL,uuid)}` creates an HTTP get request to `/user/edit/{uuid}` when the button element is clicked.
 
 {% hint style="info" %}
 We use the `HtmxUtil.URI()` method, that creates a `UriTemplate` and fills it with the variables we pass.
@@ -289,14 +289,14 @@ In the corresponding `EditUserForm.jte` template we display the values in a `<fo
 ```
 {% endcode %}
 
-Now, restart the application, navigate to [http://localhost:8080](http://localhost:8080/), and click the edit button. You should now see the modal popup and the values of the user displayed.
+Restart the application, navigate to [http://localhost:8080](http://localhost:8080/), and click the edit button. You should now see the modal popup and the values of the user displayed.
 
 <figure><img src="../.gitbook/assets/image (5).png" alt=""><figcaption></figcaption></figure>
 
 {% hint style="success" %}
 Lab-1 Checkpoint 2
 
-If you are stuck you can resume at this checkpoint with:&#x20;
+If you are stuck you can resume at this checkpoint with:
 
 `git checkout tags/lab-1-checkpoint-2 -b lab-1-c2`
 {% endhint %}
@@ -398,7 +398,7 @@ public String saveUser(UUID uuid, String username, String password, Model model,
 
 ### UserMangement
 
-We now listen to the `MODAL_CONTAINER_ID` event  in the`UserManagement.jte`template.
+We now listen to the `MODAL_CONTAINER_ID` event  in the`UserManagement.jte`template, by adding a `hx-on` attribute.
 
 {% code title="UserManagement.jte" %}
 ```html
@@ -420,7 +420,7 @@ The new application state after saving the user is transferred via HTML to the b
 {% hint style="success" %}
 Lab-1 Checkpoint 3
 
-If you are stuck you can resume at this checkpoint with:&#x20;
+If you are stuck you can resume at this checkpoint with:
 
 `git checkout tags/lab-1-checkpoint-3 -b lab-1-c3`
 {% endhint %}
@@ -484,17 +484,17 @@ public String createUser(String username, String password, Model model, HttpServ
 
 It follows the same pattern as the `POST_SAVE_USER` endpoint.
 
-**(1):** We target the `<body>` element using `HX-Retarget: #USER_TABLE_BODY_ID`&#x20;
+**(1):** We target the `<body>` element using `HX-Retarget: #USER_TABLE_BODY_ID`
 
 **(2):** We use `HX-Reswap: afterbegin` to insert the response's content as the target element's first child.
 
-**(3):** We trigger the `CLOSE_MODAL_EVENT`&#x20;
+**(3):** We trigger the `CLOSE_MODAL_EVENT`
 
 **(4):** Finally we return the `UserRow.jte` template.
 
 ### CreateUserForm
 
-Then we create a `<form>` element in the `CreateUserForm.jte` template: &#x20;
+Then we create a `<form>` element in the `CreateUserForm.jte` template:
 
 {% code title="CreateUserForm.jte" %}
 ```html
@@ -518,7 +518,7 @@ Then we create a `<form>` element in the `CreateUserForm.jte` template: &#x20;
 ```
 {% endcode %}
 
-(1): This time we have the hx-post attribute on the `<form>` element&#x20;
+(1): This time we have the hx-post attribute on the `<form>` element
 
 (2): We trigger the HTTP request with the `<button type="submit">`
 
@@ -530,7 +530,7 @@ After restarting the application you should be able to create a new user and whe
 
 {% hint style="success" %}
 Lab-1 Checkpoint 4\
-If you are stuck you can resume at this checkpoint with:&#x20;
+If you are stuck you can resume at this checkpoint with:
 
 `git checkout tags/lab-1-checkpoint-4 -b lab-1-c4`
 {% endhint %}
