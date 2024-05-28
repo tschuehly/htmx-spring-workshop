@@ -3,6 +3,7 @@ package de.tschuehly.easy.spring.auth;
 import de.tschuehly.easy.spring.auth.group.GroupService;
 import de.tschuehly.easy.spring.auth.user.EasyUser;
 import de.tschuehly.easy.spring.auth.user.UserService;
+import net.datafaker.Faker;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,6 +29,14 @@ public class Lab5Application {
       groupService.createGroup("USER_GROUP");
       groupService.createGroup("ADMIN_GROUP");
       groupService.addUserToGroup("USER_GROUP", thomas.uuid);
+
+      Faker faker = new Faker();
+      for (int i = 0; i < 10000; i++) {
+        userService.createUser(
+                faker.internet().username(),
+                faker.internet().password()
+        );
+      }
     };
   }
 }
