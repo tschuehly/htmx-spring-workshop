@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class UserController {
@@ -85,5 +86,14 @@ public class UserController {
     return userRowComponent.renderNewRow(user);
   }
 
+  public static final String GET_SEARCH_USER = "/search-user";
+  public static final String SEARCH_PARAM = "searchQuery";
 
+  @HxRequest
+  @GetMapping(GET_SEARCH_USER)
+  public ViewContext searchUser(
+          @RequestParam(SEARCH_PARAM) String searchQuery // (1)
+  ) {
+    return userTableComponent.renderSearch(searchQuery); // (2)
+  }
 }
