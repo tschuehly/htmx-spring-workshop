@@ -1,6 +1,6 @@
 @import static de.tschuehly.easy.spring.auth.htmx.HtmxUtil.URI
 @import static de.tschuehly.easy.spring.auth.user.UserController.*
-@import static de.tschuehly.easy.spring.auth.user.management.UserManagementComponent.MODAL_CONTAINER_ID
+@import static de.tschuehly.easy.spring.auth.web.layout.LayoutComponent.MODAL_CONTAINER_ID
 @import de.tschuehly.easy.spring.auth.user.management.table.row.UserRowComponent.UserRowContext
 @param de.tschuehly.easy.spring.auth.user.management.table.row.UserRowComponent.UserRowContext userRowContext
 
