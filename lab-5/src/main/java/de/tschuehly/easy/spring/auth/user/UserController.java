@@ -1,5 +1,6 @@
 package de.tschuehly.easy.spring.auth.user;
 
+import de.tschuehly.easy.spring.auth.user.management.UserManagementComponent;
 import de.tschuehly.easy.spring.auth.user.management.create.CreateUserComponent;
 import de.tschuehly.easy.spring.auth.user.management.edit.EditUserComponent;
 import de.tschuehly.easy.spring.auth.user.management.table.UserTableComponent;
@@ -7,6 +8,8 @@ import de.tschuehly.easy.spring.auth.user.management.table.row.UserRowComponent;
 import de.tschuehly.easy.spring.auth.web.layout.LayoutComponent;
 import de.tschuehly.spring.viewcomponent.jte.ViewContext;
 import java.util.UUID;
+
+import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,24 +24,27 @@ public class UserController {
   private final CreateUserComponent createUserComponent;
   private final LayoutComponent layoutComponent;
   private final UserTableComponent userTableComponent;
+  private final UserManagementComponent userManagementComponent;
 
   public UserController(UserService userService, EditUserComponent editUserComponent,
-      UserRowComponent userRowComponent, CreateUserComponent createUserComponent, LayoutComponent layoutComponent,
-      UserTableComponent userTableComponent) {
+                        UserRowComponent userRowComponent, CreateUserComponent createUserComponent, LayoutComponent layoutComponent,
+                        UserTableComponent userTableComponent, UserManagementComponent userManagementComponent) {
     this.userService = userService;
     this.editUserComponent = editUserComponent;
     this.userRowComponent = userRowComponent;
     this.createUserComponent = createUserComponent;
     this.layoutComponent = layoutComponent;
     this.userTableComponent = userTableComponent;
+      this.userManagementComponent = userManagementComponent;
   }
   public static final String USER_MANAGEMENT_PATH = "/";
 
   @GetMapping(USER_MANAGEMENT_PATH)
   public ViewContext userManagementComponent() {
-    return layoutComponent.render(userTableComponent.render());
+    return layoutComponent.render(
+            userManagementComponent.render()
+    );
   }
-
   public static final String GET_EDIT_USER_MODAL = "/save-user/modal/{uuid}";
 
   @GetMapping(GET_EDIT_USER_MODAL)
@@ -68,7 +74,13 @@ public class UserController {
     EasyUser user = userService.createUser(username, password);
     return userRowComponent.renderNewRow(user);
   }
+  public static final String GET_USER_TABLE = "/user-table";
 
+  @HxRequest // (1)
+  @GetMapping(GET_USER_TABLE)
+  public ViewContext userTable() {
+    return userTableComponent.render();
+  }
 
 
 

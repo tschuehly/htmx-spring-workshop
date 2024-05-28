@@ -12,6 +12,11 @@ public class UserService {
   public final static List<EasyUser> easyUserList = new ArrayList<>();
 
   public List<EasyUser> findAll() {
+    try {
+      Thread.sleep(3000);
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
+    }
     return easyUserList;
   }
 
@@ -43,4 +48,6 @@ public class UserService {
     );
     return newUser;
   }
+
+
 }
