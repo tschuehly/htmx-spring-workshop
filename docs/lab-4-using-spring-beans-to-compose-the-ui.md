@@ -1,9 +1,8 @@
 # Lab 4: Using Spring Beans to Compose the UI
 
-As you have seen in Lab 3 we have a lot of duplication between the `UserManagementComponent` and the `GroupManagementComponent` ViewComponent.\
+As you have seen in Lab 3 we have a lot of duplication between the `UserManagementComponent` and the `GroupManagementComponent` ViewComponent.\\
 
-
-We start by creating a shared `LayoutComponent` in `auth.web.layout`. We have a ViewContext parameter and the modal-related constants.
+We start by creating an`LayoutComponent` in `de.tschuehly.easy.spring.auth.web.layout`. We have a ViewContext parameter and the modal-related constants.
 
 {% code title="LayoutComponent.java" %}
 ```java
@@ -23,7 +22,7 @@ public class LayoutComponent {
 ```
 {% endcode %}
 
-&#x20;In the template, we define the shared HTML between the pages.
+In the template, we define the shared HTML between the pages.
 
 {% code title="LayoutComponent.jte" %}
 ```html
@@ -57,7 +56,9 @@ public class LayoutComponent {
 ```
 {% endcode %}
 
-Now we can use the LayoutComponent in both the GroupController and UserController:
+Now we can use the LayoutComponent in the `GroupController` and `UserController`.
+
+We autowire the `LayoutComponent` and the `GroupTableComponent` and call their render method in the endpoint method:
 
 {% code title="GroupController.java" %}
 ```java
@@ -69,6 +70,8 @@ public ViewContext groupManagementComponent(){
 }
 ```
 {% endcode %}
+
+In the `UserController` we autowire the `LayoutComponent` and the `UserTableComponent` and call their render methods in the endpoint method.
 
 {% code title="UserController.java" %}
 ```java
@@ -92,11 +95,10 @@ If you are stuck you can resume at this checkpoint with:
 `git checkout tags/lab-4-checkpoint-1 -b lab-4-c1`
 {% endhint %}
 
-But now we don't have a Navigation Bar anymore and the `UserManagementComponent` and the `GroupManagementComponent` is not used anymore. We can now use them to define the Pages that are displayed in the Navigation Bar.
+But as we now see, there is no longer a navigation bar. \
+The `UserManagementComponent` and the `GroupManagementComponent` are not used anymore. Instead, we can use them to define the page links displayed in the Navigation Bar.
 
-
-
-We start by creating an `Page` interface in `auth.web`. We define a NavigationItem record and a navigationItem method.
+We start by creating an `Page` interface in `de.tschuehly.easy.spring.auth.web`. We define a NavigationItem record and a navigationItem method.
 
 {% code title="Page.java" %}
 ```java
@@ -123,8 +125,10 @@ public class UserManagementComponent implements Page {
 ```
 {% endcode %}
 
-{% hint style="info" %}
-We now need to fix `CLOSE_MODAL_EVENT` and the `MODAL_CONTAINER_ID` in the UserRowComponent and UserTableComponent
+{% hint style="warning" %}
+We now need to fix `CLOSE_MODAL_EVENT` and the `MODAL_CONTAINER_ID` in the `UserRowComponent` and `UserTableComponent` .
+
+We replace the incorrect imports with imports to the `LayoutComponent`&#x20;
 {% endhint %}
 
 Now in the `LayoutComponent`, we can use Autowiring to get all Pages as a List and aggregate all `NavigationItems` into a List and pass it into the ViewContext
@@ -153,7 +157,8 @@ public class LayoutComponent {
 ```
 {% endcode %}
 
-In the `LayoutComponent.jte` template we can now show a link for each page defined in the Spring ApplicationContext.
+In the `LayoutComponent.jte` template we can now show a link for each page defined in the Spring ApplicationContext.\
+Replace the `<nav>` element with the following.
 
 {% code title="LayoutComponent.jte" %}
 ```html
@@ -169,7 +174,7 @@ In the `LayoutComponent.jte` template we can now show a link for each page defin
 ```
 {% endcode %}
 
-We can now navigate to [localhost:8080](http://localhost:8080/) and see that we have our Navigation again!
+We can now navigate to [localhost:8080](http://localhost:8080/) and see that the navigation works again!
 
 <figure><img src="../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
@@ -183,7 +188,9 @@ If you are stuck you can resume at this checkpoint with:
 
 ***
 
-Now we just need to add the `GroupManagementComponent` page back to our navigation. We delete the GroupMangament.jte template and change the `GroupManagementComponent.java` :
+Now we need to add the `GroupManagementComponent` page back to our navigation.&#x20;
+
+We delete the `GroupMangament.jte` template and change the `GroupManagementComponent.java` :
 
 {% code title="GroupManagementComponent.java" %}
 ```java
@@ -202,13 +209,13 @@ And now the GroupManagementComponent is back!
 
 <figure><img src="../.gitbook/assets/image (2) (1) (1) (1).png" alt=""><figcaption></figcaption></figure>
 
-The nice thing is that the Navigation Bar doesn't know that Page even exists. If we change the URL of any page it all still works.
+The nice thing is that the navigation bar doesn't know that Page exists. If we change the URL of any page it all still works.
 
 ***
 
-But what if we want to show the GroupManagementComponent as the first element? Well we can use a native Spring Framework Annotation!&#x20;
+But what if we want to show the GroupManagementComponent as the first element? Well, we can use a native Spring Framework Annotation!
 
-With the `@Order` annotation we can define where the Navigation element is shown:
+With the `@Order` annotation we can define where the navigation element is shown:
 
 {% code title="GroupManagementComponent.java" %}
 ```java

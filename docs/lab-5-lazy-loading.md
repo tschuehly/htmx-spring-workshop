@@ -4,17 +4,43 @@ In this lab, we simulate a slow system and we want to improve the user experienc
 
 ### Simulate a large payload and slow system
 
-We start by creating a lot of users in the `initializeUsers` method in the `@SpringBootApplication` class with the [datafaker.net](https://www.datafaker.net/) library.
+We start by creating a lot of users in the `initializeUsers` method in the `Lab5Application` class with the [datafaker.net](https://www.datafaker.net/) library.
 
 {% code title="Lab5Application.java" %}
 ```java
-Faker faker = new Faker();
-for (int i = 0; i < 10000; i++) {
-  userService.createUser(
-      faker.internet().username(),
-      faker.internet().password()
-  );
+
+@SpringBootApplication
+public class Lab5Application {
+
+  public static void main(String[] args) {
+    SpringApplication.run(Lab5Application.class, args);
+  }
+  @Bean
+  public ApplicationRunner initializeUsers(UserService userService, GroupService groupService) {
+    return (args) -> {
+      EasyUser thomas = userService.createUser(
+          "Thomas",
+          "This is a password"
+      );
+      userService.createUser(
+          "Cassandra",
+          "Test1234"
+      );
+      groupService.createGroup("USER_GROUP");
+      groupService.createGroup("ADMIN_GROUP");
+      groupService.addUserToGroup("USER_GROUP", thomas.uuid);
+      
+      Faker faker = new Faker();
+      for (int i = 0; i < 10000; i++) {
+        userService.createUser(
+                faker.internet().username(),
+                faker.internet().password()
+        );
+      }
+    };
+  }
 }
+
 ```
 {% endcode %}
 
@@ -35,7 +61,9 @@ public List<EasyUser> findAll() {
 
 ### Problem
 
-If you start the application and navigate to [http://localhost:8080](http://localhost:8080/) you will see that the request will take 3 seconds suggesting an unresponsive system to the user.
+Now start the `Lab5Application` and navigate to [http://localhost:8080](http://localhost:8080/).
+
+You will see that the request will take 3 seconds suggesting an unresponsive system to the user.
 
 {% embed url="https://www.youtube.com/watch?v=Mbm16OtAsFY" %}
 
@@ -43,10 +71,10 @@ To improve the user experience we want to lazy load the slow user table after th
 
 ### Lazy Loading the user table
 
-We create a constant `GET_USER_TABLE` and then add an HTTP GET endpoint in the `UserController` where we render the `userTableComponent` .&#x20;
+We create a constant `GET_USER_TABLE` and then add an HTTP GET endpoint in the `UserController` where we render the `userTableComponent` .
 
 {% code title="UserController.java" %}
-```
+```java
 public static final String GET_USER_TABLE = "/user-table";
 
 @HxRequest // (1)
@@ -57,9 +85,10 @@ public ViewContext userTable() {
 ```
 {% endcode %}
 
-(1): We use `@HxRequest`  of the [htmx-spring-boot](https://github.com/wimdeblauwe/htmx-spring-boot) library to only accept this request when it is made from htmx.
+(1): We use the `@HxRequest` annotation of the [htmx-spring-boot](https://github.com/wimdeblauwe/htmx-spring-boot) library.\
+The endpoint will only accept a request when it's made from htmx.
 
-If we now restart the application and try to navigate to [http://localhost:8080/user-table](http://localhost:8080/user-table).
+Now restart the `Lab5Application` and try to navigate to [http://localhost:8080/user-table](http://localhost:8080/user-table).
 
 You should not be able to access it.
 
@@ -96,18 +125,18 @@ Now create a `UserManagementComponent.jte` file in the same package as the `User
 </div>
 ```
 
-(1): The `hx-get` attribute creates a `GET` request to the `GET_USER_TABLE` endpoint.&#x20;
+(1): The `hx-get` attribute creates a `GET` request to the `GET_USER_TABLE` endpoint.
 
-(2): The `hx-trigger="load"` attribute triggers the request when the page loads.&#x20;
+(2): The `hx-trigger="load"` attribute triggers the request when the page loads.
 
-We can show a loading spinner with an `<img>` element. \
+We can show a loading spinner with an `<img>` element.\
 (3): By adding the `htmx-indicator` CSS class the element is shown while the HTTP request of the parent htmx element is in flight.
 
 ### Rendering the UserMangement
 
-Now back in the `UserController` we autowire the `userMangement` by injecting it in the constructor.
+Now back in the `UserController` we autowire the `userMangementComponent` by injecting it into the constructor.
 
-Then we replace the `userTableComponent.render()` method with `userManagementComponent.render()`&#x20;
+Then we replace the `userTableComponent.render()` method with `userManagementComponent.render() in`&#x20;
 
 {% code title="UserController.java" %}
 ```java
@@ -122,7 +151,9 @@ public ViewContext userManagementComponent() {
 ```
 {% endcode %}
 
-If you restart the application and navigate to [http://localhost:8080](http://localhost:8080/) you can see that the page loads instantly and only the UserTable is loaded afterwards.
+Restart the `Lab5Application` and navigate to [http://localhost:8080](http://localhost:8080/).
+
+You can see that the page loads instantly and only the user table rendering is delayed.
 
 {% embed url="https://youtu.be/Q3k-p3-9YaA" %}
 
