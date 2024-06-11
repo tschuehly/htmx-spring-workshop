@@ -40,7 +40,7 @@ dependencies {
     implementation("io.projectreactor:reactor-core:3.6.5")
 
     implementation("net.datafaker:datafaker:2.1.0")
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    runtimeOnly("org.springframework.boot:spring-boot-devtools")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
