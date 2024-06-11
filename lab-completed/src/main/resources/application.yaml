@@ -2,8 +2,4 @@ spring:
   application:
     name: easy-spring-auth
   view-component:
-    local-development: true
-    jte-template-directories: lab-completed/src/main/java
-gg:
-  jte:
-    developmentMode: true
+    local-development: false

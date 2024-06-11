@@ -1,7 +1,9 @@
+import kotlin.io.path.Path
 plugins {
     java
     id("org.springframework.boot") version "3.2.5"
     id("io.spring.dependency-management") version "1.1.4"
+    id("gg.jte.gradle") version("3.1.12")
 }
 
 group = "de.tschuehly"
@@ -27,14 +29,17 @@ repositories {
     }
 }
 
+jte{
+    generate()
+    sourceDirectory = Path("src/main/java")
+}
 dependencies {
 
     // LAB 1:
     implementation("org.springframework.boot:spring-boot-starter-web")
 
     // LAB 2:
-    implementation("de.tschuehly:spring-view-component-jte:0.7.5-SNAPSHOT")
-    annotationProcessor("de.tschuehly:spring-view-component-core:0.7.5-SNAPSHOT")
+    implementation("de.tschuehly:spring-view-component-jte:0.8.1")
     implementation("io.github.wimdeblauwe:htmx-spring-boot:3.3.0")
 
     // LAB 9:

@@ -1,7 +1,9 @@
+import kotlin.io.path.Path
 plugins {
     java
     id("org.springframework.boot") version "3.2.5"
     id("io.spring.dependency-management") version "1.1.4"
+    id("gg.jte.gradle") version("3.1.12")
 }
 
 group = "de.tschuehly"

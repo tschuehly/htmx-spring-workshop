@@ -62,7 +62,7 @@ public class UserTableComponent {
           ViewContext viewContext = userRowComponent.render(user);
           StringOutput stringOutput = new StringOutput();
           jteTemplateEngine.render(
-              IViewContext.Companion.getViewComponentTemplate(viewContext),
+              IViewContext.Companion.getViewComponentTemplateWithoutSuffix(viewContext) + ".jte",
               viewContext,
               stringOutput
           );
