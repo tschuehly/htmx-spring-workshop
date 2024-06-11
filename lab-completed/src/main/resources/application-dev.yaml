@@ -1,0 +1,4 @@
+spring:
+  view-component:
+    local-development: true
+    view-component-root: lab-completed/src/main/java

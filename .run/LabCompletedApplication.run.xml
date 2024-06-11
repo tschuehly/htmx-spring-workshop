@@ -1,5 +1,8 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="LabCompletedApplication" type="Application" factoryName="Application" nameIsGenerated="true">
+    <envs>
+      <env name="SPRING_PROFILES_ACTIVE" value="dev" />
+    </envs>
     <option name="MAIN_CLASS_NAME" value="de.tschuehly.easy.spring.auth.LabCompletedApplication" />
     <module name="lab-completed.main" />
     <extension name="coverage">

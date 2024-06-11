@@ -2,4 +2,4 @@ spring:
   application:
     name: easy-spring-auth
   view-component:
-    local-development: false
+    local-development: true
