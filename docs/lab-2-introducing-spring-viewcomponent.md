@@ -57,7 +57,7 @@ Also, uncomment the `gg.jte` properties
 spring:
   view-component:
     local-development: true
-    jte-template-directories: lab-2/src/main/java
+    viewComponentRoot: lab-2/src/main/java
 #gg:
  # jte:
   #  developmentMode: true
