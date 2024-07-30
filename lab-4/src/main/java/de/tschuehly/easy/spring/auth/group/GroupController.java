@@ -3,6 +3,7 @@ package de.tschuehly.easy.spring.auth.group;
 import de.tschuehly.easy.spring.auth.group.management.GroupManagementComponent;
 import de.tschuehly.easy.spring.auth.group.management.table.GroupTableComponent;
 import de.tschuehly.easy.spring.auth.group.management.table.user.AddUserComponent;
+import de.tschuehly.easy.spring.auth.web.layout.LayoutComponent;
 import de.tschuehly.spring.viewcomponent.jte.ViewContext;
 import java.util.UUID;
 import org.springframework.stereotype.Controller;
@@ -17,18 +18,22 @@ public class GroupController {
   private final AddUserComponent addUserComponent;
   private final GroupTableComponent groupTableComponent;
   private final GroupService groupService;
+  private final LayoutComponent layoutComponent;
 
   public GroupController(GroupManagementComponent groupManagementComponent, AddUserComponent addUserComponent,
-      GroupTableComponent groupTableComponent, GroupService groupService) {
+                         GroupTableComponent groupTableComponent, GroupService groupService, LayoutComponent layoutComponent) {
     this.groupManagementComponent = groupManagementComponent;
     this.addUserComponent = addUserComponent;
     this.groupTableComponent = groupTableComponent;
     this.groupService = groupService;
+      this.layoutComponent = layoutComponent;
   }
 
-  @GetMapping("/group-management")
+  public static final String GROUP_MANAGEMENT =  "/group-management";
+
+  @GetMapping(GROUP_MANAGEMENT)
   public ViewContext groupManagementComponent(){
-    return groupManagementComponent.render();
+    return layoutComponent.render(groupTableComponent.render());
   }
 
   public final static String GET_SELECT_USER =  "/group/{groupName}/select-user";

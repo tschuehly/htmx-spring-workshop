@@ -3,7 +3,9 @@ package de.tschuehly.easy.spring.auth.user;
 import de.tschuehly.easy.spring.auth.user.management.UserManagementComponent;
 import de.tschuehly.easy.spring.auth.user.management.create.CreateUserComponent;
 import de.tschuehly.easy.spring.auth.user.management.edit.EditUserComponent;
+import de.tschuehly.easy.spring.auth.user.management.table.UserTableComponent;
 import de.tschuehly.easy.spring.auth.user.management.table.row.UserRowComponent;
+import de.tschuehly.easy.spring.auth.web.layout.LayoutComponent;
 import de.tschuehly.spring.viewcomponent.jte.ViewContext;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.UUID;
@@ -21,20 +23,27 @@ public class UserController {
   private final EditUserComponent editUserComponent;
   private final UserRowComponent userRowComponent;
   private final CreateUserComponent createUserComponent;
+  private final LayoutComponent layoutComponent;
+  private final UserTableComponent userTableComponent;
 
   public UserController(UserManagementComponent userManagementComponent, UserService userService, EditUserComponent editUserComponent,
-      UserRowComponent userRowComponent, CreateUserComponent createUserComponent) {
+                        UserRowComponent userRowComponent, CreateUserComponent createUserComponent, LayoutComponent layoutComponent, UserTableComponent userTableComponent) {
     this.userManagementComponent = userManagementComponent;
     this.userService = userService;
     this.editUserComponent = editUserComponent;
     this.userRowComponent = userRowComponent;
     this.createUserComponent = createUserComponent;
+      this.layoutComponent = layoutComponent;
+      this.userTableComponent = userTableComponent;
   }
 
-  @GetMapping("/")
+  public static final String USER_MANAGEMENT_PATH = "/";
+
+  @GetMapping(USER_MANAGEMENT_PATH)
   public ViewContext userManagementComponent() {
-    return userManagementComponent.render();
+    return layoutComponent.render(userTableComponent.render());
   }
+
 
   public static final String GET_EDIT_USER_MODAL = "/save-user/modal/{uuid}";
 
