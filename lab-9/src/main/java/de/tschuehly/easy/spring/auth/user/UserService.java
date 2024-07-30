@@ -1,10 +1,13 @@
 package de.tschuehly.easy.spring.auth.user;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import net.datafaker.Faker;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 
 @Service
 public class UserService {
@@ -63,4 +66,10 @@ public class UserService {
     return newUser;
   }
 
+  public Flux<EasyUser> subscribeToNewUserCreation() {
+    Faker faker = new Faker();
+    return Flux.interval(Duration.ofSeconds(5)).map(
+        val -> createUser(faker.internet().username(), faker.internet().password())
+    );
+  }
 }

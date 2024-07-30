@@ -9,11 +9,13 @@ import de.tschuehly.easy.spring.auth.web.layout.LayoutComponent;
 import de.tschuehly.spring.viewcomponent.jte.ViewContext;
 import io.github.wimdeblauwe.htmx.spring.boot.mvc.HxRequest;
 import java.util.UUID;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 @Controller
 public class UserController {
@@ -61,6 +63,23 @@ public class UserController {
   @GetMapping(GET_SEARCH_USER)
   public ViewContext searchUser(@RequestParam(SEARCH_PARAM) String searchQuery) {
     return userTableComponent.renderSearch(searchQuery);
+  }
+
+  public static final String GET_SUBSCRIBE_USER = "/subscribe-new-user";
+
+  @GetMapping(value = GET_SUBSCRIBE_USER, produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+  public SseEmitter subscribeUser() {
+    SseEmitter emitter = new SseEmitter();
+    userTableComponent.subscribeToNewUserRow().subscribe(
+        row -> {
+          try {
+            emitter.send(row);
+          } catch (Exception e) {
+            emitter.completeWithError(e);
+          }
+        }, emitter::completeWithError, emitter::complete
+    );
+    return emitter;
   }
 
   public static final String GET_EDIT_USER_MODAL = "/save-user/modal/{uuid}";
