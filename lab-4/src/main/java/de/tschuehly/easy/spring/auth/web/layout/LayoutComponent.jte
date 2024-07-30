@@ -16,6 +16,10 @@
     <h2>
         Easy Spring Auth
     </h2>
+    @for(var nav: layoutContext.navigationItemList())
+        <a href="${nav.URI()}">${nav.displayName()}</a>
+    @endfor
+    <hr>
 </nav>
 <main>
     ${layoutContext.content()}

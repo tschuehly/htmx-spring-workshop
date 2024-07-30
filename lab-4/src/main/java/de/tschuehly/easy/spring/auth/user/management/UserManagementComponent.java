@@ -1,23 +1,14 @@
 package de.tschuehly.easy.spring.auth.user.management;
 
-import de.tschuehly.easy.spring.auth.user.management.table.UserTableComponent;
-import de.tschuehly.spring.viewcomponent.core.component.ViewComponent;
-import de.tschuehly.spring.viewcomponent.jte.ViewContext;
+import de.tschuehly.easy.spring.auth.user.UserController;
+import de.tschuehly.easy.spring.auth.web.Page;
+import org.springframework.stereotype.Component;
 
-@ViewComponent
-public class UserManagementComponent {
-  private final UserTableComponent userTableComponent;
+@Component
+public class UserManagementComponent implements Page {
 
-  public static final String MODAL_CONTAINER_ID = "modalContainer";
-  public static final String CLOSE_MODAL_EVENT = "close-modal";
-
-  public UserManagementComponent(UserTableComponent userTableComponent) {
-    this.userTableComponent = userTableComponent;
-  }
-
-  public record UserManagementContext(ViewContext viewContext) implements ViewContext{}
-
-  public ViewContext render(){
-    return new UserManagementContext(userTableComponent.render());
-  }
+    @Override
+    public NavigationItem navigationItem() {
+        return new NavigationItem("User Management", UserController.USER_MANAGEMENT_PATH);
+    }
 }
