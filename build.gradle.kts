@@ -1,7 +1,12 @@
+import gg.jte.html.HtmlPolicy
+import kotlin.io.path.Path
+
 plugins {
     java
     id("org.springframework.boot") version "3.2.3"
     id("io.spring.dependency-management") version "1.1.4"
+
+    id("gg.jte.gradle") version("3.1.12")
 }
 
 group = "de.tschuehly"
@@ -11,11 +16,6 @@ java {
     sourceCompatibility = JavaVersion.VERSION_21
 }
 
-configurations {
-    compileOnly {
-        extendsFrom(configurations.annotationProcessor.get())
-    }
-}
 
 repositories {
     mavenCentral()
@@ -39,8 +39,7 @@ dependencies {
     implementation("com.github.casid.jte:jte:e8fca09303")
 //
 
-    implementation("de.tschuehly:spring-view-component-jte:0.7.5-SNAPSHOT")
-    annotationProcessor("de.tschuehly:spring-view-component-core:0.7.5-SNAPSHOT")
+    implementation("de.tschuehly:spring-view-component-jte:0.8.3")
 //    implementation("org.eclipse.store:integrations-spring-boot3:1.2.0")
 
     implementation("io.github.wimdeblauwe:htmx-spring-boot:3.2.0")
@@ -52,4 +51,10 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+
+jte{
+    generate()
+    sourceDirectory.set(Path("src/main/java"))
 }

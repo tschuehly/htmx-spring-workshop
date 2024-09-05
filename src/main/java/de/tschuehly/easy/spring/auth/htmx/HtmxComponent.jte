@@ -1,9 +1,13 @@
 @param de.tschuehly.easy.spring.auth.htmx.HtmxComponent.HtmxContext htmxContext
 
 
+<!--suppress ALL -->
+
+
+
 <script src="https://unpkg.com/htmx.org@1.9.12"></script>
 
-<form ${htmxContext.server().createUserEndpoint.call()}>
+<form $unsafe{htmxContext.server().createUserEndpoint.call()}>
     <input type="text" name="userName">
     <input type="text" name="password">
     <button type="submit">

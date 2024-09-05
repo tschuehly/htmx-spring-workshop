@@ -14,7 +14,7 @@ public class AddUserComponent {
     this.userService = userService;
   }
 
-  public record AddUserContext(String groupName, List<EasyUser> easyUserList) implements ViewContext{}
+  public record AddUserContext(String groupName, List<EasyUser> easyUserList) implements ViewContext {}
 
   public ViewContext render(String groupName){
     return new AddUserContext(groupName,userService.findAll());

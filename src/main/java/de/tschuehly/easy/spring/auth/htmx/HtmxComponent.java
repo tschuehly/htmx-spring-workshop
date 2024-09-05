@@ -8,12 +8,15 @@ import org.springframework.http.HttpMethod;
 @ViewComponent
 public class HtmxComponent {
 
-
   public HtmxEndpoint<?> htmxTestEndpoint = new HtmxEndpoint<>(
       "/test", HttpMethod.GET, this::test);
 
   private ViewContext test() {
     return new HtmxContext(null, this);
+  }
+
+  public record HtmxContext(@Nullable UserForm userForm, HtmxComponent server) implements ViewContext {
+
   }
 
 
@@ -31,7 +34,4 @@ public class HtmxComponent {
     return new HtmxContext(userForm, this);
   }
 
-  public record HtmxContext(@Nullable UserForm userForm, HtmxComponent server) implements ViewContext {
-
-  }
 }

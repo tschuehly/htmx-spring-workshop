@@ -16,7 +16,7 @@ public class HtmxEndpoint<T> extends AbstractHtmxEndpoint<T, ViewContext> {
 
   @Override
   String templateName(ViewContext modelAndView) {
-    return IViewContext.Companion.getViewComponentTemplate(modelAndView);
+    return IViewContext.Companion.getViewComponentTemplateWithoutSuffix(modelAndView);
   }
 
   public HtmxEndpoint(String path, HttpMethod method, Function<T, ViewContext> function, Class<T> tClass) {
