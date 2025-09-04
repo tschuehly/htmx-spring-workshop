@@ -145,7 +145,7 @@ public class UserTableComponent {
 
 In the last lab, we defined the `USER_TABLE_BODY_ID` in the `UserController.java`. Now define it in the `UserTableComponent.java` .
 
-Now we will create a `UserManagementComponent.jte` template in the same package as the `UserTableComponent.java`:
+Now we will create a `UserTableComponent.jte` template in the same package as the `UserTableComponent.java`:
 
 {% code title="UserTableComponent.jte" %}
 ```java
