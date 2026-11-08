@@ -69,7 +69,7 @@ public class UserService {
   public Flux<EasyUser> subscribeToNewUserCreation() {
     Faker faker = new Faker();
     return Flux.interval(Duration.ofSeconds(5)).map(
-        val -> createUser(faker.internet().username(), faker.internet().password())
+        val -> createUser(faker.credentials().username(), faker.credentials().password())
     );
   }
 }
