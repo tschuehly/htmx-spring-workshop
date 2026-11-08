@@ -1,7 +1,7 @@
 name: Native image
 
 # Builds lab-completed (the deployed demo app) as a GraalVM native image, smoke-tests the container,
-# and on the default branch pushes ghcr.io/<repo>:<sha> and :latest.
+# and on push to master/main pushes ghcr.io/<repo>:<sha> and :latest.
 on:
   push:
     branches: [master, main]
@@ -41,7 +41,7 @@ jobs:
           docker rm -f app
 
       - name: Log in to GHCR
-        if: github.event_name != 'pull_request'
+        if: github.event_name == 'push'
         uses: docker/login-action@v4
         with:
           registry: ghcr.io
@@ -49,7 +49,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push image
-        if: github.event_name != 'pull_request'
+        if: github.event_name == 'push'
         run: |
           docker push "$IMAGE:${{ github.sha }}"
           docker push "$IMAGE:latest"
