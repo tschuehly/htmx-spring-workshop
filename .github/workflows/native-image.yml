@@ -1,0 +1,55 @@
+name: Native image
+
+# Builds lab-completed (the deployed demo app) as a GraalVM native image, smoke-tests the container,
+# and on the default branch pushes ghcr.io/<repo>:<sha> and :latest.
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  IMAGE: ghcr.io/${{ github.repository }}
+
+jobs:
+  native-image:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: docker/setup-buildx-action@v4
+
+      - name: Build native image
+        uses: docker/build-push-action@v7
+        with:
+          context: lab-completed
+          load: true
+          tags: ${{ env.IMAGE }}:${{ github.sha }},${{ env.IMAGE }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Smoke test container
+        run: |
+          docker run -d --name app -p 8080:8080 "$IMAGE:${{ github.sha }}"
+          timeout 30 bash -c 'until curl -sf localhost:8080/ >/dev/null; do sleep 1; done'
+          lab-completed/smoke-test.sh http://localhost:8080
+          docker stats --no-stream app
+          docker rm -f app
+
+      - name: Log in to GHCR
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push image
+        if: github.event_name != 'pull_request'
+        run: |
+          docker push "$IMAGE:${{ github.sha }}"
+          docker push "$IMAGE:latest"

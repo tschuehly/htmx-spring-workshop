@@ -1,10 +1,10 @@
-import org.springframework.boot.gradle.tasks.bundling.BootBuildImage
 import kotlin.io.path.Path
 plugins {
     java
-    id("org.springframework.boot") version "3.2.5"
-    id("io.spring.dependency-management") version "1.1.4"
-    id("gg.jte.gradle") version("3.1.12")
+    id("org.springframework.boot") version "4.0.9"
+    id("io.spring.dependency-management") version "1.1.7"
+    id("org.graalvm.buildtools.native") version "0.11.5"
+    id("gg.jte.gradle") version("3.2.5")
 }
 
 group = "de.tschuehly"
@@ -22,33 +22,30 @@ configurations {
 
 repositories {
     mavenCentral()
-    maven {
-        url = uri("https://s01.oss.sonatype.org/content/repositories/snapshots/")
-        mavenContent {
-            snapshotsOnly()
-        }
-    }
 }
 
 jte{
     generate()
     sourceDirectory = Path("src/main/java")
+    // registers the generated template classes for GraalVM reflection
+    jteExtension("gg.jte.nativeimage.NativeResourcesExtension")
 }
 dependencies {
     // LAB 1:
-    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-webmvc")
 
     // LAB 2:
-    implementation("de.tschuehly:spring-view-component-jte:0.8.1")
-    implementation("io.github.wimdeblauwe:htmx-spring-boot:3.3.0")
+    implementation("de.tschuehly:spring-view-component-jte:0.9.1")
+    implementation("io.github.wimdeblauwe:htmx-spring-boot:5.2.0")
+    jteGenerate("gg.jte:jte-native-resources:3.2.5")
 
     // LAB 9:
-    implementation("io.projectreactor:reactor-core:3.6.5")
+    implementation("io.projectreactor:reactor-core")
 
-    implementation("net.datafaker:datafaker:2.1.0")
-    runtimeOnly("org.springframework.boot:spring-boot-devtools")
+    implementation("net.datafaker:datafaker:2.7.0")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
 }
 
 tasks.withType<Test> {

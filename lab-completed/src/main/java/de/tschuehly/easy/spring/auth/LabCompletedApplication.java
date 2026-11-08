@@ -33,8 +33,8 @@ public class LabCompletedApplication {
       Faker faker = new Faker();
       for (int i = 0; i < 1000; i++) {
         userService.createUser(
-            faker.internet().username(),
-            faker.internet().password()
+            faker.credentials().username(),
+            faker.credentials().password()
         );
       }
     };
