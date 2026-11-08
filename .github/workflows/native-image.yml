@@ -1,16 +1,17 @@
 name: Native image
 
-# Builds lab-completed (the deployed demo app) as a GraalVM native image, smoke-tests the container,
-# and on push to master/main pushes ghcr.io/<repo>:<sha> and :latest.
+# Builds lab-completed (the deployed demo app) as a GraalVM native image and smoke-tests it.
+# build: unprivileged (contents: read), for PRs, manual runs and master.
+# publish: only on push to master; loads the image built above and pushes ghcr.io/<repo>:<sha> and :latest.
+# It never checks out or runs repository code, so PR code never sees a packages:write token.
 on:
   push:
-    branches: [master, main]
+    branches: [master]
   pull_request:
   workflow_dispatch:
 
 permissions:
   contents: read
-  packages: write
 
 env:
   IMAGE: ghcr.io/${{ github.repository }}
@@ -20,6 +21,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
 
       - uses: docker/setup-buildx-action@v4
 
@@ -28,7 +31,7 @@ jobs:
         with:
           context: lab-completed
           load: true
-          tags: ${{ env.IMAGE }}:${{ github.sha }},${{ env.IMAGE }}:latest
+          tags: ${{ env.IMAGE }}:${{ github.sha }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -40,16 +43,36 @@ jobs:
           docker stats --no-stream app
           docker rm -f app
 
-      - name: Log in to GHCR
-        if: github.event_name == 'push'
-        uses: docker/login-action@v4
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Push image
-        if: github.event_name == 'push'
+      - name: Kamal service label
         run: |
+          label=$(docker image inspect -f '{{index .Config.Labels "service"}}' "$IMAGE:${{ github.sha }}")
+          echo "service label: '$label'"
+          test "$label" = htmx-spring-workshop
+
+      - if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        run: docker save "$IMAGE:${{ github.sha }}" | gzip > image.tar.gz
+      - if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: image
+          path: image.tar.gz
+          retention-days: 1
+
+  publish:
+    needs: native-image
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    permissions:
+      packages: write
+    steps:
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: image
+      - env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gunzip -c image.tar.gz | docker load
+          echo "$GH_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
+          docker tag "$IMAGE:${{ github.sha }}" "$IMAGE:latest"
           docker push "$IMAGE:${{ github.sha }}"
           docker push "$IMAGE:latest"

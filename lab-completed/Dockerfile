@@ -7,6 +7,8 @@ RUN ./gradlew nativeCompile --no-daemon
 
 FROM debian:trixie-slim
 LABEL org.opencontainers.image.source=https://github.com/tschuehly/htmx-spring-workshop
+# Kamal requires service=<service> (deploy/apps/htmx-spring-workshop/config/deploy.yml).
+LABEL service="htmx-spring-workshop"
 COPY --from=build /app/build/native/nativeCompile/lab-completed /app/lab-completed
 EXPOSE 8080
 USER 1000
